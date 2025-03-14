@@ -24,6 +24,16 @@
             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY"
                          To="1" Duration="0:0:0.3" />
         </Storyboard>
+
+        <Storyboard x:Key="TextGrow">
+            <DoubleAnimation Storyboard.TargetProperty="FontSize"
+                         To="28" Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="TextShrink">
+            <DoubleAnimation Storyboard.TargetProperty="FontSize"
+                         To="24" Duration="0:0:0.3" />
+        </Storyboard>
     </Window.Resources>
 
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -81,6 +91,48 @@
                     </EventTrigger>
                 </Image.Triggers>
             </Image>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
+            <TextBlock x:Name="Enter_BTN" Text="Войти" FontSize="24" VerticalAlignment="Center" Margin="0,0,50,0" FontWeight="Bold"
+                       Cursor="Hand" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextDecorations" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <!-- Триггер при наведении -->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard Storyboard="{StaticResource TextGrow}"/>
+                            </EventTrigger>
+
+                            <!-- Триггер при уходе курсора -->
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard Storyboard="{StaticResource TextShrink}"/>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <TextBlock x:Name="Reg_BTN" Text="Зарегистрироваться" FontSize="24" VerticalAlignment="Center" FontWeight="Bold"
+                       Cursor="Hand" TextDecorations="{x:Null}" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="TextDecorations" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <!-- Триггер при наведении -->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard Storyboard="{StaticResource TextGrow}"/>
+                            </EventTrigger>
+
+                            <!-- Триггер при уходе курсора -->
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard Storyboard="{StaticResource TextShrink}"/>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </StackPanel>
     </Grid>
 </Window>

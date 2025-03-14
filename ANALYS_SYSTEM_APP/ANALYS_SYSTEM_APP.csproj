@@ -56,7 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="GUI\Auth_Win.xaml">
+    <Page Include="GUI\Main.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -64,8 +64,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI\Auth_Win.xaml.cs">
-      <DependentUpon>Auth_Win.xaml</DependentUpon>
+    <Compile Include="GUI\Main.xaml.cs">
+      <DependentUpon>Main.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
