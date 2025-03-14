@@ -94,7 +94,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
             <TextBlock x:Name="Enter_BTN" Text="Войти" FontSize="24" VerticalAlignment="Center" Margin="0,0,50,0" FontWeight="Bold"
-                       Cursor="Hand" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave" Width="150">
+                       Cursor="Hand" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave" Width="150" MouseLeftButtonDown="Enter_BTN_MouseLeftButtonDown">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="TextDecorations" Value="{x:Null}"/>
@@ -114,7 +114,7 @@
             </TextBlock>
 
             <TextBlock x:Name="Reg_BTN" Text="Зарегистрироваться" FontSize="24" VerticalAlignment="Center" FontWeight="Bold"
-                       Cursor="Hand" TextDecorations="{x:Null}" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave" Width="300">
+                       Cursor="Hand" TextDecorations="{x:Null}" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave" Width="300" MouseLeftButtonDown="Reg_BTN_MouseLeftButtonDown">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="TextDecorations" Value="{x:Null}"/>
@@ -149,8 +149,5 @@
          Stretch="Fill"/>
             </StackPanel>
         </Border>
-       
-
-        
     </Grid>
 </Window>

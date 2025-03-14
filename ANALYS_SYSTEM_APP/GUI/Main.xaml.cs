@@ -32,44 +32,6 @@ namespace ANALYS_SYSTEM_APP
             ImageBehavior.SetAnimatedSource(GifImage, gif);
         }
 
-        private void MinimizeWindow_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void MaximizeWindow_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
-        }
-
-        private void CloseWindow_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-
-        // Импорты Windows API для управления размером окна
-        [DllImport("user32.dll")]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
-        private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int HTBOTTOMRIGHT = 17;
-        private const int HTBOTTOM = 15;
-        private const int HTRIGHT = 11;
-
-        private void ResizeWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                IntPtr hWnd = new WindowInteropHelper(this).Handle;
-                ReleaseCapture();
-                SendMessage(hWnd, WM_NCLBUTTONDOWN, (IntPtr)HTBOTTOMRIGHT, IntPtr.Zero);
-            }
-        }
-
         private void Enter_BTN_MouseEnter(object sender, MouseEventArgs e)
         {
             TextBlock tb = sender as TextBlock;
@@ -80,6 +42,17 @@ namespace ANALYS_SYSTEM_APP
         {
             TextBlock tb = sender as TextBlock;
             tb.TextDecorations = null; // Убираем подчеркивание
+        }
+
+        private void Enter_BTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void Reg_BTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Для регистрации обратитесь лично к администратору или заполните форму ниже.", "Регистрация",
+                MessageBoxButton.OKCancel, MessageBoxImage.Information);
         }
     }
 }
