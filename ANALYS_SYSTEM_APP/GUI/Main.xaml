@@ -93,8 +93,8 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
-            <TextBlock x:Name="Enter_BTN" Text="Войти" FontSize="24" VerticalAlignment="Center" Margin="0,0,100,0" FontWeight="Bold"
-                       Cursor="Hand" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave">
+            <TextBlock x:Name="Enter_BTN" Text="Войти" FontSize="24" VerticalAlignment="Center" Margin="0,0,50,0" FontWeight="Bold"
+                       Cursor="Hand" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave" Width="150">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="TextDecorations" Value="{x:Null}"/>
@@ -134,18 +134,22 @@
             </TextBlock>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Vertical"
-                    Margin="0,100,0,0">
-            <TextBlock TextWrapping="Wrap" FontSize="28" HorizontalAlignment="Center"
-                Text="Система учета и анализа данных" FontWeight="Bold"/>
+        <Border Padding="20" Grid.Row="1" BorderBrush="Black" BorderThickness="1" CornerRadius="10"
+                HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
+            <StackPanel Grid.Row="1"  Orientation="Vertical"
+             Margin="20,50,20,50">
+                <TextBlock TextWrapping="Wrap" FontSize="28" HorizontalAlignment="Center"
+         Text="Система учета и анализа данных" FontWeight="Bold"/>
 
-            <TextBlock TextWrapping="Wrap" FontSize="26" MaxWidth="700" Margin="0,20,0,0"
-                Text="Добро пожаловать, уважаемый пользователь! Данное приложение разработано для вашего удобства в представлении необходимых вам отчетов, данных, файлов и иной информации."/>
+                <TextBlock TextWrapping="Wrap" FontSize="26" MaxWidth="700" Margin="0,20,0,0"
+         Text="Добро пожаловать, уважаемый пользователь! Данное приложение разработано для вашего удобства в представлении необходимых вам отчетов, данных, файлов и иной информации."/>
 
-            <Image x:Name="GifImage" Margin="0,20,0,0"
-                Width="550" Height="370"
-                Stretch="Fill"/>
-        </StackPanel>
+                <Image x:Name="GifImage" Margin="0,20,0,0"
+         Width="550" Height="370"
+         Stretch="Fill"/>
+            </StackPanel>
+        </Border>
+       
 
         
     </Grid>
