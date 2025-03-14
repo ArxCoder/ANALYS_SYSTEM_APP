@@ -46,13 +46,18 @@ namespace ANALYS_SYSTEM_APP
 
         private void Enter_BTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
+            Auth_Modal_Form.Visibility = Visibility.Visible;
         }
 
         private void Reg_BTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("Для регистрации обратитесь лично к администратору или заполните форму ниже.", "Регистрация",
                 MessageBoxButton.OKCancel, MessageBoxImage.Information);
+        }
+
+        private void Close_Modal_Auth_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Auth_Modal_Form.Visibility = Visibility.Hidden;
         }
     }
 }
