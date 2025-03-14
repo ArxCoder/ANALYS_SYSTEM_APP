@@ -15,6 +15,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfAnimatedGif;
 
 namespace ANALYS_SYSTEM_APP
 {
@@ -26,6 +27,9 @@ namespace ANALYS_SYSTEM_APP
         public MainWindow()
         {
             InitializeComponent();
+            string path = $"{System.IO.Directory.GetCurrentDirectory()}/Assets/Main_gif.gif";
+            var gif = new BitmapImage(new Uri(path));
+            ImageBehavior.SetAnimatedSource(GifImage, gif);
         }
 
         private void MinimizeWindow_Click(object sender, RoutedEventArgs e)
@@ -64,11 +68,6 @@ namespace ANALYS_SYSTEM_APP
                 ReleaseCapture();
                 SendMessage(hWnd, WM_NCLBUTTONDOWN, (IntPtr)HTBOTTOMRIGHT, IntPtr.Zero);
             }
-        }
-
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
         }
 
         private void Enter_BTN_MouseEnter(object sender, MouseEventArgs e)

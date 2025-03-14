@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResize"
-        Title="ANALYS" MinWidth="1920" MinHeight="1080" Icon="/Resources/APP_icon.png" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+        Title="ANALYS" Width="1920" Height="1080" MinWidth="800" MinHeight="600" Icon="/Resources/APP_icon.png">
 
     <Window.Resources>
         <Storyboard x:Key="ScaleDown">
@@ -94,7 +93,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
-            <TextBlock x:Name="Enter_BTN" Text="Войти" FontSize="24" VerticalAlignment="Center" Margin="0,0,50,0" FontWeight="Bold"
+            <TextBlock x:Name="Enter_BTN" Text="Войти" FontSize="24" VerticalAlignment="Center" Margin="0,0,100,0" FontWeight="Bold"
                        Cursor="Hand" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
@@ -115,7 +114,7 @@
             </TextBlock>
 
             <TextBlock x:Name="Reg_BTN" Text="Зарегистрироваться" FontSize="24" VerticalAlignment="Center" FontWeight="Bold"
-                       Cursor="Hand" TextDecorations="{x:Null}" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave">
+                       Cursor="Hand" TextDecorations="{x:Null}" MouseEnter="Enter_BTN_MouseEnter" MouseLeave="Enter_BTN_MouseLeave" Width="300">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="TextDecorations" Value="{x:Null}"/>
@@ -134,5 +133,20 @@
                 </TextBlock.Style>
             </TextBlock>
         </StackPanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Vertical"
+                    Margin="0,100,0,0">
+            <TextBlock TextWrapping="Wrap" FontSize="28" HorizontalAlignment="Center"
+                Text="Система учета и анализа данных" FontWeight="Bold"/>
+
+            <TextBlock TextWrapping="Wrap" FontSize="26" MaxWidth="700" Margin="0,20,0,0"
+                Text="Добро пожаловать, уважаемый пользователь! Данное приложение разработано для вашего удобства в представлении необходимых вам отчетов, данных, файлов и иной информации."/>
+
+            <Image x:Name="GifImage" Margin="0,20,0,0"
+                Width="550" Height="370"
+                Stretch="Fill"/>
+        </StackPanel>
+
+        
     </Grid>
 </Window>
