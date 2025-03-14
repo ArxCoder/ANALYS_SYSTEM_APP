@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ANALYS_SYSTEM_APP", "ANALYS_SYSTEM_APP\ANALYS_SYSTEM_APP.csproj", "{C1550C19-72DD-46E2-B7CB-8B4145A8A815}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1550C19-72DD-46E2-B7CB-8B4145A8A815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1550C19-72DD-46E2-B7CB-8B4145A8A815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1550C19-72DD-46E2-B7CB-8B4145A8A815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1550C19-72DD-46E2-B7CB-8B4145A8A815}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
