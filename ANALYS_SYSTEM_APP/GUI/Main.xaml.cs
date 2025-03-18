@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ANALYS_SYSTEM_APP.GUI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -253,12 +254,21 @@ namespace ANALYS_SYSTEM_APP
                 {
                     case 1:
                         //Форма пользователя
+                        UserWindow userWindow = new UserWindow(seleced_User);
+                        userWindow.Show();
+                        this.Close();
                         break;
                     case 2:
                         //Форма сотрудника
+                        UserWindow userWindow_ = new UserWindow(seleced_User);
+                        userWindow_.Show();
+                        this.Close();
                         break;
                     case 3:
                         //Форма администратора
+                        ModeratorWindow moderatorWindow = new ModeratorWindow(seleced_User);
+                        moderatorWindow.Show();
+                        this.Close();
                         break;
                 }
             }
