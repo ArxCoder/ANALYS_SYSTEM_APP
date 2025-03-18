@@ -30,7 +30,7 @@ namespace ANALYS_SYSTEM_APP.GUI
             Username.Text = $"{current_User.User_Role.Name}: {current_User.Surname} {current_User.Name} {current_User.Lastname}";
             SetRequestInfo();
             RequestInfo_Timer.Tick += RequestInfo_Timer_Tick;
-            RequestInfo_Timer.Interval = TimeSpan.FromSeconds(15);
+            RequestInfo_Timer.Interval = TimeSpan.FromSeconds(20);
             RequestInfo_Timer.Start();
         }
 
@@ -61,7 +61,7 @@ namespace ANALYS_SYSTEM_APP.GUI
             }
             else
             {
-                Registration_Request_Count.Text = "У вас пока нет необработанных заявок на регистрацию";
+                Registration_Request_Count.Text = "У вас пока нет необработанных заявок на регистрацию.";
             }
         }
     }

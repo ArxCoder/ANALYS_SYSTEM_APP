@@ -68,8 +68,52 @@
                         </Button>
                     </StackPanel>
                 </Border>
+
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Список пользователей" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Просмотр списка пользователей для администрирования графика входа и управления доступом к информации." Width="400" TextWrapping="Wrap"
+                                   FontSize="20" Margin="0,10,0,0"/>
+                        <Button x:Name="Check_User_List" Width="400" Height="30" Content="Список пользователей" Margin="0,10,0,0" FontSize="20" FontWeight="Bold"
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Просмотр документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Width="400" FontSize="20" Margin="0,10,0,0" TextWrapping="Wrap" Text="Просмотр списка документов для их проверки, администрирования и редактирования."/>
+                        <Button x:Name="Check_Document_List" Width="400" Content="Список документов" HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,10,0,0">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Актуальность документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock FontSize="20" Width="400" TextWrapping="Wrap" Margin="0,10,0,0" Text="Просмотр списка документов для утверждения их актуальности."/>
+                        <Button x:Name="Document_Actual" Width="400" Content="Утверждение актуальности" FontSize="20" FontWeight="Bold" Margin="0,10,0,0">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Border>
-        
     </Grid>
 </Window>
