@@ -46,7 +46,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Orientation="Horizontal">
             <Image x:Name="Git_IMG" Source="/Resources/github_icon.png" Margin="5,0,5,0" Width="50" Height="50"
-                   RenderTransformOrigin="0.5,0.5">
+                   RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Git_IMG_MouseLeftButtonDown">
                 <Image.RenderTransform>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                 </Image.RenderTransform>
@@ -61,7 +61,7 @@
                 </Image.Triggers>
             </Image>
             <Image x:Name="TG_IMG" Source="/Resources/telegram_icon.png" Margin="5,0,5,0" Width="50" Height="50"
-                          RenderTransformOrigin="0.5,0.5">
+                          RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="TG_IMG_MouseLeftButtonDown">
                 <Image.RenderTransform>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                 </Image.RenderTransform>
@@ -76,7 +76,7 @@
                 </Image.Triggers>
             </Image>
             <Image x:Name="Vk_IMG" Source="/Resources/vk_icon.png" Margin="5,0,5,0" Width="50" Height="50"
-                          RenderTransformOrigin="0.5,0.5">
+                          RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Vk_IMG_MouseLeftButtonDown">
                 <Image.RenderTransform>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                 </Image.RenderTransform>
