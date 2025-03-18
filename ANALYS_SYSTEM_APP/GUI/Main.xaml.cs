@@ -249,6 +249,16 @@ namespace ANALYS_SYSTEM_APP
                     return;
                 }
 
+                Login_History login_History = new Login_History()
+                {
+                    Date = DateTime.Now,
+                    User_ID = seleced_User.ID
+                };
+
+
+                database.Login_History.Add(login_History);
+                database.SaveChanges();
+
                 //Определение рабочей формы по роли пользователя
                 switch (seleced_User.Role_ID)
                 {
