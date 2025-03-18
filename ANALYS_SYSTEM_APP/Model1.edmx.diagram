@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="039d870d739f47fbb6925f671c0f8e51" Name="Diagram1">
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Change_History" Width="1.5" PointX="8.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Data_Source" Width="1.5" PointX="9" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document" Width="1.5" PointX="6" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Status" Width="1.5" PointX="3.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Struct" Width="1.5" PointX="6" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Type" Width="1.5" PointX="3.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Load_History" Width="1.5" PointX="11.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Login_History" Width="1.5" PointX="8.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Registration_Request" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Report" Width="1.5" PointX="8.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Report_Type" Width="1.5" PointX="6" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Request_Status" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User_Role" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User_Status" Width="1.5" PointX="3.75" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Change_History_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Change_History_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Load_History_Data_Source" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Document_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Document_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Load_History_Document" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Struct_Document_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Load_History_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Login_History_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Registration_Request_Request_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Registration_Request_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Report_Report_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Report_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Status" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

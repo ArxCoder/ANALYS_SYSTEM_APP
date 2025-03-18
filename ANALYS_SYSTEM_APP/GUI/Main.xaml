@@ -176,7 +176,7 @@
                 </TextBox>
 
                 <Button x:Name="Enter" Width="300" Height="35" Content="Войти" FontSize="24" FontWeight="Bold"
-                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,50,0,0">
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,50,0,0" Click="Enter_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -243,7 +243,7 @@
                 </TextBox>
 
                 <Button x:Name="Reg" Width="300" Height="35" Content="Регистрация" FontSize="24" FontWeight="Bold"
-           HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,50,0,0">
+           HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,50,0,0" Click="Reg_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>

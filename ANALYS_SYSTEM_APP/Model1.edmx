@@ -1,0 +1,1051 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ANALYS_SYSTEM_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Change_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Change_Date" Type="datetime" />
+          <Property Name="Old_Value" Type="nvarchar(max)" />
+          <Property Name="New_Value" Type="nvarchar(max)" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="255" />
+          <Property Name="User_ID" Type="int" />
+          <Property Name="Document_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Data_Source">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status_ID" Type="int" />
+          <Property Name="Type_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Document_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Document_Struct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Attributes_List" Type="nvarchar(max)" />
+          <Property Name="Creation_Date" Type="datetime" />
+          <Property Name="Type_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Document_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Load_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Source_File_Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="User_ID" Type="int" />
+          <Property Name="Document_ID" Type="int" />
+          <Property Name="Data_Source_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Login_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="User_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Registration_Request">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Login" Type="nvarchar" MaxLength="100" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+          <Property Name="Creation_Date" Type="datetime" />
+          <Property Name="Request_Status_ID" Type="int" />
+          <Property Name="Role_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Creation_Date" Type="datetime" />
+          <Property Name="Repoort_Type_ID" Type="int" />
+          <Property Name="Document_ID" Type="int" />
+          <Property Name="User_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Report_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Request_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="100" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" />
+          <Property Name="Creation_date" Type="datetime" />
+          <Property Name="Role_ID" Type="int" />
+          <Property Name="User_Status_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="User_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="User_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Change_History_Document">
+          <End Role="Document" Type="Self.Document" Multiplicity="0..1" />
+          <End Role="Change_History" Type="Self.Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Change_History">
+              <PropertyRef Name="Document_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Change_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Change_History" Type="Self.Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Change_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Status">
+          <End Role="Document_Status" Type="Self.Document_Status" Multiplicity="0..1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Type">
+          <End Role="Document_Type" Type="Self.Document_Type" Multiplicity="0..1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Struct_Document_Type">
+          <End Role="Document_Type" Type="Self.Document_Type" Multiplicity="0..1" />
+          <End Role="Document_Struct" Type="Self.Document_Struct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Document_Struct">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Load_History_Data_Source">
+          <End Role="Data_Source" Type="Self.Data_Source" Multiplicity="0..1" />
+          <End Role="Load_History" Type="Self.Load_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Data_Source">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load_History">
+              <PropertyRef Name="Data_Source_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Load_History_Document">
+          <End Role="Document" Type="Self.Document" Multiplicity="0..1" />
+          <End Role="Load_History" Type="Self.Load_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load_History">
+              <PropertyRef Name="Document_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Load_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Load_History" Type="Self.Load_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Login_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Login_History" Type="Self.Login_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Login_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Request_Request_Status">
+          <End Role="Request_Status" Type="Self.Request_Status" Multiplicity="0..1" />
+          <End Role="Registration_Request" Type="Self.Registration_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Registration_Request">
+              <PropertyRef Name="Request_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Request_User_Role">
+          <End Role="User_Role" Type="Self.User_Role" Multiplicity="0..1" />
+          <End Role="Registration_Request" Type="Self.Registration_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Registration_Request">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_Report_Type">
+          <End Role="Report_Type" Type="Self.Report_Type" Multiplicity="0..1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Report_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="Repoort_Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User_Role">
+          <End Role="User_Role" Type="Self.User_Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User_Status">
+          <End Role="User_Status" Type="Self.User_Status" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ANALYS_SYSTEM_DBModelContainer">
+          <EntitySet Name="Change_History" EntityType="Self.Change_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Data_Source" EntityType="Self.Data_Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document_Status" EntityType="Self.Document_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document_Struct" EntityType="Self.Document_Struct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Document_Type" EntityType="Self.Document_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Load_History" EntityType="Self.Load_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login_History" EntityType="Self.Login_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report_Type" EntityType="Self.Report_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_Status" EntityType="Self.Request_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Role" EntityType="Self.User_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Status" EntityType="Self.User_Status" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Change_History_Document" Association="Self.FK_Change_History_Document">
+            <End Role="Document" EntitySet="Document" />
+            <End Role="Change_History" EntitySet="Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Change_History_User" Association="Self.FK_Change_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Change_History" EntitySet="Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Status" Association="Self.FK_Document_Document_Status">
+            <End Role="Document_Status" EntitySet="Document_Status" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Type" Association="Self.FK_Document_Document_Type">
+            <End Role="Document_Type" EntitySet="Document_Type" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Struct_Document_Type" Association="Self.FK_Document_Struct_Document_Type">
+            <End Role="Document_Type" EntitySet="Document_Type" />
+            <End Role="Document_Struct" EntitySet="Document_Struct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Load_History_Data_Source" Association="Self.FK_Load_History_Data_Source">
+            <End Role="Data_Source" EntitySet="Data_Source" />
+            <End Role="Load_History" EntitySet="Load_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Load_History_Document" Association="Self.FK_Load_History_Document">
+            <End Role="Document" EntitySet="Document" />
+            <End Role="Load_History" EntitySet="Load_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Load_History_User" Association="Self.FK_Load_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Load_History" EntitySet="Load_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Login_History_User" Association="Self.FK_Login_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Login_History" EntitySet="Login_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Request_Request_Status" Association="Self.FK_Registration_Request_Request_Status">
+            <End Role="Request_Status" EntitySet="Request_Status" />
+            <End Role="Registration_Request" EntitySet="Registration_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Request_User_Role" Association="Self.FK_Registration_Request_User_Role">
+            <End Role="User_Role" EntitySet="User_Role" />
+            <End Role="Registration_Request" EntitySet="Registration_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_Report_Type" Association="Self.FK_Report_Report_Type">
+            <End Role="Report_Type" EntitySet="Report_Type" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User_Role" Association="Self.FK_User_User_Role">
+            <End Role="User_Role" EntitySet="User_Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User_Status" Association="Self.FK_User_User_Status">
+            <End Role="User_Status" EntitySet="User_Status" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ANALYS_SYSTEM_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Change_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Change_Date" Type="DateTime" Precision="3" />
+          <Property Name="Old_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="New_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Reason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="User_ID" Type="Int32" />
+          <Property Name="Document_ID" Type="Int32" />
+          <NavigationProperty Name="Document" Relationship="Self.FK_Change_History_Document" FromRole="Change_History" ToRole="Document" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Change_History_User" FromRole="Change_History" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Data_Source">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Load_History" Relationship="Self.FK_Load_History_Data_Source" FromRole="Data_Source" ToRole="Load_History" />
+        </EntityType>
+        <EntityType Name="Document">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status_ID" Type="Int32" />
+          <Property Name="Type_ID" Type="Int32" />
+          <NavigationProperty Name="Change_History" Relationship="Self.FK_Change_History_Document" FromRole="Document" ToRole="Change_History" />
+          <NavigationProperty Name="Document_Status" Relationship="Self.FK_Document_Document_Status" FromRole="Document" ToRole="Document_Status" />
+          <NavigationProperty Name="Document_Type" Relationship="Self.FK_Document_Document_Type" FromRole="Document" ToRole="Document_Type" />
+          <NavigationProperty Name="Load_History" Relationship="Self.FK_Load_History_Document" FromRole="Document" ToRole="Load_History" />
+        </EntityType>
+        <EntityType Name="Document_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Document" Relationship="Self.FK_Document_Document_Status" FromRole="Document_Status" ToRole="Document" />
+        </EntityType>
+        <EntityType Name="Document_Struct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Attributes_List" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Type_ID" Type="Int32" />
+          <NavigationProperty Name="Document_Type" Relationship="Self.FK_Document_Struct_Document_Type" FromRole="Document_Struct" ToRole="Document_Type" />
+        </EntityType>
+        <EntityType Name="Document_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Document" Relationship="Self.FK_Document_Document_Type" FromRole="Document_Type" ToRole="Document" />
+          <NavigationProperty Name="Document_Struct" Relationship="Self.FK_Document_Struct_Document_Type" FromRole="Document_Type" ToRole="Document_Struct" />
+        </EntityType>
+        <EntityType Name="Load_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Source_File_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="User_ID" Type="Int32" />
+          <Property Name="Document_ID" Type="Int32" />
+          <Property Name="Data_Source_ID" Type="Int32" />
+          <NavigationProperty Name="Data_Source" Relationship="Self.FK_Load_History_Data_Source" FromRole="Load_History" ToRole="Data_Source" />
+          <NavigationProperty Name="Document" Relationship="Self.FK_Load_History_Document" FromRole="Load_History" ToRole="Document" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Load_History_User" FromRole="Load_History" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Login_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Login_History_User" FromRole="Login_History" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Registration_Request">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Request_Status_ID" Type="Int32" />
+          <Property Name="Role_ID" Type="Int32" />
+          <NavigationProperty Name="Request_Status" Relationship="Self.FK_Registration_Request_Request_Status" FromRole="Registration_Request" ToRole="Request_Status" />
+          <NavigationProperty Name="User_Role" Relationship="Self.FK_Registration_Request_User_Role" FromRole="Registration_Request" ToRole="User_Role" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Repoort_Type_ID" Type="Int32" />
+          <Property Name="Document_ID" Type="Int32" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="Report_Type" Relationship="Self.FK_Report_Report_Type" FromRole="Report" ToRole="Report_Type" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Report_User" FromRole="Report" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Report_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Report" Relationship="Self.FK_Report_Report_Type" FromRole="Report_Type" ToRole="Report" />
+        </EntityType>
+        <EntityType Name="Request_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Registration_Request" Relationship="Self.FK_Registration_Request_Request_Status" FromRole="Request_Status" ToRole="Registration_Request" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_date" Type="DateTime" Precision="3" />
+          <Property Name="Role_ID" Type="Int32" />
+          <Property Name="User_Status_ID" Type="Int32" />
+          <NavigationProperty Name="Change_History" Relationship="Self.FK_Change_History_User" FromRole="User" ToRole="Change_History" />
+          <NavigationProperty Name="Load_History" Relationship="Self.FK_Load_History_User" FromRole="User" ToRole="Load_History" />
+          <NavigationProperty Name="Login_History" Relationship="Self.FK_Login_History_User" FromRole="User" ToRole="Login_History" />
+          <NavigationProperty Name="Report" Relationship="Self.FK_Report_User" FromRole="User" ToRole="Report" />
+          <NavigationProperty Name="User_Role" Relationship="Self.FK_User_User_Role" FromRole="User" ToRole="User_Role" />
+          <NavigationProperty Name="User_Status" Relationship="Self.FK_User_User_Status" FromRole="User" ToRole="User_Status" />
+        </EntityType>
+        <EntityType Name="User_Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Registration_Request" Relationship="Self.FK_Registration_Request_User_Role" FromRole="User_Role" ToRole="Registration_Request" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_User_Role" FromRole="User_Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_User_Status" FromRole="User_Status" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Change_History_Document">
+          <End Role="Document" Type="Self.Document" Multiplicity="0..1" />
+          <End Role="Change_History" Type="Self.Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Change_History">
+              <PropertyRef Name="Document_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Change_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Change_History" Type="Self.Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Change_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Load_History_Data_Source">
+          <End Role="Data_Source" Type="Self.Data_Source" Multiplicity="0..1" />
+          <End Role="Load_History" Type="Self.Load_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Data_Source">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load_History">
+              <PropertyRef Name="Data_Source_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Status">
+          <End Role="Document_Status" Type="Self.Document_Status" Multiplicity="0..1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Document_Type">
+          <End Role="Document_Type" Type="Self.Document_Type" Multiplicity="0..1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Load_History_Document">
+          <End Role="Document" Type="Self.Document" Multiplicity="0..1" />
+          <End Role="Load_History" Type="Self.Load_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load_History">
+              <PropertyRef Name="Document_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Struct_Document_Type">
+          <End Role="Document_Type" Type="Self.Document_Type" Multiplicity="0..1" />
+          <End Role="Document_Struct" Type="Self.Document_Struct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Document_Struct">
+              <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Load_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Load_History" Type="Self.Load_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Load_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Login_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Login_History" Type="Self.Login_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Login_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Request_Request_Status">
+          <End Role="Request_Status" Type="Self.Request_Status" Multiplicity="0..1" />
+          <End Role="Registration_Request" Type="Self.Registration_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Request_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Registration_Request">
+              <PropertyRef Name="Request_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Registration_Request_User_Role">
+          <End Role="User_Role" Type="Self.User_Role" Multiplicity="0..1" />
+          <End Role="Registration_Request" Type="Self.Registration_Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Registration_Request">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_Report_Type">
+          <End Role="Report_Type" Type="Self.Report_Type" Multiplicity="0..1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Report_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="Repoort_Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Report_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User_Role">
+          <End Role="User_Role" Type="Self.User_Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Role_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User_Status">
+          <End Role="User_Status" Type="Self.User_Status" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Change_History" EntityType="Self.Change_History" />
+          <EntitySet Name="Data_Source" EntityType="Self.Data_Source" />
+          <EntitySet Name="Document" EntityType="Self.Document" />
+          <EntitySet Name="Document_Status" EntityType="Self.Document_Status" />
+          <EntitySet Name="Document_Struct" EntityType="Self.Document_Struct" />
+          <EntitySet Name="Document_Type" EntityType="Self.Document_Type" />
+          <EntitySet Name="Load_History" EntityType="Self.Load_History" />
+          <EntitySet Name="Login_History" EntityType="Self.Login_History" />
+          <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" />
+          <EntitySet Name="Report" EntityType="Self.Report" />
+          <EntitySet Name="Report_Type" EntityType="Self.Report_Type" />
+          <EntitySet Name="Request_Status" EntityType="Self.Request_Status" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="User_Role" EntityType="Self.User_Role" />
+          <EntitySet Name="User_Status" EntityType="Self.User_Status" />
+          <AssociationSet Name="FK_Change_History_Document" Association="Self.FK_Change_History_Document">
+            <End Role="Document" EntitySet="Document" />
+            <End Role="Change_History" EntitySet="Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Change_History_User" Association="Self.FK_Change_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Change_History" EntitySet="Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Load_History_Data_Source" Association="Self.FK_Load_History_Data_Source">
+            <End Role="Data_Source" EntitySet="Data_Source" />
+            <End Role="Load_History" EntitySet="Load_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Status" Association="Self.FK_Document_Document_Status">
+            <End Role="Document_Status" EntitySet="Document_Status" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Document_Type" Association="Self.FK_Document_Document_Type">
+            <End Role="Document_Type" EntitySet="Document_Type" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Load_History_Document" Association="Self.FK_Load_History_Document">
+            <End Role="Document" EntitySet="Document" />
+            <End Role="Load_History" EntitySet="Load_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Struct_Document_Type" Association="Self.FK_Document_Struct_Document_Type">
+            <End Role="Document_Type" EntitySet="Document_Type" />
+            <End Role="Document_Struct" EntitySet="Document_Struct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Load_History_User" Association="Self.FK_Load_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Load_History" EntitySet="Load_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Login_History_User" Association="Self.FK_Login_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Login_History" EntitySet="Login_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Request_Request_Status" Association="Self.FK_Registration_Request_Request_Status">
+            <End Role="Request_Status" EntitySet="Request_Status" />
+            <End Role="Registration_Request" EntitySet="Registration_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Registration_Request_User_Role" Association="Self.FK_Registration_Request_User_Role">
+            <End Role="User_Role" EntitySet="User_Role" />
+            <End Role="Registration_Request" EntitySet="Registration_Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_Report_Type" Association="Self.FK_Report_Report_Type">
+            <End Role="Report_Type" EntitySet="Report_Type" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User_Role" Association="Self.FK_User_User_Role">
+            <End Role="User_Role" EntitySet="User_Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User_Status" Association="Self.FK_User_User_Status">
+            <End Role="User_Status" EntitySet="User_Status" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ANALYS_SYSTEM_DBModelContainer" CdmEntityContainer="Database">
+          <EntitySetMapping Name="Change_History">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Change_History">
+              <MappingFragment StoreEntitySet="Change_History">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Change_Date" ColumnName="Change_Date" />
+                <ScalarProperty Name="Old_Value" ColumnName="Old_Value" />
+                <ScalarProperty Name="New_Value" ColumnName="New_Value" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Document_ID" ColumnName="Document_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Data_Source">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Data_Source">
+              <MappingFragment StoreEntitySet="Data_Source">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Document">
+              <MappingFragment StoreEntitySet="Document">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Type_ID" ColumnName="Type_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document_Status">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Document_Status">
+              <MappingFragment StoreEntitySet="Document_Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document_Struct">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Document_Struct">
+              <MappingFragment StoreEntitySet="Document_Struct">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Attributes_List" ColumnName="Attributes_List" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="Type_ID" ColumnName="Type_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Document_Type">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Document_Type">
+              <MappingFragment StoreEntitySet="Document_Type">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Load_History">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Load_History">
+              <MappingFragment StoreEntitySet="Load_History">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Source_File_Name" ColumnName="Source_File_Name" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Document_ID" ColumnName="Document_ID" />
+                <ScalarProperty Name="Data_Source_ID" ColumnName="Data_Source_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Login_History">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Login_History">
+              <MappingFragment StoreEntitySet="Login_History">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Registration_Request">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Registration_Request">
+              <MappingFragment StoreEntitySet="Registration_Request">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="Request_Status_ID" ColumnName="Request_Status_ID" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Report">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="Repoort_Type_ID" ColumnName="Repoort_Type_ID" />
+                <ScalarProperty Name="Document_ID" ColumnName="Document_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Report_Type">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Report_Type">
+              <MappingFragment StoreEntitySet="Report_Type">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_Status">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Request_Status">
+              <MappingFragment StoreEntitySet="Request_Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="User_Status_ID" ColumnName="User_Status_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Role">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.User_Role">
+              <MappingFragment StoreEntitySet="User_Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Status">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.User_Status">
+              <MappingFragment StoreEntitySet="User_Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
