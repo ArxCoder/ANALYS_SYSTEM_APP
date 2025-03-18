@@ -185,5 +185,72 @@
                 </Button>
             </StackPanel>
         </Border>
+
+        <Border x:Name="Reg_Modal_Form" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" BorderThickness="1"
+                CornerRadius="10" Background="White" Visibility="Hidden">
+            <StackPanel Orientation="Vertical" Margin="10,20,10,20">
+                <TextBlock x:Name="Close_Modal_Reg" HorizontalAlignment="Right" Width="30" Height="30" Text="✖" MouseLeftButtonDown="Close_Modal_Reg_MouseLeftButtonDown"/>
+                <TextBlock Text="Регистрация" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+
+                <TextBlock Text="Имя" FontSize="24" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                <TextBox x:Name="Reg_Name_Input" Width="300" Height="30" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Margin="0,10,0,0">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <TextBlock Text="Фамилия" FontSize="24" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                <TextBox x:Name="Reg_Surname_Input" Width="300" Height="30" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Margin="0,10,0,0">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <TextBlock Text="Отчество" FontSize="24" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                <TextBox x:Name="Reg_Lastname_Input" Width="300" Height="30" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Margin="0,10,0,0">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <TextBlock Text="Логин" FontSize="24" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                <TextBox x:Name="Reg_Login_Input" Width="300" Height="30" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Margin="0,10,0,0">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <TextBlock Text="Пароль" FontSize="24" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                <TextBox x:Name="Reg_Password_Input" Width="300" Height="30" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Margin="0,10,0,0">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <Button x:Name="Reg" Width="300" Height="35" Content="Регистрация" FontSize="24" FontWeight="Bold"
+           HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,50,0,0">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

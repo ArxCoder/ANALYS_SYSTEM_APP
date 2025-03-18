@@ -57,20 +57,42 @@ namespace ANALYS_SYSTEM_APP
         private void Enter_BTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Появление модального окна при нажатии на надпись войти
+            if (Reg_Modal_Form.Visibility == Visibility.Visible)
+            {
+                MessageBox.Show("Для авторизации закройте форму регистрации", "Уведомление", MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+                return;
+            }
             Auth_Modal_Form.Visibility = Visibility.Visible;
         }
 
         private void Reg_BTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Нажатие на кнопку зарегистрироваться
-            MessageBox.Show("Для регистрации обратитесь лично к администратору или заполните форму ниже.", "Регистрация",
+            MessageBoxResult MB_Dialog_Result = MessageBox.Show("Для регистрации обратитесь лично к администратору или заполните форму ниже.", "Регистрация",
                 MessageBoxButton.OKCancel, MessageBoxImage.Information);
+
+            if (MB_Dialog_Result == MessageBoxResult.Cancel)
+                return;
+
+            if (Auth_Modal_Form.Visibility == Visibility.Visible)
+            {
+                MessageBox.Show("Для регистрации закройте форму авторизации", "Уведомление", MessageBoxButton.OK, 
+                    MessageBoxImage.Exclamation);
+                return;
+            }
+
+            Reg_Modal_Form.Visibility = Visibility.Visible;
         }
 
         private void Close_Modal_Auth_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Закрытие модального окна авторизации при нажатии на крестик
             Auth_Modal_Form.Visibility = Visibility.Hidden;
+
+            //Очистка полей формы
+            Auth_Login_Input.Text = string.Empty;
+            Auth_Password_Input.Text = string.Empty;
         }
 
         private void Git_IMG_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -89,6 +111,19 @@ namespace ANALYS_SYSTEM_APP
         {
             //Переход по ссылке на VK
             Process.Start(new ProcessStartInfo(Vk_Url) { UseShellExecute = true });
+        }
+
+        private void Close_Modal_Reg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Закрытие модального окна заявки на регистрацию
+            Reg_Modal_Form.Visibility = Visibility.Hidden;
+
+            //Очистка полей формы
+            Reg_Name_Input.Text = string.Empty;
+            Reg_Surname_Input.Text = string.Empty;
+            Reg_Lastname_Input.Text = string.Empty;
+            Reg_Login_Input.Text = string.Empty;
+            Reg_Password_Input.Text = string.Empty;
         }
     }
 }
