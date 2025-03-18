@@ -230,11 +230,13 @@ namespace ANALYS_SYSTEM_APP
                     return;
                 }
 
+                //Хеш текущего пароля
                 byte[] CurrentPassBytes = Encoding.UTF8.GetBytes(Password);
                 byte[] CurrentPassHash = sha256.ComputeHash(CurrentPassBytes);
 
                 string Current_Pass = Convert.ToBase64String(CurrentPassHash);
 
+                //Сравнения хеша пароля пользователя и текущего
                 if (!String.Equals(Current_Pass, seleced_User.Password))
                 {
                     MessageBox.Show(
@@ -246,13 +248,17 @@ namespace ANALYS_SYSTEM_APP
                     return;
                 }
 
+                //Определение рабочей формы по роли пользователя
                 switch (seleced_User.Role_ID)
                 {
                     case 1:
+                        //Форма пользователя
                         break;
                     case 2:
+                        //Форма сотрудника
                         break;
                     case 3:
+                        //Форма администратора
                         break;
                 }
             }
