@@ -34,6 +34,11 @@
             <Grid>
                 <TextBlock x:Name="Username" FontSize="24" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" TextDecorations="Underline"/>
 
+                <StackPanel Orientation="Vertical" Width="200" Margin="0,10,200,0" HorizontalAlignment="Right">
+                    <TextBlock x:Name="CurrentDate" FontSize="24" HorizontalAlignment="Right"/>
+                    <TextBlock x:Name="CurrentTime" FontSize="20" HorizontalAlignment="Right"/>
+                </StackPanel>
+
                 <Image x:Name="Logout" HorizontalAlignment="Right" Margin="0,0,20,0" Cursor="Hand"
                        VerticalAlignment="Center" Source="\Resources\Logout.png" MouseLeftButtonDown="Logout_MouseLeftButtonDown">
                     <Image.RenderTransform>
@@ -52,7 +57,7 @@
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+        <Border Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
             <StackPanel Orientation="Vertical" Margin="20">
                 <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
                     <StackPanel Orientation="Vertical" Margin="5">

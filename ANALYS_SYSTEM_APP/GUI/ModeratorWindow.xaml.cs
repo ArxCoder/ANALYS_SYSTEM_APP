@@ -22,16 +22,28 @@ namespace ANALYS_SYSTEM_APP.GUI
     {
         Database database = new Database();
         DispatcherTimer RequestInfo_Timer = new DispatcherTimer();
+        DispatcherTimer CurrentTimer = new DispatcherTimer();
         User current_User;
         public ModeratorWindow(User current_User)
         {
             InitializeComponent();
             this.current_User = current_User;
             Username.Text = $"{current_User.User_Role.Name}: {current_User.Surname} {current_User.Name} {current_User.Lastname}";
+
+            CurrentDate.Text = DateTime.Now.ToShortDateString();
+            CurrentTimer.Tick += CurrentTimer_Tick;
+            CurrentTimer.Interval = TimeSpan.FromSeconds(1);
+            CurrentTimer.Start();
+
             SetRequestInfo();
             RequestInfo_Timer.Tick += RequestInfo_Timer_Tick;
             RequestInfo_Timer.Interval = TimeSpan.FromSeconds(20);
             RequestInfo_Timer.Start();
+        }
+
+        private void CurrentTimer_Tick(object sender, EventArgs e)
+        {
+            CurrentTime.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
         private void RequestInfo_Timer_Tick(object sender, EventArgs e)
