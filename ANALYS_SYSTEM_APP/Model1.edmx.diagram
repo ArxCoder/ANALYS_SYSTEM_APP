@@ -36,6 +36,8 @@
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Report_User" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Role" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Status" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Organisation_News" Width="1.5" PointX="8.25" PointY="0.75" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

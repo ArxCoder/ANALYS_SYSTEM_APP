@@ -21,6 +21,7 @@ namespace ANALYS_SYSTEM_APP
             this.Load_History = new HashSet<Load_History>();
             this.Login_History = new HashSet<Login_History>();
             this.Report = new HashSet<Report>();
+            this.Organisation_News = new HashSet<Organisation_News>();
         }
     
         public int ID { get; set; }
@@ -44,5 +45,7 @@ namespace ANALYS_SYSTEM_APP
         public virtual ICollection<Report> Report { get; set; }
         public virtual User_Role User_Role { get; set; }
         public virtual User_Status User_Status { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Organisation_News> Organisation_News { get; set; }
     }
 }

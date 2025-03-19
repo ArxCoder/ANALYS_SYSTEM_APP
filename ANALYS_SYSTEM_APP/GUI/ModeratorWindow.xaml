@@ -120,5 +120,89 @@
                 </Border>
             </StackPanel>
         </Border>
+
+        <TextBlock FontSize="24" FontWeight="Bold" Text="Новости организации" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
+        <ListView x:Name="News_List" Height="800" Grid.Row="1" HorizontalAlignment="Center" Margin="0,50,0,0"
+                  VerticalAlignment="Top" BorderThickness="0">
+            <ListView.Resources>
+                <!-- Переопределяем стиль ListViewItem -->
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Focusable" Value="False"/>
+                    <!-- Позволяет кликать на элементы -->
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border Background="{TemplateBinding Background}" Padding="2">
+                                    <ContentPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.Resources>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                        <StackPanel Orientation="Vertical" Margin="10,30,10,30">
+                            <TextBlock Text="{Binding Path=Name}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" TextWrapping="Wrap" Width="400"/>
+                            <TextBlock Text="{Binding Path=Description}" HorizontalAlignment="Stretch" Width="400" Margin="0,10,0,10" 
+                                       FontSize="20" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding Path=Creation_Date, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="18" HorizontalAlignment="Right"
+                                       FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="1" Margin="0,0,10,0">
+            <TextBlock Text="Дни рождения" Grid.Row="1" HorizontalAlignment="Center" FontWeight="Bold"
+                       FontSize="24" Margin="0,10,0,0"/>
+            <ListView x:Name="Users_Birth_List" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0"
+          Grid.Row="1" BorderThickness="0" Height="800">
+                <ListView.Resources>
+                    <!-- Переопределяем стиль ListViewItem -->
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <!-- Позволяет кликать на элементы -->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border Background="{TemplateBinding Background}" Padding="2">
+                                        <ContentPresenter/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="0,20,0,20">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="20" Width="400" HorizontalAlignment="Stretch" TextWrapping="Wrap" Margin="10">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                            <Binding Path="Surname"/>
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Lastname"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock Text="{Binding Path=Birth, StringFormat='{}{0:dd:MM:yyyy}'}" FontSize="20" HorizontalAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        
     </Grid>
 </Window>

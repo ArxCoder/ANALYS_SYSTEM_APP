@@ -103,6 +103,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Organisation_News.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Registration_Request.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

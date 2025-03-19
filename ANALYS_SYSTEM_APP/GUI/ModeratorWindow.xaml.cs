@@ -25,6 +25,9 @@ namespace ANALYS_SYSTEM_APP.GUI
         DispatcherTimer RequestInfo_Timer = new DispatcherTimer();
         //Таймер для отображения текущего времени
         DispatcherTimer CurrentTimer = new DispatcherTimer();
+        //Таймер для обновления новостей
+        DispatcherTimer RefreshNews = new DispatcherTimer();
+
         //Передача на форму авторизованного пользователя
         User current_User;
         public ModeratorWindow(User current_User)
@@ -45,6 +48,24 @@ namespace ANALYS_SYSTEM_APP.GUI
             RequestInfo_Timer.Tick += RequestInfo_Timer_Tick;
             RequestInfo_Timer.Interval = TimeSpan.FromSeconds(20);
             RequestInfo_Timer.Start();
+
+            //Загрузка новостей
+            setNews();
+            RefreshNews.Tick += RefreshNews_Tick;
+            RefreshNews.Interval = TimeSpan.FromMinutes(5);
+            RefreshNews.Start();
+        }
+
+        private void RefreshNews_Tick(object sender, EventArgs e)
+        {
+            setNews();
+        }
+
+        private void setNews()
+        {
+            News_List.ItemsSource = null;
+            News_List.Items.Clear();
+            News_List.ItemsSource = database.Organisation_News.ToList().OrderByDescending(on => on.Creation_Date);
         }
 
         //Получение текущего времени

@@ -78,6 +78,16 @@
           <Property Name="Date" Type="datetime" />
           <Property Name="User_ID" Type="int" />
         </EntityType>
+        <EntityType Name="Organisation_News">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Creation_Date" Type="datetime" />
+          <Property Name="User_ID" Type="int" />
+        </EntityType>
         <EntityType Name="Registration_Request">
           <Key>
             <PropertyRef Name="ID" />
@@ -264,6 +274,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Organisation_News_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Organisation_News" Type="Self.Organisation_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Organisation_News">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Registration_Request_Request_Status">
           <End Role="Request_Status" Type="Self.Request_Status" Multiplicity="0..1" />
           <End Role="Registration_Request" Type="Self.Registration_Request" Multiplicity="*" />
@@ -345,6 +367,7 @@
           <EntitySet Name="Document_Type" EntityType="Self.Document_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Load_History" EntityType="Self.Load_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login_History" EntityType="Self.Login_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Organisation_News" EntityType="Self.Organisation_News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report_Type" EntityType="Self.Report_Type" Schema="dbo" store:Type="Tables" />
@@ -388,6 +411,10 @@
           <AssociationSet Name="FK_Login_History_User" Association="Self.FK_Login_History_User">
             <End Role="User" EntitySet="User" />
             <End Role="Login_History" EntitySet="Login_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organisation_News_User" Association="Self.FK_Organisation_News_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Organisation_News" EntitySet="Organisation_News" />
           </AssociationSet>
           <AssociationSet Name="FK_Registration_Request_Request_Status" Association="Self.FK_Registration_Request_Request_Status">
             <End Role="Request_Status" EntitySet="Request_Status" />
@@ -581,6 +608,7 @@
           <NavigationProperty Name="User_Role" Relationship="Self.FK_User_User_Role" FromRole="User" ToRole="User_Role" />
           <NavigationProperty Name="User_Status" Relationship="Self.FK_User_User_Status" FromRole="User" ToRole="User_Status" />
           <Property Name="Birth" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Organisation_News" Relationship="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" FromRole="User" ToRole="Organisation_News" />
         </EntityType>
         <EntityType Name="User_Role">
           <Key>
@@ -856,7 +884,35 @@
             <End Role="User_Status" EntitySet="User_Status" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
+          <EntitySet Name="Organisation_News" EntityType="ANALYS_SYSTEM_DBModel.Organisation_News" />
+          <AssociationSet Name="FK_Organisation_News_User" Association="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Organisation_News" EntitySet="Organisation_News" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Organisation_News">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" FromRole="Organisation_News" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Organisation_News_User">
+          <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ANALYS_SYSTEM_DBModel.Organisation_News" Role="Organisation_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Organisation_News">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1027,6 +1083,17 @@
               <MappingFragment StoreEntitySet="User_Status">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organisation_News">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Organisation_News">
+              <MappingFragment StoreEntitySet="Organisation_News">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
