@@ -32,6 +32,7 @@ namespace ANALYS_SYSTEM_APP
         public Nullable<System.DateTime> Creation_date { get; set; }
         public Nullable<int> Role_ID { get; set; }
         public Nullable<int> User_Status_ID { get; set; }
+        public Nullable<System.DateTime> Birth { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Change_History> Change_History { get; set; }

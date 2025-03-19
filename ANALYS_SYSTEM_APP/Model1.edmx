@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище ANALYS_SYSTEM_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище ANALYS_SYSTEM_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Change_History">
           <Key>
             <PropertyRef Name="ID" />
@@ -91,6 +91,7 @@
           <Property Name="Creation_Date" Type="datetime" />
           <Property Name="Request_Status_ID" Type="int" />
           <Property Name="Role_ID" Type="int" />
+          <Property Name="Birth" Type="date" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -139,6 +140,7 @@
           <Property Name="Creation_date" Type="datetime" />
           <Property Name="Role_ID" Type="int" />
           <Property Name="User_Status_ID" Type="int" />
+          <Property Name="Birth" Type="date" />
         </EntityType>
         <EntityType Name="User_Role">
           <Key>
@@ -412,8 +414,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ANALYS_SYSTEM_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -520,6 +521,7 @@
           <Property Name="Role_ID" Type="Int32" />
           <NavigationProperty Name="Request_Status" Relationship="Self.FK_Registration_Request_Request_Status" FromRole="Registration_Request" ToRole="Request_Status" />
           <NavigationProperty Name="User_Role" Relationship="Self.FK_Registration_Request_User_Role" FromRole="Registration_Request" ToRole="User_Role" />
+          <Property Name="Birth" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -578,6 +580,7 @@
           <NavigationProperty Name="Report" Relationship="Self.FK_Report_User" FromRole="User" ToRole="Report" />
           <NavigationProperty Name="User_Role" Relationship="Self.FK_User_User_Role" FromRole="User" ToRole="User_Role" />
           <NavigationProperty Name="User_Status" Relationship="Self.FK_User_User_Status" FromRole="User" ToRole="User_Status" />
+          <Property Name="Birth" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="User_Role">
           <Key>
@@ -944,6 +947,7 @@
           <EntitySetMapping Name="Registration_Request">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Registration_Request">
               <MappingFragment StoreEntitySet="Registration_Request">
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -997,6 +1001,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />

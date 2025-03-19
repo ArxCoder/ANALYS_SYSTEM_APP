@@ -128,6 +128,7 @@ namespace ANALYS_SYSTEM_APP
             Reg_Lastname_Input.Text = string.Empty;
             Reg_Login_Input.Text = string.Empty;
             Reg_Password_Input.Text = string.Empty;
+            Reg_Bith_Select.Text = string.Empty;
         }
 
         //Обработка нажатия кнопки Регистрация
@@ -139,7 +140,8 @@ namespace ANALYS_SYSTEM_APP
                 String.Equals(Reg_Surname_Input.Text, String.Empty) ||
                 String.Equals(Reg_Lastname_Input.Text, String.Empty) ||
                 String.Equals(Reg_Login_Input.Text, String.Empty) ||
-                String.Equals(Reg_Password_Input.Text, String.Empty)
+                String.Equals(Reg_Password_Input.Text, String.Empty) ||
+                String.Equals(Reg_Bith_Select.Text, String.Empty)
                 )
             {
                 MessageBox.Show("Для создания заявки на регистрацию заполните все поля.", "Ошибка регистрации", MessageBoxButton.OK,
@@ -152,6 +154,17 @@ namespace ANALYS_SYSTEM_APP
             string Lastname = Reg_Lastname_Input.Text;
             string Login = Reg_Login_Input.Text;
             string Password = Reg_Password_Input.Text;
+            DateTime Date = (DateTime)Reg_Bith_Select.SelectedDate;
+            double time = DateTime.Today.Subtract(Date).TotalDays;
+
+            if ((time / 365) < 18 || (time / 365) > 70)
+            {
+                MessageBox.Show("Возраст должен входить в рамки от 18 до 70 лет",
+                    "Ошибка регистрации", MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+                return;
+            }
+
             try
             {
                 //Проверка на существование пользователя с таким же логином
@@ -181,7 +194,8 @@ namespace ANALYS_SYSTEM_APP
                     Password = HeshedPassword,
                     Creation_Date = DateTime.Now,
                     Request_Status_ID = 1,
-                    Role_ID = 1
+                    Role_ID = 1,
+                    Birth = Date
                 };
 
                 database.Registration_Request.Add(registration_Request);

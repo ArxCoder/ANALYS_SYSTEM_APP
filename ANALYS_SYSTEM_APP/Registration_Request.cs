@@ -23,6 +23,7 @@ namespace ANALYS_SYSTEM_APP
         public Nullable<System.DateTime> Creation_Date { get; set; }
         public Nullable<int> Request_Status_ID { get; set; }
         public Nullable<int> Role_ID { get; set; }
+        public Nullable<System.DateTime> Birth { get; set; }
     
         public virtual Request_Status Request_Status { get; set; }
         public virtual User_Role User_Role { get; set; }
