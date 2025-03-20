@@ -84,6 +84,50 @@
 
                                 <TextBlock Text="{Binding Path=Login}" FontSize="20" Margin="5,5,5,10"/>
                                 <TextBlock Text="{Binding Path=Creation_Date, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="20" Margin="5,5,5,10"/>
+                                <TextBlock Text="{Binding Path=Request_Status.Name}" FontSize="20" Margin="5,5,5,10"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top"
+                    Grid.Row="1" Margin="0,50,0,0">
+            <TextBlock Text="Список заявок на регистрацию" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,0,0,30"/>
+            <ListView x:Name="New_Registration_Request_List" BorderBrush="Black"
+                      BorderThickness="1" Height="750">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem x:Name="Accept_Request" Header="Одобрить" Click="Accept_Request_Click"/>
+                        <MenuItem x:Name="Decline_Request" Header="Отклонить" Click="Decline_Request_Click"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10">
+                            <StackPanel Orientation="Vertical" Margin="5,5,5,10" Width="400">
+                                <TextBlock FontSize="20" Margin="5,5,5,10" Width="400" TextWrapping="Wrap">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                            <Binding Path="Surname"/>
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Lastname"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <TextBlock Text="{Binding Path=Login}" FontSize="20" Margin="5,5,5,10"/>
+                                <TextBlock Text="{Binding Path=Creation_Date, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="20" Margin="5,5,5,10"/>
+                                <TextBlock Text="{Binding Path=Request_Status.Name}" FontSize="20" Margin="5,5,5,10"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
@@ -91,6 +135,38 @@
             </ListView>
         </StackPanel>
         
-        
+        <Border x:Name="Decline_Modal" Background="White" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center"
+                VerticalAlignment="Top" Grid.Row="1" Width="400" Height="300" CornerRadius="10" Margin="0,50,0,0" Visibility="Hidden">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <TextBlock Text="Причина отклонения заявки" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+
+                <TextBox x:Name="Decline_Reason" Width="390" HorizontalAlignment="Center" FontSize="20" Margin="0,10,0,0" TextWrapping="Wrap"
+                         Height="150">
+                    <TextBox.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <Button x:Name="Decline_Request_BTN" Width="400" Height="30" HorizontalAlignment="Center" Margin="0,20,0,0"
+                        Content="Отклонить" FontSize="20" FontWeight="Bold" Click="Decline_Request_BTN_Click">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button x:Name="Decline_Request_Cancel" Width="400" Height="30" HorizontalAlignment="Center" Margin="0,20,0,0"
+                    Content="Отменить" FontSize="20" FontWeight="Bold" Click="Decline_Request_Cancel_Click">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

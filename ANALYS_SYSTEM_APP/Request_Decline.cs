@@ -17,7 +17,9 @@ namespace ANALYS_SYSTEM_APP
         public int ID { get; set; }
         public Nullable<int> Registration_Request_ID { get; set; }
         public string Decline_Reason { get; set; }
+        public Nullable<int> User_ID { get; set; }
     
         public virtual Registration_Request Registration_Request { get; set; }
+        public virtual User User { get; set; }
     }
 }

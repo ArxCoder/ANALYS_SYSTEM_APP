@@ -40,6 +40,7 @@
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" />
         <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Request_Decline" Width="1.5" PointX="5.25" PointY="1.875" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

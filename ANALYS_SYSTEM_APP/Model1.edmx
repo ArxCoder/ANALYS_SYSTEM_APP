@@ -127,6 +127,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Registration_Request_ID" Type="int" />
           <Property Name="Decline_Reason" Type="nvarchar(max)" />
+          <Property Name="User_ID" Type="int" />
         </EntityType>
         <EntityType Name="Request_Status">
           <Key>
@@ -354,6 +355,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Request_Decline_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Request_Decline" Type="Self.Request_Decline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Request_Decline">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_User_Role">
           <End Role="User_Role" Type="Self.User_Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -455,6 +468,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Request_Decline_Registration_Request" Association="Self.FK_Request_Decline_Registration_Request">
             <End Role="Registration_Request" EntitySet="Registration_Request" />
+            <End Role="Request_Decline" EntitySet="Request_Decline" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Decline_User" Association="Self.FK_Request_Decline_User">
+            <End Role="User" EntitySet="User" />
             <End Role="Request_Decline" EntitySet="Request_Decline" />
           </AssociationSet>
           <AssociationSet Name="FK_User_User_Role" Association="Self.FK_User_User_Role">
@@ -635,6 +652,7 @@
           <NavigationProperty Name="User_Status" Relationship="Self.FK_User_User_Status" FromRole="User" ToRole="User_Status" />
           <Property Name="Birth" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Organisation_News" Relationship="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" FromRole="User" ToRole="Organisation_News" />
+          <NavigationProperty Name="Request_Decline" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" FromRole="User" ToRole="Request_Decline" />
         </EntityType>
         <EntityType Name="User_Role">
           <Key>
@@ -920,6 +938,10 @@
             <End Role="Registration_Request" EntitySet="Registration_Request" />
             <End Role="Request_Decline" EntitySet="Request_Decline" />
           </AssociationSet>
+          <AssociationSet Name="FK_Request_Decline_User" Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Request_Decline" EntitySet="Request_Decline" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Organisation_News">
           <Key>
@@ -952,6 +974,8 @@
           <Property Name="Registration_Request_ID" Type="Int32" />
           <Property Name="Decline_Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Registration_Request" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" FromRole="Request_Decline" ToRole="Registration_Request" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" FromRole="Request_Decline" ToRole="User" />
         </EntityType>
         <Association Name="FK_Request_Decline_Registration_Request">
           <End Type="ANALYS_SYSTEM_DBModel.Registration_Request" Role="Registration_Request" Multiplicity="0..1" />
@@ -962,6 +986,18 @@
             </Principal>
             <Dependent Role="Request_Decline">
               <PropertyRef Name="Registration_Request_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Decline_User">
+          <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ANALYS_SYSTEM_DBModel.Request_Decline" Role="Request_Decline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Request_Decline">
+              <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1152,6 +1188,7 @@
           <EntitySetMapping Name="Request_Decline">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Request_Decline">
               <MappingFragment StoreEntitySet="Request_Decline">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Decline_Reason" ColumnName="Decline_Reason" />
                 <ScalarProperty Name="Registration_Request_ID" ColumnName="Registration_Request_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
