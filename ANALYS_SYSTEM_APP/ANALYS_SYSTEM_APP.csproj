@@ -89,6 +89,9 @@
     <Compile Include="GUI\ModeratorActions\RegistrationRequestList.xaml.cs">
       <DependentUpon>RegistrationRequestList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ModeratorActions\UserList.xaml.cs">
+      <DependentUpon>UserList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ModeratorWindow.xaml.cs">
       <DependentUpon>ModeratorWindow.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="GUI\ModeratorActions\RegistrationRequestList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ModeratorActions\UserList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

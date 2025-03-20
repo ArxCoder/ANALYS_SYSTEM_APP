@@ -117,5 +117,12 @@ namespace ANALYS_SYSTEM_APP.GUI
             registrationRequestList.Show();
             this.Close();
         }
+
+        private void Check_User_List_Click(object sender, RoutedEventArgs e)
+        {
+            UserList userList = new UserList(this.current_User);
+            userList.Show();
+            this.Close();
+        }
     }
 }
