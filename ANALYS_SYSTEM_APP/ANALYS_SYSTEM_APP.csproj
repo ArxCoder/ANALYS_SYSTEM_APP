@@ -86,6 +86,9 @@
     <Compile Include="Document_Type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ModeratorActions\RegistrationRequestList.xaml.cs">
+      <DependentUpon>RegistrationRequestList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ModeratorWindow.xaml.cs">
       <DependentUpon>ModeratorWindow.xaml</DependentUpon>
     </Compile>
@@ -142,6 +145,10 @@
       <DependentUpon>Main.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="GUI\ModeratorActions\RegistrationRequestList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ModeratorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,10 +231,12 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\return.png" />
     <Resource Include="Resources\logout.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using ANALYS_SYSTEM_APP.GUI.ModeratorActions;
 
 namespace ANALYS_SYSTEM_APP.GUI
 {
@@ -54,6 +55,8 @@ namespace ANALYS_SYSTEM_APP.GUI
             RefreshNews.Tick += RefreshNews_Tick;
             RefreshNews.Interval = TimeSpan.FromMinutes(5);
             RefreshNews.Start();
+
+            Users_Birth_List.ItemsSource = database.User.ToList();
         }
 
         private void RefreshNews_Tick(object sender, EventArgs e)
@@ -106,6 +109,13 @@ namespace ANALYS_SYSTEM_APP.GUI
             {
                 Registration_Request_Count.Text = "У вас пока нет необработанных заявок на регистрацию.";
             }
+        }
+
+        private void Check_Request_List_Click(object sender, RoutedEventArgs e)
+        {
+            RegistrationRequestList registrationRequestList = new RegistrationRequestList(this.current_User);
+            registrationRequestList.Show();
+            this.Close();
         }
     }
 }
