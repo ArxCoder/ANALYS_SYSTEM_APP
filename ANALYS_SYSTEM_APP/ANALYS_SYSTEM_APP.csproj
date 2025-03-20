@@ -118,6 +118,9 @@
     <Compile Include="Report_Type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Request_Decline.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Request_Status.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

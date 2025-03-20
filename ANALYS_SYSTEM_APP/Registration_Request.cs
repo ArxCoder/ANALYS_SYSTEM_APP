@@ -14,6 +14,12 @@ namespace ANALYS_SYSTEM_APP
     
     public partial class Registration_Request
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Registration_Request()
+        {
+            this.Request_Decline = new HashSet<Request_Decline>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -27,5 +33,7 @@ namespace ANALYS_SYSTEM_APP
     
         public virtual Request_Status Request_Status { get; set; }
         public virtual User_Role User_Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Request_Decline> Request_Decline { get; set; }
     }
 }

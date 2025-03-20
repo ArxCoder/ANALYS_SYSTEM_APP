@@ -55,5 +55,42 @@
                 </Image>
             </Grid>
         </Border>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,50,0,0"
+                    Grid.Row="1">
+            <TextBlock Text="Список старых заявок на регистрацию" FontSize="24" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,0,0,30"/>
+
+            <ListView x:Name="Old_Registration_Request_List" BorderBrush="Black" BorderThickness="1" Height="750">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock FontSize="20" Margin="5,5,5,10" Width="400" TextWrapping="Wrap">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                            <Binding Path="Surname"/>
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Lastname"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <TextBlock Text="{Binding Path=Login}" FontSize="20" Margin="5,5,5,10"/>
+                                <TextBlock Text="{Binding Path=Creation_Date, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="20" Margin="5,5,5,10"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        
+        
     </Grid>
 </Window>

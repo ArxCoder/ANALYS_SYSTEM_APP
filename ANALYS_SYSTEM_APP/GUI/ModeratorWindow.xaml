@@ -195,7 +195,7 @@
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
-                                <TextBlock Text="{Binding Path=Birth, StringFormat='{}{0:dd:MM:yyyy}'}" FontSize="20" HorizontalAlignment="Right"
+                                <TextBlock Text="{Binding Path=Birth, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="20" HorizontalAlignment="Right"
                                            TextWrapping="Wrap"/>
                             </StackPanel>
                         </Border>

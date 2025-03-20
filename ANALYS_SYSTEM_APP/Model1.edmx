@@ -120,6 +120,14 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Request_Decline">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Registration_Request_ID" Type="int" />
+          <Property Name="Decline_Reason" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Request_Status">
           <Key>
             <PropertyRef Name="ID" />
@@ -334,6 +342,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Request_Decline_Registration_Request">
+          <End Role="Registration_Request" Type="Self.Registration_Request" Multiplicity="0..1" />
+          <End Role="Request_Decline" Type="Self.Request_Decline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registration_Request">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Request_Decline">
+              <PropertyRef Name="Registration_Request_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_User_Role">
           <End Role="User_Role" Type="Self.User_Role" Multiplicity="0..1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -371,6 +391,7 @@
           <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report_Type" EntityType="Self.Report_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request_Decline" EntityType="Self.Request_Decline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Request_Status" EntityType="Self.Request_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -431,6 +452,10 @@
           <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
             <End Role="User" EntitySet="User" />
             <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Decline_Registration_Request" Association="Self.FK_Request_Decline_Registration_Request">
+            <End Role="Registration_Request" EntitySet="Registration_Request" />
+            <End Role="Request_Decline" EntitySet="Request_Decline" />
           </AssociationSet>
           <AssociationSet Name="FK_User_User_Role" Association="Self.FK_User_User_Role">
             <End Role="User_Role" EntitySet="User_Role" />
@@ -549,6 +574,7 @@
           <NavigationProperty Name="Request_Status" Relationship="Self.FK_Registration_Request_Request_Status" FromRole="Registration_Request" ToRole="Request_Status" />
           <NavigationProperty Name="User_Role" Relationship="Self.FK_Registration_Request_User_Role" FromRole="Registration_Request" ToRole="User_Role" />
           <Property Name="Birth" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Request_Decline" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" FromRole="Registration_Request" ToRole="Request_Decline" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -889,6 +915,11 @@
             <End Role="User" EntitySet="User" />
             <End Role="Organisation_News" EntitySet="Organisation_News" />
           </AssociationSet>
+          <EntitySet Name="Request_Decline" EntityType="ANALYS_SYSTEM_DBModel.Request_Decline" />
+          <AssociationSet Name="FK_Request_Decline_Registration_Request" Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request">
+            <End Role="Registration_Request" EntitySet="Registration_Request" />
+            <End Role="Request_Decline" EntitySet="Request_Decline" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Organisation_News">
           <Key>
@@ -910,6 +941,27 @@
             </Principal>
             <Dependent Role="Organisation_News">
               <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Request_Decline">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Registration_Request_ID" Type="Int32" />
+          <Property Name="Decline_Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Registration_Request" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" FromRole="Request_Decline" ToRole="Registration_Request" />
+        </EntityType>
+        <Association Name="FK_Request_Decline_Registration_Request">
+          <End Type="ANALYS_SYSTEM_DBModel.Registration_Request" Role="Registration_Request" Multiplicity="0..1" />
+          <End Type="ANALYS_SYSTEM_DBModel.Request_Decline" Role="Request_Decline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Registration_Request">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Request_Decline">
+              <PropertyRef Name="Registration_Request_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1093,6 +1145,15 @@
                 <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request_Decline">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Request_Decline">
+              <MappingFragment StoreEntitySet="Request_Decline">
+                <ScalarProperty Name="Decline_Reason" ColumnName="Decline_Reason" />
+                <ScalarProperty Name="Registration_Request_ID" ColumnName="Registration_Request_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

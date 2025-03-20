@@ -24,6 +24,8 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
         Database database = new Database();
         //Таймер для отображения текущего времени
         DispatcherTimer CurrentTimer = new DispatcherTimer();
+        //Таймер для обновления списков заявок на регистрацию
+        DispatcherTimer RefreshLists = new DispatcherTimer();
         User current_User;
         public RegistrationRequestList(User currentUser)
         {
@@ -36,6 +38,24 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             CurrentTimer.Tick += CurrentTimer_Tick;
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
+
+            RefreshRequestLists();
+            //Установка информации о списках заявок на регистрацию
+            RefreshLists.Interval = TimeSpan.FromMinutes(5);
+            RefreshLists.Tick += RefreshLists_Tick;
+            RefreshLists.Start();
+        }
+
+        private void RefreshLists_Tick(object sender, EventArgs e)
+        {
+            RefreshRequestLists();
+        }
+
+        private void RefreshRequestLists()
+        {
+            Old_Registration_Request_List.ItemsSource = null;
+            Old_Registration_Request_List.Items.Clear();
+            Old_Registration_Request_List.ItemsSource = database.Registration_Request.Where(rr => rr.Request_Status_ID != 1).ToList();
         }
 
         //Получение текущего времени
