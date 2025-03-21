@@ -52,5 +52,13 @@ namespace ANALYS_SYSTEM_APP.GUI.ReporterActions
             reporterWindow.Show();
             this.Close();
         }
+
+        private void News_List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Organisation_News selected_news = News_List.SelectedItem as Organisation_News;
+
+            News_Name.Text = selected_news.Name;
+            News_Description.Text = selected_news.Description;
+        }
     }
 }
