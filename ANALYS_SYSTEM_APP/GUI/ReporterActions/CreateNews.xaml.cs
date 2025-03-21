@@ -36,12 +36,21 @@ namespace ANALYS_SYSTEM_APP.GUI.ReporterActions
             CurrentTimer.Tick += CurrentTimer_Tick;
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
+
+            News_List.ItemsSource = database.Organisation_News.ToList();
         }
 
         //Получение текущего времени
         private void CurrentTimer_Tick(object sender, EventArgs e)
         {
             CurrentTime.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private void Return_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ReporterWindow reporterWindow = new ReporterWindow(this.current_User);
+            reporterWindow.Show();
+            this.Close();
         }
     }
 }

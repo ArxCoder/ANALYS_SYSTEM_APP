@@ -40,8 +40,8 @@
                     <TextBlock x:Name="CurrentTime" FontSize="20" HorizontalAlignment="Right"/>
                 </StackPanel>
 
-                <Image x:Name="Logout" HorizontalAlignment="Right" Margin="0,0,20,0" Cursor="Hand"
-               VerticalAlignment="Center" Source="\Resources\Logout.png" MouseLeftButtonDown="Logout_MouseLeftButtonDown">
+                <Image x:Name="Return" HorizontalAlignment="Right" Margin="0,0,20,0" Cursor="Hand"
+               VerticalAlignment="Center" Source="\Resources\return.png" MouseLeftButtonDown="Return_MouseLeftButtonDown">
                     <Image.RenderTransform>
                         <ScaleTransform ScaleX="1" ScaleY="1"/>
                     </Image.RenderTransform>
@@ -57,5 +57,39 @@
                 </Image>
             </Grid>
         </Border>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Margin="10,50,0,0">
+            <TextBlock Text="Список новостей" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <ListView x:Name="News_List" BorderBrush="Black" BorderThickness="1" Height="700" Width="500">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Width="400" HorizontalAlignment="Center" Margin="40,10,10,0">
+                            <StackPanel Orientation="Vertical" Margin="10">
+                                <TextBlock FontSize="20" HorizontalAlignment="Left" FontWeight="Bold" TextWrapping="Wrap" Margin="5,5,5,10" Text="{Binding Path=Name}"/>
+                                <TextBlock FontSize="20" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5,5,5,10" Text="{Binding Path=Description}"/>
+                                <TextBlock FontSize="20" HorizontalAlignment="Right" TextWrapping="Wrap" Margin="5,5,5,10">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                            <Binding Path="User.Surname"/>
+                                            <Binding Path="User.Name"/>
+                                            <Binding Path="User.Lastname"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <TextBlock FontSize="20" HorizontalAlignment="Right" TextWrapping="Wrap" Margin="5,5,5,10" Text="{Binding Path=Creation_Date,
+                                    StringFormat='{}{0:dd.MM.yyyy}'}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
     </Grid>
 </Window>

@@ -79,7 +79,7 @@ namespace ANALYS_SYSTEM_APP.GUI.ReporterActions
             }
         }
 
-        private void Create_News_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Create_News_Click(object sender, RoutedEventArgs e)
         {
             CreateNews createNews = new CreateNews(current_User);
             createNews.Show();
