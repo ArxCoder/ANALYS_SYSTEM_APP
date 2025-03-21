@@ -95,6 +95,12 @@
     <Compile Include="GUI\ModeratorWindow.xaml.cs">
       <DependentUpon>ModeratorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ReporterActions\CreateNews.xaml.cs">
+      <DependentUpon>CreateNews.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ReporterActions\ReporterWindow.xaml.cs">
+      <DependentUpon>ReporterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
@@ -163,6 +169,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\ModeratorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ReporterActions\CreateNews.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ReporterActions\ReporterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

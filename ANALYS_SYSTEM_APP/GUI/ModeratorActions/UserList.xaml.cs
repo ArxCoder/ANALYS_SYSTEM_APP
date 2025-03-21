@@ -38,7 +38,10 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
 
+            //Установка информации в список пользователей
             Users_List.ItemsSource = database.User.ToList();
+
+            //Заполнение ComboBox данными
             User_Role.ItemsSource = database.User_Role.ToList();
             User_Status.ItemsSource = database.User_Status.ToList();
         }
@@ -49,6 +52,7 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             CurrentTime.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
+        //Обработка нажатия кнопки Return
         private void Return_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ModeratorWindow moderatorWindow = new ModeratorWindow(this.current_User);
@@ -56,6 +60,7 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             this.Close();
         }
 
+        //Обработка нажатия на элемент списка пользователей
         private void Users_List_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (Users_List.SelectedItem == null)
@@ -71,17 +76,20 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
                 return;
             }
 
+            //Заполнение информации о пользователе
             User_Name.Text = selected_User.Name;
             User_Surname.Text = selected_User.Surname;
             User_Lastname.Text = selected_User.Lastname;
             User_Status.SelectedItem = selected_User.User_Status;
             User_Role.SelectedItem = selected_User.User_Role;
 
+            //Заполнение истории входа пользователя в систему
             User_Login_History.ItemsSource = null;
             User_Login_History.Items.Clear();
             User_Login_History.ItemsSource = database.Login_History.Where(lh => lh.User_ID == selected_User.ID).ToList().OrderByDescending(lh => lh.Date);
         }
 
+        //Обработка сохранения измненений данных пользователя
         private void Save_User_Changes_Click(object sender, RoutedEventArgs e)
         {
             if (Users_List.SelectedItem == null)
@@ -104,17 +112,20 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
                 return;
             }
 
+            //Изменение информации о пользователе
             selected_User.Name = User_Name.Text;
             selected_User.Surname = User_Surname.Text;
             selected_User.Lastname = User_Lastname.Text;
             selected_User.User_Role = User_Role.SelectedItem as User_Role;
             selected_User.User_Status = User_Status.SelectedItem as User_Status;
 
+            //Сохранение изменений
             database.User.AddOrUpdate(selected_User);
             database.SaveChanges();
 
             MessageBox.Show("Изменения сохранены");
 
+            //Изменение информации в списке пользователей
             Users_List.ItemsSource = null;
             Users_List.Items.Clear();
             Users_List.ItemsSource = database.User.ToList();

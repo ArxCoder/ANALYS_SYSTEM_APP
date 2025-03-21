@@ -1,4 +1,5 @@
 ﻿using ANALYS_SYSTEM_APP.GUI;
+using ANALYS_SYSTEM_APP.GUI.ReporterActions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -310,6 +311,12 @@ namespace ANALYS_SYSTEM_APP
                         //Форма администратора
                         ModeratorWindow moderatorWindow = new ModeratorWindow(seleced_User);
                         moderatorWindow.Show();
+                        this.Close();
+                        break;
+                    case 4:
+                        //Форма репортера
+                        ReporterWindow reporterWindow = new ReporterWindow(seleced_User);
+                        reporterWindow.Show();
                         this.Close();
                         break;
                 }
