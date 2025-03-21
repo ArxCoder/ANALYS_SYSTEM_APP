@@ -57,5 +57,114 @@
                 </Image>
             </Grid>
         </Border>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0"
+                    Grid.Row="1">
+            <TextBlock Text="Список пользователей" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,10"
+                       FontSize="24" FontWeight="Bold"/>
+
+            <ListView x:Name="Users_List" Height="700" HorizontalAlignment="Center" Width="500" BorderBrush="Black" BorderThickness="1" MouseDoubleClick="Users_List_MouseDoubleClick">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListView.Resources>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10" HorizontalAlignment="Center" Width="450">
+                            <StackPanel Margin="5">
+                                <TextBlock FontSize="20" Margin="5,5,5,10" TextWrapping="Wrap">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} {1} {2}">
+                                            <Binding Path="Surname"/>
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Lastname"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <TextBlock Text="{Binding Path=Login}" FontSize="20" Margin="5,5,5,10" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding Path=Birth, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="20" Margin="5,5,5,10" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding Path=User_Role.Name}" Margin="5,5,5,10" TextWrapping="Wrap" FontSize="20"/>
+                                <TextBlock Text="{Binding Path=User_Status.Name}" Margin="5,5,5,0" TextWrapping="Wrap" FontSize="20"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0"
+                    Grid.Row="1">
+            <TextBlock Text="Данные пользователя" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Имя" HorizontalAlignment="Left" FontSize="24" Margin="0,20,0,10"/>
+            <TextBox x:Name="User_Name" Width="400" Height="35" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Фамилия" HorizontalAlignment="Left" FontSize="24" Margin="0,20,0,10"/>
+            <TextBox x:Name="User_Surname" Width="400" Height="35" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Отчество" HorizontalAlignment="Left" FontSize="24" Margin="0,20,0,10"/>
+            <TextBox x:Name="User_Lastname" Width="400" Height="35" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Должность" HorizontalAlignment="Left" FontSize="24" Margin="0,20,0,10"/>
+            <ComboBox x:Name="User_Role" Width="400" Height="35" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                      DisplayMemberPath="Name"/>
+
+            <TextBlock Text="Статус" HorizontalAlignment="Left" FontSize="24" Margin="0,20,0,10"/>
+            <ComboBox x:Name="User_Status" Width="400" Height="35" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                      DisplayMemberPath="Name"/>
+
+            <Button x:Name="Save_User_Changes" Width="400" Height="40" Content="Сохранить изменения" FontSize="20" FontWeight="Bold"
+                    Margin="0,50,0,0" Click="Save_User_Changes_Click"> 
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="1" Margin="0,50,20,0">
+            <TextBlock Text="История входа пользователя" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"
+                       Margin="0,0,0,10"/>
+            <ListView x:Name="User_Login_History" Height="700" Width="500" BorderBrush="Black" BorderThickness="1">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListView.Resources>
+                
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                            <StackPanel Orientation="Vertical" Margin="10">
+                                <TextBlock Text="{Binding Path=Date}" FontSize="20" HorizontalAlignment="Left" Width="400" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding Path=Login_Status.Name}" FontSize="20" HorizontalAlignment="Left" Width="400" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
     </Grid>
 </Window>

@@ -251,6 +251,13 @@ namespace ANALYS_SYSTEM_APP
 
                 string Current_Pass = Convert.ToBase64String(CurrentPassHash);
 
+                Login_History login_History = new Login_History()
+                {
+                    Date = DateTime.Now,
+                    User_ID = seleced_User.ID,
+                    Login_Status_ID = 1
+                };
+
                 //Сравнения хеша пароля пользователя и текущего
                 if (!String.Equals(Current_Pass, seleced_User.Password))
                 {
@@ -260,15 +267,26 @@ namespace ANALYS_SYSTEM_APP
                         MessageBoxButton.OK,
                         MessageBoxImage.Exclamation);
 
+                    login_History.Login_Status_ID = 2;
+
+                    database.Login_History.Add(login_History);
+                    database.SaveChanges();
+
                     return;
                 }
 
-                Login_History login_History = new Login_History()
+                if (seleced_User.User_Status_ID == 3)
                 {
-                    Date = DateTime.Now,
-                    User_ID = seleced_User.ID
-                };
+                    MessageBox.Show("Ваша учетная запись заблокирована администратором, обратитесь к нему для решения проблемы.",
+                        "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
 
+                    login_History.Login_Status_ID = 3;
+
+                    database.Login_History.Add(login_History);
+                    database.SaveChanges();
+
+                    return;
+                }                
 
                 database.Login_History.Add(login_History);
                 database.SaveChanges();

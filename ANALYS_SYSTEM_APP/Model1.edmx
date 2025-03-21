@@ -77,6 +77,14 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" />
           <Property Name="User_ID" Type="int" />
+          <Property Name="Login_Status_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Login_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Organisation_News">
           <Key>
@@ -271,6 +279,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Login_History_Login_Status">
+          <End Role="Login_Status" Type="Self.Login_Status" Multiplicity="0..1" />
+          <End Role="Login_History" Type="Self.Login_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Login_History">
+              <PropertyRef Name="Login_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Login_History_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Login_History" Type="Self.Login_History" Multiplicity="*" />
@@ -400,6 +420,7 @@
           <EntitySet Name="Document_Type" EntityType="Self.Document_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Load_History" EntityType="Self.Load_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login_History" EntityType="Self.Login_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login_Status" EntityType="Self.Login_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organisation_News" EntityType="Self.Organisation_News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
@@ -441,6 +462,10 @@
           <AssociationSet Name="FK_Load_History_User" Association="Self.FK_Load_History_User">
             <End Role="User" EntitySet="User" />
             <End Role="Load_History" EntitySet="Load_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Login_History_Login_Status" Association="Self.FK_Login_History_Login_Status">
+            <End Role="Login_Status" EntitySet="Login_Status" />
+            <End Role="Login_History" EntitySet="Login_History" />
           </AssociationSet>
           <AssociationSet Name="FK_Login_History_User" Association="Self.FK_Login_History_User">
             <End Role="User" EntitySet="User" />
@@ -574,6 +599,8 @@
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_Login_History_User" FromRole="Login_History" ToRole="User" />
+          <Property Name="Login_Status_ID" Type="Int32" />
+          <NavigationProperty Name="Login_Status" Relationship="ANALYS_SYSTEM_DBModel.FK_Login_History_Login_Status" FromRole="Login_History" ToRole="Login_Status" />
         </EntityType>
         <EntityType Name="Registration_Request">
           <Key>
@@ -942,6 +969,11 @@
             <End Role="User" EntitySet="User" />
             <End Role="Request_Decline" EntitySet="Request_Decline" />
           </AssociationSet>
+          <EntitySet Name="Login_Status" EntityType="ANALYS_SYSTEM_DBModel.Login_Status" />
+          <AssociationSet Name="FK_Login_History_Login_Status" Association="ANALYS_SYSTEM_DBModel.FK_Login_History_Login_Status">
+            <End Role="Login_Status" EntitySet="Login_Status" />
+            <End Role="Login_History" EntitySet="Login_History" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Organisation_News">
           <Key>
@@ -998,6 +1030,26 @@
             </Principal>
             <Dependent Role="Request_Decline">
               <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Login_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Login_History" Relationship="ANALYS_SYSTEM_DBModel.FK_Login_History_Login_Status" FromRole="Login_Status" ToRole="Login_History" />
+        </EntityType>
+        <Association Name="FK_Login_History_Login_Status">
+          <End Type="ANALYS_SYSTEM_DBModel.Login_Status" Role="Login_Status" Multiplicity="0..1" />
+          <End Type="ANALYS_SYSTEM_DBModel.Login_History" Role="Login_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Login_History">
+              <PropertyRef Name="Login_Status_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1082,6 +1134,7 @@
           <EntitySetMapping Name="Login_History">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Login_History">
               <MappingFragment StoreEntitySet="Login_History">
+                <ScalarProperty Name="Login_Status_ID" ColumnName="Login_Status_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
@@ -1191,6 +1244,14 @@
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Decline_Reason" ColumnName="Decline_Reason" />
                 <ScalarProperty Name="Registration_Request_ID" ColumnName="Registration_Request_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Login_Status">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Login_Status">
+              <MappingFragment StoreEntitySet="Login_Status">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

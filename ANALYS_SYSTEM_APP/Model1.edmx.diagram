@@ -41,6 +41,8 @@
         <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Request_Decline" Width="1.5" PointX="5.25" PointY="1.875" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Login_Status" Width="1.5" PointX="10.375" PointY="0.875" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Login_History_Login_Status" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,14 +12,18 @@ namespace ANALYS_SYSTEM_APP
     using System;
     using System.Collections.Generic;
     
-    public partial class Login_History
+    public partial class Login_Status
     {
-        public int ID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> User_ID { get; set; }
-        public Nullable<int> Login_Status_ID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Login_Status()
+        {
+            this.Login_History = new HashSet<Login_History>();
+        }
     
-        public virtual User User { get; set; }
-        public virtual Login_Status Login_Status { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Login_History> Login_History { get; set; }
     }
 }
