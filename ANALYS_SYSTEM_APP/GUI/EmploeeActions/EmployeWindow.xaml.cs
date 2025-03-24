@@ -80,5 +80,10 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                 this.Close();
             }
         }
+
+        private void Load_Doc_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
