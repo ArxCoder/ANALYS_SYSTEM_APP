@@ -86,6 +86,9 @@
     <Compile Include="Document_Type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="GUI\EmploeeActions\EmployeWindow.xaml.cs">
+      <DependentUpon>EmployeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ModeratorActions\RegistrationRequestList.xaml.cs">
       <DependentUpon>RegistrationRequestList.xaml</DependentUpon>
     </Compile>
@@ -101,8 +104,8 @@
     <Compile Include="GUI\ReporterActions\ReporterWindow.xaml.cs">
       <DependentUpon>ReporterWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UserWindow.xaml.cs">
-      <DependentUpon>UserWindow.xaml</DependentUpon>
+    <Compile Include="GUI\User_Actions\User_Window.xaml.cs">
+      <DependentUpon>User_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="Load_History.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -116,6 +119,9 @@
     <Compile Include="Model1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="News_Change_History.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Organisation_News.cs">
@@ -148,6 +154,10 @@
     <Compile Include="User_Status.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Page Include="GUI\EmploeeActions\EmployeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Main.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -180,7 +190,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\UserWindow.xaml">
+    <Page Include="GUI\User_Actions\User_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,22 +12,16 @@ namespace ANALYS_SYSTEM_APP
     using System;
     using System.Collections.Generic;
     
-    public partial class Organisation_News
+    public partial class News_Change_History
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Organisation_News()
-        {
-            this.News_Change_History = new HashSet<News_Change_History>();
-        }
-    
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<System.DateTime> Creation_Date { get; set; }
         public Nullable<int> User_ID { get; set; }
+        public Nullable<int> News_ID { get; set; }
+        public string Old_Value { get; set; }
+        public string New_Value { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     
+        public virtual Organisation_News Organisation_News { get; set; }
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<News_Change_History> News_Change_History { get; set; }
     }
 }

@@ -12,19 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ANALYS_SYSTEM_APP.GUI
+namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
 {
     /// <summary>
-    /// Логика взаимодействия для UserWindow.xaml
+    /// Логика взаимодействия для EmployeWindow.xaml
     /// </summary>
-    public partial class UserWindow : Window
+    public partial class EmployeWindow : Window
     {
         User current_User;
-        public UserWindow(User current_User)
+
+        public EmployeWindow(User current_user)
         {
             InitializeComponent();
-            this.current_User = current_User;
-            Username.Text = $"{current_User.User_Role.Name}: {current_User.Surname} {current_User.Name} {current_User.Lastname}";
+            this.current_User = current_user;
         }
     }
 }

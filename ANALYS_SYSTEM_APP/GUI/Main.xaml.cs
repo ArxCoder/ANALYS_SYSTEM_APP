@@ -1,5 +1,7 @@
 ﻿using ANALYS_SYSTEM_APP.GUI;
+using ANALYS_SYSTEM_APP.GUI.EmploeeActions;
 using ANALYS_SYSTEM_APP.GUI.ReporterActions;
+using ANALYS_SYSTEM_APP.GUI.User_Actions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -297,14 +299,14 @@ namespace ANALYS_SYSTEM_APP
                 {
                     case 1:
                         //Форма пользователя
-                        UserWindow userWindow = new UserWindow(seleced_User);
+                        User_Window userWindow = new User_Window(seleced_User);
                         userWindow.Show();
                         this.Close();
                         break;
                     case 2:
                         //Форма сотрудника
-                        UserWindow userWindow_ = new UserWindow(seleced_User);
-                        userWindow_.Show();
+                        EmployeWindow employeWindow = new EmployeWindow(seleced_User);
+                        employeWindow.Show();
                         this.Close();
                         break;
                     case 3:

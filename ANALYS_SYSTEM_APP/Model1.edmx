@@ -86,6 +86,17 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="News_Change_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_ID" Type="int" />
+          <Property Name="News_ID" Type="int" />
+          <Property Name="Old_Value" Type="nvarchar(max)" />
+          <Property Name="New_Value" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
         <EntityType Name="Organisation_News">
           <Key>
             <PropertyRef Name="ID" />
@@ -303,6 +314,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_News_Change_History_Organisation_News">
+          <End Role="Organisation_News" Type="Self.Organisation_News" Multiplicity="0..1" />
+          <End Role="News_Change_History" Type="Self.News_Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organisation_News">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Change_History">
+              <PropertyRef Name="News_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Change_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="News_Change_History" Type="Self.News_Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Change_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Organisation_News_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Organisation_News" Type="Self.Organisation_News" Multiplicity="*" />
@@ -421,6 +456,7 @@
           <EntitySet Name="Load_History" EntityType="Self.Load_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login_History" EntityType="Self.Login_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Login_Status" EntityType="Self.Login_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News_Change_History" EntityType="Self.News_Change_History" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Organisation_News" EntityType="Self.Organisation_News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
@@ -470,6 +506,14 @@
           <AssociationSet Name="FK_Login_History_User" Association="Self.FK_Login_History_User">
             <End Role="User" EntitySet="User" />
             <End Role="Login_History" EntitySet="Login_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Change_History_Organisation_News" Association="Self.FK_News_Change_History_Organisation_News">
+            <End Role="Organisation_News" EntitySet="Organisation_News" />
+            <End Role="News_Change_History" EntitySet="News_Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Change_History_User" Association="Self.FK_News_Change_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="News_Change_History" EntitySet="News_Change_History" />
           </AssociationSet>
           <AssociationSet Name="FK_Organisation_News_User" Association="Self.FK_Organisation_News_User">
             <End Role="User" EntitySet="User" />
@@ -680,6 +724,7 @@
           <Property Name="Birth" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Organisation_News" Relationship="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" FromRole="User" ToRole="Organisation_News" />
           <NavigationProperty Name="Request_Decline" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" FromRole="User" ToRole="Request_Decline" />
+          <NavigationProperty Name="News_Change_History" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_User" FromRole="User" ToRole="News_Change_History" />
         </EntityType>
         <EntityType Name="User_Role">
           <Key>
@@ -974,6 +1019,15 @@
             <End Role="Login_Status" EntitySet="Login_Status" />
             <End Role="Login_History" EntitySet="Login_History" />
           </AssociationSet>
+          <EntitySet Name="News_Change_History" EntityType="ANALYS_SYSTEM_DBModel.News_Change_History" />
+          <AssociationSet Name="FK_News_Change_History_Organisation_News" Association="ANALYS_SYSTEM_DBModel.FK_News_Change_History_Organisation_News">
+            <End Role="Organisation_News" EntitySet="Organisation_News" />
+            <End Role="News_Change_History" EntitySet="News_Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Change_History_User" Association="ANALYS_SYSTEM_DBModel.FK_News_Change_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="News_Change_History" EntitySet="News_Change_History" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Organisation_News">
           <Key>
@@ -985,6 +1039,7 @@
           <Property Name="Creation_Date" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" />
           <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" FromRole="Organisation_News" ToRole="User" />
+          <NavigationProperty Name="News_Change_History" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_Organisation_News" FromRole="Organisation_News" ToRole="News_Change_History" />
         </EntityType>
         <Association Name="FK_Organisation_News_User">
           <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
@@ -1050,6 +1105,43 @@
             </Principal>
             <Dependent Role="Login_History">
               <PropertyRef Name="Login_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="News_Change_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" />
+          <Property Name="News_ID" Type="Int32" />
+          <NavigationProperty Name="Organisation_News" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_Organisation_News" FromRole="News_Change_History" ToRole="Organisation_News" />
+          <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_User" FromRole="News_Change_History" ToRole="User" />
+          <Property Name="Old_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="New_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_News_Change_History_Organisation_News">
+          <End Type="ANALYS_SYSTEM_DBModel.Organisation_News" Role="Organisation_News" Multiplicity="0..1" />
+          <End Type="ANALYS_SYSTEM_DBModel.News_Change_History" Role="News_Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organisation_News">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Change_History">
+              <PropertyRef Name="News_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Change_History_User">
+          <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="ANALYS_SYSTEM_DBModel.News_Change_History" Role="News_Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Change_History">
+              <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1252,6 +1344,18 @@
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Login_Status">
               <MappingFragment StoreEntitySet="Login_Status">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News_Change_History">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.News_Change_History">
+              <MappingFragment StoreEntitySet="News_Change_History">
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="New_Value" ColumnName="New_Value" />
+                <ScalarProperty Name="Old_Value" ColumnName="Old_Value" />
+                <ScalarProperty Name="News_ID" ColumnName="News_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

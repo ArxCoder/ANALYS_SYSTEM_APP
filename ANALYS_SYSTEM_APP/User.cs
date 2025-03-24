@@ -23,6 +23,7 @@ namespace ANALYS_SYSTEM_APP
             this.Report = new HashSet<Report>();
             this.Organisation_News = new HashSet<Organisation_News>();
             this.Request_Decline = new HashSet<Request_Decline>();
+            this.News_Change_History = new HashSet<News_Change_History>();
         }
     
         public int ID { get; set; }
@@ -50,5 +51,7 @@ namespace ANALYS_SYSTEM_APP
         public virtual ICollection<Organisation_News> Organisation_News { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request_Decline> Request_Decline { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<News_Change_History> News_Change_History { get; set; }
     }
 }

@@ -44,5 +44,6 @@ namespace ANALYS_SYSTEM_APP
         public virtual DbSet<Organisation_News> Organisation_News { get; set; }
         public virtual DbSet<Request_Decline> Request_Decline { get; set; }
         public virtual DbSet<Login_Status> Login_Status { get; set; }
+        public virtual DbSet<News_Change_History> News_Change_History { get; set; }
     }
 }
