@@ -83,7 +83,9 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
 
         private void Load_Doc_Click(object sender, RoutedEventArgs e)
         {
-
+            Load_Doc_Wnd load_Doc_Wnd = new Load_Doc_Wnd(current_User);
+            load_Doc_Wnd.Show();
+            this.Close();
         }
     }
 }
