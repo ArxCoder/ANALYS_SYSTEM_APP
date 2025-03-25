@@ -1,9 +1,13 @@
-﻿using Microsoft.Win32;
+﻿using CsvHelper.Configuration;
+using CsvHelper;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Style.XmlAccess;
+using OfficeOpenXml.Utils;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -84,16 +88,35 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = false;
-                openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx| CSV files (*.csv)|*.csv";
 
                 if (openFileDialog.ShowDialog() == false)
                 {
-                    MessageBox.Show("Для загрузки выберите Excel таблицу",
+                    MessageBox.Show("Для загрузки выберите Excel таблицу или CSV документ",
                         "Загрузка документа", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     return;
                 }
 
                 pathToSelectedFile = openFileDialog.FileName;
+
+                if (String.Equals(New_Doc_Src.Text, "CSV"))
+                {
+                    SaveFileAsCSV(openFileDialog);
+                    return;
+                }
+
+                if (!pathToSelectedFile.EndsWith(".xlsx"))
+                {
+                    MessageBox.Show("Выбран файл неверного формата", "Ошибка загрузки", 
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else if (pathToSelectedFile.EndsWith(".xlsx") && !String.Equals(New_Doc_Src.Text, "Excel"))
+                {
+                    MessageBox.Show("Неверно указано название источника данных", "Ошибка загрузки",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
                 Document_Type selectedType = New_Doc_Type.SelectedItem as Document_Type;
                 string AttributesList = database.Document_Struct.Where(ds => ds.Type_ID == selectedType.ID).Select(dt => dt.Attributes_List).FirstOrDefault();
@@ -168,6 +191,114 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                 }
 
                 return expectedHeaders.All(actualheaders.Contains) && actualheaders.All(expectedHeaders.Contains);
+            }
+        }
+
+        private void SaveFileAsCSV(OpenFileDialog openFileDialog)
+        {
+            if (!pathToSelectedFile.EndsWith(".csv"))
+            {
+                MessageBox.Show("Выбран файл неверного формата", "Ошибка загрузки",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else if (pathToSelectedFile.EndsWith(".csv") && !String.Equals(New_Doc_Src.Text, "CSV"))
+            {
+                MessageBox.Show("Неверно указано название источника данных", "Ошибка загрузки",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Document_Type selectedType = New_Doc_Type.SelectedItem as Document_Type;
+            string AttributesList = database.Document_Struct.Where(ds => ds.Type_ID == selectedType.ID).Select(dt => dt.Attributes_List).FirstOrDefault();
+            List<string> neededHeaders = JsonConvert.DeserializeObject<List<string>>(AttributesList);
+
+            if (ValidateCsvHeaders(pathToSelectedFile, neededHeaders))
+            {
+                if (File.Exists($"{pathToLoadedFiles}{openFileDialog.SafeFileName}"))
+                {
+                    MessageBox.Show("Файл с таким именем уже существует, переименуйте файл", "Ошибка загрузки",
+                        MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    return;
+                }
+
+                File.Copy(pathToSelectedFile, $"{pathToLoadedFiles}{openFileDialog.SafeFileName}");
+
+                Document newDocument = new Document()
+                {
+                    Date = DateTime.Now,
+                    Name = openFileDialog.SafeFileName,
+                    Status_ID = 1,
+                    Type_ID = selectedType.ID
+                };
+
+                database.Document.Add(newDocument);
+                database.SaveChanges();
+
+                Data_Source data_Source = New_Doc_Src.SelectedItem as Data_Source;
+
+                Load_History load_History = new Load_History()
+                {
+                    Source_File_Name = openFileDialog.FileName,
+                    Date = DateTime.Now,
+                    User_ID = current_User.ID,
+                    Document_ID = newDocument.ID,
+                    Data_Source_ID = data_Source.ID
+                };
+
+                database.Load_History.Add(load_History);
+                database.SaveChanges();
+                Refresh_Doc_List();
+                MessageBox.Show("Файл успешно загружен", "Загрузка файла",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Выбранный файл не соответствует структуре", "Ошибка загрузки",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        static Encoding DetectFileEncoding(string filePath)
+        {
+            using (var reader = new StreamReader(filePath, true))
+            {
+                reader.Peek();
+                return reader.CurrentEncoding;
+            }
+        }
+
+        static bool ValidateCsvHeaders(string filePath, List<string> expectedHeaders)
+        {
+            var encoding = DetectFileEncoding(filePath);
+
+            using (var reader = new StreamReader(filePath, encoding))
+            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Delimiter = ";",       // Разделитель - точка с запятой
+                TrimOptions = TrimOptions.Trim, // Убирает пробелы в начале и конце
+                IgnoreBlankLines = true // Игнорирует пустые строки
+            }))
+            {
+                csv.Read();
+                csv.ReadHeader(); // Читаем заголовки
+
+                var actualHeaders = csv.HeaderRecord?
+                    .Select(h => h.Replace("\"", "").Trim()) // Удаляем кавычки и пробелы
+                    .ToList() ?? new List<string>();
+
+                foreach (string header in expectedHeaders)
+                {
+                    MessageBox.Show($"Ожидаемые заголовки: {header}");
+                }
+
+                foreach (string header in actualHeaders)
+                {
+                    MessageBox.Show($"Актуальные заголовки: {header}");
+                }
+
+                return expectedHeaders.All(actualHeaders.Contains) && actualHeaders.All(expectedHeaders.Contains);
             }
         }
     }
