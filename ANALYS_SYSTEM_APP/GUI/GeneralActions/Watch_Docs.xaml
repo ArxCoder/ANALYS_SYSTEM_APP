@@ -57,5 +57,37 @@
                 </Image>
             </Grid>
         </Border>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,50,0,0">
+            <TextBlock Text="Список загруженных документов" FontSize="24" FontWeight="Bold"
+               HorizontalAlignment="Center" Margin="0,0,0,30"/>
+            <ListView x:Name="Loaded_Docs_Files"
+    BorderBrush="Black" BorderThickness="1" Width="500" Height="700" MouseDoubleClick="Loaded_Docs_Files_MouseDoubleClick">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="30,10,0,10" BorderBrush="Black" BorderThickness="1" Width="400" CornerRadius="10">
+                            <StackPanel Margin="5" Orientation="Vertical">
+                                <TextBlock Text="{Binding Path=Date}" FontSize="20" HorizontalAlignment="Right" Margin="0,5,0,5" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Path=Name}" FontSize="20" HorizontalAlignment="Left" Margin="0,5,0,5"/>
+                                <TextBlock Text="{Binding Path=Document_Status.Name}" FontSize="20" HorizontalAlignment="Left" Margin="0,5,0,5"/>
+                                <TextBlock Text="{Binding Path=Document_Type.Name}" FontSize="20" HorizontalAlignment="Left" Margin="0,5,0,5"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,50,0">
+            <TextBlock Text="Данные документа" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+            <DataGrid x:Name="Selected_Doc_Data" ItemsSource="{Binding DocumentData}" AutoGenerateColumns="False" Width="1100" Height="700" FontSize="16" MinRowHeight="20"/>
+        </StackPanel>
+        
     </Grid>
 </Window>

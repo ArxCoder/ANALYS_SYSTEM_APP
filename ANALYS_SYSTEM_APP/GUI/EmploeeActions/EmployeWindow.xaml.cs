@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ANALYS_SYSTEM_APP.GUI.GeneralActions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -85,6 +86,13 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
         {
             Load_Doc_Wnd load_Doc_Wnd = new Load_Doc_Wnd(current_User);
             load_Doc_Wnd.Show();
+            this.Close();
+        }
+
+        private void Watch_Doc_Click(object sender, RoutedEventArgs e)
+        {
+            Watch_Docs watch_Doc = new Watch_Docs(current_User);
+            watch_Doc.Show();
             this.Close();
         }
     }
