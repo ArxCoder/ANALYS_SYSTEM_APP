@@ -71,7 +71,7 @@
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="20" BorderBrush="Black" BorderThickness="1">
+                        <Border Margin="30,10,0,10" BorderBrush="Black" BorderThickness="1" Width="400" CornerRadius="10">
                             <StackPanel Margin="5" Orientation="Vertical">
                                 <TextBlock Text="{Binding Path=Date}" FontSize="20" HorizontalAlignment="Right" Margin="0,5,0,5" FontWeight="Bold"/>
                                 <TextBlock Text="{Binding Path=Name}" FontSize="20" HorizontalAlignment="Left" Margin="0,5,0,5"/>

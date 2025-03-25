@@ -276,16 +276,16 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             using (var reader = new StreamReader(filePath, encoding))
             using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                Delimiter = ";",       // Разделитель - точка с запятой
-                TrimOptions = TrimOptions.Trim, // Убирает пробелы в начале и конце
-                IgnoreBlankLines = true // Игнорирует пустые строки
+                Delimiter = ";",
+                TrimOptions = TrimOptions.Trim, 
+                IgnoreBlankLines = true 
             }))
             {
                 csv.Read();
-                csv.ReadHeader(); // Читаем заголовки
+                csv.ReadHeader();
 
                 var actualHeaders = csv.HeaderRecord?
-                    .Select(h => h.Replace("\"", "").Trim()) // Удаляем кавычки и пробелы
+                    .Select(h => h.Replace("\"", "").Trim())
                     .ToList() ?? new List<string>();
 
                 foreach (string header in expectedHeaders)

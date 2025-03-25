@@ -74,6 +74,22 @@
                         </Button>
                     </StackPanel>
                 </Border>
+
+                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                    <StackPanel Orientation="Vertical" Margin="5">
+                        <TextBlock Text="Просмотр документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Позволяет просматривать информацию из документов" 
+                   FontSize="20" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="400"/>
+                        <Button x:Name="Watch_Doc" Width="400" Height="30" Margin="0,10,0,0" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                    Content="Просмотреть">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </Border>
 

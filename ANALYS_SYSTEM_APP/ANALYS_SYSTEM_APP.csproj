@@ -136,6 +136,9 @@
     <Compile Include="GUI\EmploeeActions\Load_Doc_Wnd.xaml.cs">
       <DependentUpon>Load_Doc_Wnd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\GeneralActions\Watch_Docs.xaml.cs">
+      <DependentUpon>Watch_Docs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ModeratorActions\RegistrationRequestList.xaml.cs">
       <DependentUpon>RegistrationRequestList.xaml</DependentUpon>
     </Compile>
@@ -206,6 +209,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\EmploeeActions\Load_Doc_Wnd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\GeneralActions\Watch_Docs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
