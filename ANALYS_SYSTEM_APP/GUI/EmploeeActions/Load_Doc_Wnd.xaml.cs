@@ -33,7 +33,9 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
         Database database = new Database();
         //Таймер для отображения текущего времени
         DispatcherTimer CurrentTimer = new DispatcherTimer();
+        //Путь для сохранения всех новых документов
         private readonly string pathToLoadedFiles = $@"{System.IO.Directory.GetCurrentDirectory()}\FILES\";
+        //Путь до выбранного файла
         private string pathToSelectedFile;
         public Load_Doc_Wnd(User current_User)
         {
@@ -48,9 +50,11 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
 
+            //Загрузка информации в ComboBox
             New_Doc_Src.ItemsSource = database.Data_Source.ToList();
             New_Doc_Type.ItemsSource = database.Document_Type.ToList();
 
+            //Загрузка списка документов
             Refresh_Doc_List();
         }
 
@@ -67,6 +71,7 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             this.Close();
         }
 
+        //Функция загрузки списка документов
         private void Refresh_Doc_List()
         {
             Loaded_Docs_Files.ItemsSource = null;
@@ -74,8 +79,10 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             Loaded_Docs_Files.ItemsSource = database.Document.ToList();
         }
 
+        //Загрузка нового документа
         private void Load_New_Doc_Click(object sender, RoutedEventArgs e)
         {
+            //Валидация на пустые значения полей
             if (New_Doc_Src.SelectedItem is null ||
                 New_Doc_Type.SelectedItem is null)
             {
@@ -86,6 +93,7 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
 
             try
             {
+                //Выбор файла
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = false;
                 openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx| CSV files (*.csv)|*.csv";
@@ -99,12 +107,16 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
 
                 pathToSelectedFile = openFileDialog.FileName;
 
+                //Проверка на выбранный тип источника данных
+
+                //Обработка CSV формата
                 if (String.Equals(New_Doc_Src.Text, "CSV"))
                 {
                     SaveFileAsCSV(openFileDialog);
                     return;
                 }
 
+                //Обработка xlsx формата
                 if (!pathToSelectedFile.EndsWith(".xlsx"))
                 {
                     MessageBox.Show("Выбран файл неверного формата", "Ошибка загрузки", 
@@ -119,11 +131,14 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                 }
 
                 Document_Type selectedType = New_Doc_Type.SelectedItem as Document_Type;
+                //Получение списка необходимых заголовков в файле из БД
                 string AttributesList = database.Document_Struct.Where(ds => ds.Type_ID == selectedType.ID).Select(dt => dt.Attributes_List).FirstOrDefault();
                 List<string> neededHeaders = JsonConvert.DeserializeObject<List<string>>(AttributesList);
 
+                //Проверка на соответствие заголовков
                 if (ValidateExcelHeaders(neededHeaders, pathToSelectedFile))
                 {
+                    //Проверка на существование файла с таким же именем
                     if (File.Exists($"{pathToLoadedFiles}{openFileDialog.SafeFileName}"))
                     {
                         MessageBox.Show("Файл с таким именем уже существует, переименуйте файл", "Ошибка загрузки",
@@ -131,8 +146,12 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                         return;
                     }
 
+                    //Копирование файла
                     File.Copy(pathToSelectedFile, $"{pathToLoadedFiles}{openFileDialog.SafeFileName}");
 
+                    //Создание записей в БД
+
+                    //Запись нового документа
                     Document newDocument = new Document()
                     {
                         Date = DateTime.Now,
@@ -146,6 +165,7 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
 
                     Data_Source data_Source = New_Doc_Src.SelectedItem as Data_Source;
 
+                    //Запись в истории действий сотрудников
                     Load_History load_History = new Load_History()
                     {
                         Source_File_Name = openFileDialog.FileName,
@@ -157,6 +177,8 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
 
                     database.Load_History.Add(load_History);
                     database.SaveChanges();
+
+                    //Обновление списка загруженных документов
                     Refresh_Doc_List();
                     MessageBox.Show("Файл успешно загружен", "Загрузка файла",
                         MessageBoxButton.OK, MessageBoxImage.Information);
@@ -174,28 +196,43 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             }
         }
 
+        /// <summary>
+        /// Метод для валидации схожести необходимых заголовков
+        /// </summary>
+        /// <param name="expectedHeaders">Ожидаемые заголовки, которые должны быть</param>
+        /// <param name="filePath">Путь до файла с данными</param>
+        /// <returns>Результат валидации: true - заголовки верны, false - есть расхождение в наличии основных заголовков</returns>
         private bool ValidateExcelHeaders(List<string> expectedHeaders, string filePath)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
+            //Чтение заголовков из excel таблицы
             using (var package = new ExcelPackage(new System.IO.FileInfo(filePath)))
             {
                 var worksheet = package.Workbook.Worksheets[0];
                 int columnCount = worksheet.Dimension.End.Column;
 
+                //Инициализация списка заголовков в excel таблице
                 List<string> actualheaders = new List<string>();
 
+                //Перенос заголовков в список
                 for (int col = 1; col <= columnCount; col++)
                 {
                     actualheaders.Add(worksheet.Cells[1, col].Text.Trim());
                 }
 
+                //Сравнение списков с заголовками
                 return expectedHeaders.All(actualheaders.Contains) && actualheaders.All(expectedHeaders.Contains);
             }
         }
 
+        /// <summary>
+        /// Функция сохранения CSV файла
+        /// </summary>
+        /// <param name="openFileDialog">Результат выбора файла</param>
         private void SaveFileAsCSV(OpenFileDialog openFileDialog)
         {
+            //Проверка корректности выбора источника данных
             if (!pathToSelectedFile.EndsWith(".csv"))
             {
                 MessageBox.Show("Выбран файл неверного формата", "Ошибка загрузки",
@@ -210,9 +247,11 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             }
 
             Document_Type selectedType = New_Doc_Type.SelectedItem as Document_Type;
+            //Получение списка необходимых заголовков в файле из БД
             string AttributesList = database.Document_Struct.Where(ds => ds.Type_ID == selectedType.ID).Select(dt => dt.Attributes_List).FirstOrDefault();
             List<string> neededHeaders = JsonConvert.DeserializeObject<List<string>>(AttributesList);
 
+            //Проверка на соответствие заголовков
             if (ValidateCsvHeaders(pathToSelectedFile, neededHeaders))
             {
                 if (File.Exists($"{pathToLoadedFiles}{openFileDialog.SafeFileName}"))
@@ -260,6 +299,11 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             }
         }
 
+        /// <summary>
+        /// Метод автоматического определения кодировки CSV файла, для корректности его чтения
+        /// </summary>
+        /// <param name="filePath">Путь до необходимого файла</param>
+        /// <returns>Возвращает кодировку выбранного файла</returns>
         static Encoding DetectFileEncoding(string filePath)
         {
             using (var reader = new StreamReader(filePath, true))
@@ -269,10 +313,18 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             }
         }
 
+        /// <summary>
+        /// Метод валидации заголовков CSV файла аналогично валидации Excel таблиц
+        /// </summary>
+        /// <param name="filePath">Путь до файла с данными</param>
+        /// <param name="expectedHeaders">Ожидаемые заголовки</param>
+        /// <returns>Результат валидации true/false</returns>
         static bool ValidateCsvHeaders(string filePath, List<string> expectedHeaders)
         {
+            //Получение кодировки выбранного файла
             var encoding = DetectFileEncoding(filePath);
 
+            //Чтение CSV файла
             using (var reader = new StreamReader(filePath, encoding))
             using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -284,20 +336,12 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                 csv.Read();
                 csv.ReadHeader();
 
+                //Получение списка заголовков
                 var actualHeaders = csv.HeaderRecord?
                     .Select(h => h.Replace("\"", "").Trim())
                     .ToList() ?? new List<string>();
 
-                foreach (string header in expectedHeaders)
-                {
-                    MessageBox.Show($"Ожидаемые заголовки: {header}");
-                }
-
-                foreach (string header in actualHeaders)
-                {
-                    MessageBox.Show($"Актуальные заголовки: {header}");
-                }
-
+                //Сравнение заголовков
                 return expectedHeaders.All(actualHeaders.Contains) && actualHeaders.All(expectedHeaders.Contains);
             }
         }
