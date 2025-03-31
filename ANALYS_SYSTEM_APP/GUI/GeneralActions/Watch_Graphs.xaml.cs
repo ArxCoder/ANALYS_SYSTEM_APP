@@ -49,7 +49,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
         private void LoadHistoryGraph()
         {
-            LoadHistoryGraphPanel.Children.Remove(UserChart);
+            LoadHistoryGraphPanel.Children.Clear();
 
             CartesianChart newChart = new CartesianChart();
             newChart.Name = "UserChart";
@@ -98,11 +98,67 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             LoadHistoryGraphPanel.Visibility = Visibility.Visible;
         }
 
+        private struct DocsChart
+        {
+            public string Name { get; set; }
+            public int Count { get; set; }
+        }
+
+        private void LoadDocsGraph()
+        {
+            LoadHistoryGraphPanel.Children.Clear();
+
+            CartesianChart newChart = new CartesianChart();
+            newChart.Name = "UserChart";
+            newChart.Width = 1200;
+            newChart.Height = 700;
+            newChart.IsEnabled = false;
+
+            List<DocsChart> docsData = new List<DocsChart>();
+            foreach (Data_Source src in database.Data_Source)
+            {
+                string Name = src.Name;
+                int Count = database.Load_History.Where(doc => doc.Data_Source_ID == src.ID).Count();
+
+                if (Count > 0)
+                {
+                    DocsChart newChartData = new DocsChart()
+                    {
+                        Name = Name,
+                        Count = Count
+                    };
+
+                    docsData.Add(newChartData);
+                }
+            }
+
+            if (newChart.AxisX.Count > 0)
+            {
+                newChart.AxisX[0].Labels = docsData.Select(d => d.Name).ToList();
+            }
+            else
+            {
+                // Если нет элементов, можно создать или добавить ось
+                newChart.AxisX.Add(new Axis
+                {
+                    Labels = docsData.Select(d => d.Name).ToList()
+                });
+            }
+
+            newChart.Series.Add(new ColumnSeries
+            {
+                Title = "Документы",
+                Values = new ChartValues<int>(docsData.Select(d => d.Count))
+            });
+
+            LoadHistoryGraphPanel.Children.Add(newChart);
+            LoadHistoryGraphPanel.Visibility = Visibility.Visible;
+        }
+
         private struct ChartData {
             public string UserName {get; set;}
             public int DocumentCount { get; set; }
         }
-
 
         //Получение текущего времени
         private void CurrentTimer_Tick(object sender, EventArgs e)
@@ -119,7 +175,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         {
             if (LoadHistoryGraphPanel.Visibility == Visibility.Visible)
             {
-                MessageBox.Show("Данный график уже загружен", "Ошибка загрузки графика",
+                MessageBox.Show("График уже загружен", "Ошибка загрузки графика",
                     MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
@@ -150,6 +206,18 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
                     this.Close();
                     break;
             }
+        }
+
+        private void LoadGraph_LoadDocType_Click(object sender, RoutedEventArgs e)
+        {
+            if (LoadHistoryGraphPanel.Visibility == Visibility.Visible)
+            {
+                MessageBox.Show("График уже загружен", "Ошибка загрузки графика",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+            LoadDocsGraph();
         }
     }
 }

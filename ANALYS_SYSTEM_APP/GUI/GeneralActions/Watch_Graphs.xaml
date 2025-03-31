@@ -86,7 +86,7 @@ VerticalAlignment="Center" Source="\Resources\return.png" MouseLeftButtonDown="R
                         <TextBlock Text="Отображает имя пользователя и количество загруженных им документов" 
             FontSize="20" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="400"/>
 
-                        <Button x:Name="LoadGraph_LoadDocType" Content="Загрузить" FontSize="20" FontWeight="Bold" Margin="0,20,0,0">
+                        <Button x:Name="LoadGraph_LoadDocType" Content="Загрузить" FontSize="20" FontWeight="Bold" Margin="0,20,0,0" Click="LoadGraph_LoadDocType_Click">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="10"/>
@@ -98,30 +98,18 @@ VerticalAlignment="Center" Source="\Resources\return.png" MouseLeftButtonDown="R
             </StackPanel>
         </Border>
 
+        <Button x:Name="CloseLoadHistoryGraph" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,20,0"
+        Width="400" Height="30" Content="Скрыть график" FontSize="20" FontWeight="Bold" Click="CloseLoadHistoryGraph_Click"
+                Grid.Row="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
         <StackPanel x:Name="LoadHistoryGraphPanel" Margin="0,50,20,0" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="1" Orientation="Vertical"
                     Visibility="Hidden">
-            <Button x:Name="CloseLoadHistoryGraph" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,20"
-                    Width="400" Height="30" Content="Скрыть график" FontSize="20" FontWeight="Bold" Click="CloseLoadHistoryGraph_Click">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            
-            <lvc:CartesianChart x:Name="UserChart" Width="1200" Height="700" IsEnabled="False">
-                <lvc:CartesianChart.Series>
-                    <lvc:ColumnSeries Title="Документы"/>
-                </lvc:CartesianChart.Series>
-
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Пользователь"/>
-                </lvc:CartesianChart.AxisX>
-
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Кол-во документов" MinValue="0"/>
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
         </StackPanel>
     </Grid>
 </Window>
