@@ -32,8 +32,6 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
     /// </summary>
     public partial class Watch_Docs : Window
     {
-        
-
         Database database = new Database();
         User current_User;
         //Таймер для отображения текущего времени
@@ -52,16 +50,18 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
 
+            DocumentsSortByType.ItemsSource = database.Data_Source.ToList();
+
             //Загрузка списка документов
-            Refresh_Doc_List();
+            Refresh_Doc_List(database.Document.ToList());
         }
 
         //Функция загрузки списка документов
-        private void Refresh_Doc_List()
+        private void Refresh_Doc_List(List<Document> Docs)
         {
             Loaded_Docs_Files.ItemsSource = null;
             Loaded_Docs_Files.Items.Clear();
-            Loaded_Docs_Files.ItemsSource = database.Document.ToList();
+            Loaded_Docs_Files.ItemsSource = Docs;
         }
 
         //Получение текущего времени
@@ -210,6 +210,78 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
                     this.Close();
                     break;
             }
+        }
+
+        private void DocumentsSortByName_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                //Строка, содержащая часть или полное наименование типа документа
+                string contains = DocumentsSortByName.Text.ToString();
+                //Источник данных загрузки документа
+                Data_Source selectedType = new Data_Source();
+
+                if (DocumentsSortByType.SelectedItem == null)
+                {   
+                    //Если не выбран источник загрузки документа, то загрузка документов только по имени
+                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains)).ToList());
+                }
+                else
+                {
+                    //Список неоходимых для загрузки документов
+                    List<Document> neededDocs = new List<Document>();
+                    //Выбранный тип источника данных
+                    List<Load_History> load_History = database.Load_History.Where(lh => lh.Data_Source_ID == selectedType.ID).ToList();
+
+                    foreach (Load_History story in load_History)
+                    {
+                        neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID).FirstOrDefault());
+                    }
+
+                    //Загрузка сортированного списка документов
+                    selectedType = DocumentsSortByType.SelectedItem as Data_Source;
+                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Type_ID == selectedType.ID).ToList());
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DocumentsSortByType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try 
+            {
+                Data_Source selectedDocType = DocumentsSortByType.SelectedItem as Data_Source;
+                string contains = DocumentsSortByName.Text.ToString();
+
+                List<Document> neededDocs = new List<Document>();
+                List<Load_History> load_History = database.Load_History.Where(lh => lh.Data_Source_ID == selectedDocType.ID).ToList();
+
+                foreach (Load_History story in load_History)
+                {
+                    neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID).FirstOrDefault());
+                }
+
+                if (String.Equals(contains, String.Empty))
+                {
+                    Refresh_Doc_List(neededDocs);
+                }
+                else
+                {
+                    Refresh_Doc_List(neededDocs.Where(doc => doc.Document_Type.Name.Contains(contains)).ToList());
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void DropFilters_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh_Doc_List(database.Document.ToList());
         }
     }
 }
