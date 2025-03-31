@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using ANALYS_SYSTEM_APP.GUI.GeneralActions;
 using ANALYS_SYSTEM_APP.GUI.ModeratorActions;
 
 namespace ANALYS_SYSTEM_APP.GUI
@@ -122,6 +123,13 @@ namespace ANALYS_SYSTEM_APP.GUI
         {
             UserList userList = new UserList(this.current_User);
             userList.Show();
+            this.Close();
+        }
+
+        private void Check_Document_List_Click(object sender, RoutedEventArgs e)
+        {
+            Watch_Docs watch_Docs = new Watch_Docs(current_User);
+            watch_Docs.Show();
             this.Close();
         }
     }

@@ -1,5 +1,4 @@
-﻿using ANALYS_SYSTEM_APP.GUI.GeneralActions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,24 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
+namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 {
     /// <summary>
-    /// Логика взаимодействия для EmployeWindow.xaml
+    /// Логика взаимодействия для Watch_Graphs.xaml
     /// </summary>
-    public partial class EmployeWindow : Window
+    public partial class Watch_Graphs : Window
     {
         Database database = new Database();
         User current_User;
         //Таймер для отображения текущего времени
         DispatcherTimer CurrentTimer = new DispatcherTimer();
-        //Таймер для обновления новостей
-        DispatcherTimer RefreshNews = new DispatcherTimer();
-
-        public EmployeWindow(User current_user)
+        public Watch_Graphs(User current_User)
         {
             InitializeComponent();
-            this.current_User = current_user;
+            this.current_User = current_User;
 
             //Установка информации о пользователе
             Username.Text = $"{current_User.User_Role.Name}: {current_User.Surname} {current_User.Name} {current_User.Lastname}";
@@ -41,26 +37,6 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             CurrentTimer.Tick += CurrentTimer_Tick;
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
-
-            //Загрузка новостей
-            setNews();
-            RefreshNews.Tick += RefreshNews_Tick;
-            RefreshNews.Interval = TimeSpan.FromMinutes(5);
-            RefreshNews.Start();
-
-            Users_Birth_List.ItemsSource = database.User.ToList();
-        }
-
-        private void RefreshNews_Tick(object sender, EventArgs e)
-        {
-            setNews();
-        }
-
-        private void setNews()
-        {
-            News_List.ItemsSource = null;
-            News_List.Items.Clear();
-            News_List.ItemsSource = database.Organisation_News.ToList().OrderByDescending(on => on.Creation_Date);
         }
 
         //Получение текущего времени
@@ -80,27 +56,6 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                 mainWindow.Show();
                 this.Close();
             }
-        }
-
-        private void Load_Doc_Click(object sender, RoutedEventArgs e)
-        {
-            Load_Doc_Wnd load_Doc_Wnd = new Load_Doc_Wnd(current_User);
-            load_Doc_Wnd.Show();
-            this.Close();
-        }
-
-        private void Watch_Doc_Click(object sender, RoutedEventArgs e)
-        {
-            Watch_Docs watch_Doc = new Watch_Docs(current_User);
-            watch_Doc.Show();
-            this.Close();
-        }
-
-        private void Check_Graphs_Click(object sender, RoutedEventArgs e)
-        {
-            Watch_Graphs watch_Graphs = new Watch_Graphs(current_User);
-            watch_Graphs.Show();
-            this.Close();
         }
     }
 }
