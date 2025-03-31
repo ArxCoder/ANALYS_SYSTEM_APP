@@ -49,10 +49,13 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
         private void LoadHistoryGraph()
         {
-            Dispatcher.Invoke(() =>
-            {
-                UserChart.Series.Clear();
-            });
+            LoadHistoryGraphPanel.Children.Remove(UserChart);
+
+            CartesianChart newChart = new CartesianChart();
+            newChart.Name = "UserChart";
+            newChart.Width = 1200;
+            newChart.Height = 700;
+            newChart.IsEnabled = false;
 
             List<ChartData> chartData = new List<ChartData>();
             foreach (User user in database.User)
@@ -62,24 +65,36 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
                 if (documentCount > 0)
                 {
-                    ChartData newChart = new ChartData()
+                    ChartData newChartData = new ChartData()
                     {
                         UserName = userName,
                         DocumentCount = documentCount
                     };
 
-                    chartData.Add(newChart);
+                    chartData.Add(newChartData);
                 }
             }
 
-            UserChart.AxisX[0].Labels = chartData.Select(d => d.UserName).ToList();
-            UserChart.Series.Add(new ColumnSeries
+            if (newChart.AxisX.Count > 0)
+            {
+                newChart.AxisX[0].Labels = chartData.Select(d => d.UserName).ToList();
+            }
+            else
+            {
+                // Если нет элементов, можно создать или добавить ось
+                newChart.AxisX.Add(new Axis
+                {
+                    Labels = chartData.Select(d => d.UserName).ToList()
+                });
+            }
+
+            newChart.Series.Add(new ColumnSeries
             {
                 Title = "Документы",
                 Values = new ChartValues<int>(chartData.Select(d => d.DocumentCount))
             });
 
-            chartData.Clear();
+            LoadHistoryGraphPanel.Children.Add(newChart);
             LoadHistoryGraphPanel.Visibility = Visibility.Visible;
         }
 
