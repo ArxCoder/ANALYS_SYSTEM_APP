@@ -57,7 +57,90 @@
                 </Image>
             </Grid>
         </Border>
-        
-        
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,50,0,0">
+            <TextBlock Text="Список структур файлов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <ListView x:Name="FileStructList" Width="500" HorizontalAlignment="Center" Height="700" BorderBrush="Black" BorderThickness="1">
+                <ListView.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </ListView.Resources>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="20" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Margin="5">
+                                <TextBlock Text="{Binding Path=Document_Type.Name}" Width="400" TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Left" Margin="0,0,0,5"
+                                           FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Path=Name}" Width="400" TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Path=Description}" Width="400" TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Left" Margin="0,5,0,5"/>
+                                <TextBlock Text="{Binding Path=Creation_Date}" Width="400" TextWrapping="Wrap" FontSize="20" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Margin="0,30,0,30" x:Name="ChangeStruct" Width="500" HorizontalAlignment="Center" Height="35"
+                Content="Редактировать структуру" FontSize="20" FontWeight="Bold">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Margin="0,50,0,0">
+            <TextBlock Text="Создание новой структуры" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Название типа документа" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="NewDocTypeName" Width="400" Height="35" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Название новой структуры документа" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="NewDocStructName" Width="400" Height="35" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Описание новой структуры" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="NewDocStructDesc" Width="400" Height="150" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                     TextWrapping="Wrap">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Список атрибутов новой структуры" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="NewDocStructAttList" Width="400" Height="35" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <Button Margin="0,30,0,30" x:Name="AddNewStruct" Width="400" HorizontalAlignment="Center" Height="35"
+        Content="Создать новую структуру" FontSize="20" FontWeight="Bold">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

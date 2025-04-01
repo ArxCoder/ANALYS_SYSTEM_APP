@@ -36,6 +36,15 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             CurrentTimer.Tick += CurrentTimer_Tick;
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
+
+            RefreshFileStructList(database.Document_Struct.ToList());
+        }
+
+        private void RefreshFileStructList(List<Document_Struct> document_Structs)
+        {
+            FileStructList.ItemsSource = null;
+            FileStructList.Items.Clear();
+            FileStructList.ItemsSource = document_Structs;
         }
 
         //Получение текущего времени
