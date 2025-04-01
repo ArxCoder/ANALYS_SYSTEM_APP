@@ -132,5 +132,12 @@ namespace ANALYS_SYSTEM_APP.GUI
             checkDocList.Show(); 
             this.Close();
         }
+
+        private void DocumentStructChange_Click(object sender, RoutedEventArgs e)
+        {
+            DocsStructChange docsStructChange = new DocsStructChange(current_User);
+            docsStructChange.Show();
+            this.Close();
+        }
     }
 }

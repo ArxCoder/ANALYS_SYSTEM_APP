@@ -187,6 +187,9 @@
     <Compile Include="GUI\ModeratorActions\CheckDocList.xaml.cs">
       <DependentUpon>CheckDocList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ModeratorActions\DocsStructChange.xaml.cs">
+      <DependentUpon>DocsStructChange.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ModeratorActions\RegistrationRequestList.xaml.cs">
       <DependentUpon>RegistrationRequestList.xaml</DependentUpon>
     </Compile>
@@ -278,6 +281,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="GUI\ModeratorActions\CheckDocList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ModeratorActions\DocsStructChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
