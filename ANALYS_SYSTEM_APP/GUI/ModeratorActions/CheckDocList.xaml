@@ -108,6 +108,31 @@ BorderBrush="Black" BorderThickness="1" Width="500" Height="400" MouseDoubleClic
             </Button>
         </StackPanel>
 
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1"
+                    Margin="0,50,530,0">
+            <TextBlock FontSize="24" FontWeight="Bold" Text="Статус документа" HorizontalAlignment="Center" Margin="0,0,0,0"/>
+            <ComboBox x:Name="DocumentChangeStatusSelect" Width="300" Height="30" Margin="0,30,0,20"
+                      DisplayMemberPath="Name"/>
+
+            <TextBlock Text="Причина изменения статуса" FontSize="20" HorizontalAlignment="Center" FontWeight="Bold"/>
+            <TextBox x:Name="ChangeReasonInput" Width="300" Height="200" Margin="0,0,0,20" BorderBrush="Black" BorderThickness="1"
+                     FontSize="20" TextWrapping="Wrap" MaxWidth="300">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+            <Button x:Name="ChangeStatus" Width="300" Height="30" FontSize="20" Content="Изменить статус"
+                    FontWeight="Bold" Click="ChangeStatus_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,50,0">
             <TextBlock Text="Данные документа" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,30"/>
             <DataGrid x:Name="Selected_Doc_Data" ItemsSource="{Binding DocumentData}" AutoGenerateColumns="False" Width="1000" Height="700" FontSize="16" MinRowHeight="20"/>

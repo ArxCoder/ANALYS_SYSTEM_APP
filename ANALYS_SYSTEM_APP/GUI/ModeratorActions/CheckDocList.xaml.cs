@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Data.Entity.Migrations;
 
 namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
 {
@@ -44,7 +45,12 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             CurrentTimer.Tick += CurrentTimer_Tick;
             CurrentTimer.Interval = TimeSpan.FromSeconds(1);
             CurrentTimer.Start();
-            this.current_User = current_User;
+
+            DocumentsSortByType.ItemsSource = database.Data_Source.ToList();
+            DocumentChangeStatusSelect.ItemsSource = database.Document_Status.ToList();
+
+            //Загрузка списка документов
+            Refresh_Doc_List(database.Document.ToList());
         }
 
         //Получение текущего времени
@@ -136,6 +142,8 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
 
         private void DropFilters_Click(object sender, RoutedEventArgs e)
         {
+            DocumentsSortByName.Text = String.Empty;
+            DocumentsSortByType.SelectedItem = null;
             Refresh_Doc_List(database.Document.ToList());
         }
 
@@ -253,6 +261,56 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
                 Selected_Doc_Data.ItemsSource = list;
                 Selected_Doc_Data.Items.Refresh();
             }
+        }
+
+        private void ChangeStatus_Click(object sender, RoutedEventArgs e)
+        {
+            if (Loaded_Docs_Files.SelectedItem is null)
+            {
+                MessageBox.Show("Для изменения статуса документа, выберите документ", "Ошибка редактирования",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+            if (DocumentChangeStatusSelect.SelectedItem is null)
+            {
+                MessageBox.Show("Для изменения статуса документа, выберите новый статус", "Ошибка редактирования",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+            if (String.Equals(ChangeReasonInput.Text, String.Empty))
+            {
+                MessageBox.Show("Для изменения статуса документа укажите причину изменения", "Ошибка редактирования",
+                     MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+            Document_Status selectedStatus = DocumentChangeStatusSelect.SelectedItem as Document_Status;
+            Document selectedDoc = Loaded_Docs_Files.SelectedItem as Document;
+            Document_Status oldStatus = selectedDoc.Document_Status;
+            string changeReason = ChangeReasonInput.Text;
+
+            selectedDoc.Status_ID = selectedStatus.ID;
+            database.Document.AddOrUpdate(selectedDoc);
+            database.SaveChanges();
+
+            Change_History change_History = new Change_History()
+            {
+                Change_Date = DateTime.Now,
+                Old_Value = oldStatus.Name,
+                New_Value = selectedStatus.Name,
+                Reason = changeReason,
+                User_ID = current_User.ID,
+                Document_ID = selectedDoc.ID
+            };
+
+            database.Change_History.Add(change_History);
+            database.SaveChanges();
+
+            Refresh_Doc_List(database.Document.ToList());
+            DocumentChangeStatusSelect.SelectedItem = null;
+            MessageBox.Show("Статус документа успешно изменен");
         }
     }
 }

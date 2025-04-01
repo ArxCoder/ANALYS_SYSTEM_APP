@@ -27,6 +27,7 @@ using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using iTextSharp.text.pdf;
 using ClosedXML.Excel;
+using OfficeOpenXml.ConditionalFormatting.Contracts;
 
 namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 {
@@ -83,6 +84,9 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         private void Loaded_Docs_Files_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Document selected_Doc = Loaded_Docs_Files.SelectedItem as Document;
+
+            if (selected_Doc is null)
+                return;
 
             string pathToFileFromDB = $"{pathToLoadedFiles}{selected_Doc.Name}";
 
@@ -253,15 +257,18 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         {
             try 
             {
+                if (DocumentsSortByType.SelectedItem == null)
+                    return;
+
                 Data_Source selectedDocType = DocumentsSortByType.SelectedItem as Data_Source;
                 string contains = DocumentsSortByName.Text.ToString();
 
                 List<Document> neededDocs = new List<Document>();
-                List<Load_History> load_History = database.Load_History.Where(lh => lh.Data_Source_ID == selectedDocType.ID).ToList();
+                List<Load_History> load_History = database.Load_History.Where(lh => lh.Data_Source_ID == selectedDocType.ID && lh.Document.Status_ID != 4).ToList();
 
                 foreach (Load_History story in load_History)
                 {
-                    neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID && doc.Status_ID != 4).FirstOrDefault());
+                    neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID).FirstOrDefault());
                 }
 
                 if (String.Equals(contains, String.Empty))
@@ -270,7 +277,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
                 }
                 else
                 {
-                    Refresh_Doc_List(neededDocs.Where(doc => doc.Document_Type.Name.Contains(contains)).ToList());
+                    Refresh_Doc_List(neededDocs.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Status_ID != 4).ToList());
                 }
             }
             catch(Exception ex)
@@ -281,7 +288,9 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
         private void DropFilters_Click(object sender, RoutedEventArgs e)
         {
-            Refresh_Doc_List(database.Document.ToList());
+            DocumentsSortByName.Text = String.Empty;
+            DocumentsSortByType.SelectedItem = null;
+            Refresh_Doc_List(database.Document.Where(doc => doc.Status_ID != 4).ToList());
         }
 
         private void SaveFile_Click(object sender, RoutedEventArgs e)
