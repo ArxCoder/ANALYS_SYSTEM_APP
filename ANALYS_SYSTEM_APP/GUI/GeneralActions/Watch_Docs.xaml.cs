@@ -22,6 +22,9 @@ using ANALYS_SYSTEM_APP.GUI.EmploeeActions;
 using ANALYS_SYSTEM_APP.GUI.ReporterActions;
 using ANALYS_SYSTEM_APP.GUI.User_Actions;
 using System.Dynamic;
+using Microsoft.Win32;
+using Microsoft.WindowsAPICodePack;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 {
@@ -51,6 +54,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             CurrentTimer.Start();
 
             DocumentsSortByType.ItemsSource = database.Data_Source.ToList();
+            ReportTypeSelect.ItemsSource = database.Report_Type.ToList();
 
             //Загрузка списка документов
             Refresh_Doc_List(database.Document.ToList());
@@ -283,5 +287,85 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         {
             Refresh_Doc_List(database.Document.ToList());
         }
+
+        private void SaveFile_Click(object sender, RoutedEventArgs e)
+        {
+            if (Loaded_Docs_Files.SelectedItem is null)
+            {
+                MessageBox.Show("Для сохранения файла выберите его из списка загруженных файлов", "Ошибка сохранения",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+            Document selectedDocument = Loaded_Docs_Files.SelectedItem as Document;
+
+            if (ReportTypeSelect.SelectedItem is null)
+            {
+                SaveCurrentFile(selectedDocument);
+                return;
+            }
+
+            Report_Type selectedReportType = ReportTypeSelect.SelectedItem as Report_Type;
+
+            
+        }
+
+        private void SaveCurrentFile(Document selectedDoc)
+        {
+            MessageBoxResult res = MessageBox.Show(
+                "У вас не выбран тип выгрузки документа, желаете сохранить его в исходном формате?",
+                "Сохранение документа",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Information
+            );
+
+            if (res == MessageBoxResult.No)
+                return;
+
+            var dialog = new CommonOpenFileDialog
+            {
+                IsFolderPicker = true,
+                Title = "Выберите папку для сохранения"
+            };
+
+            try
+            {
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    string selectedSavePath = dialog.FileName;  // Путь к выбранной папке
+                    string selectedFileName = selectedDoc.Name; // Имя документа
+                    string fileForCopy = System.IO.Path.Combine(pathToLoadedFiles, selectedFileName); // Исходный файл
+                    string saveFilePath = System.IO.Path.Combine(selectedSavePath, selectedFileName); // Куда сохраняем
+
+                    if (!File.Exists(fileForCopy))
+                    {
+                        MessageBox.Show("Исходный файл не найден!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    if (File.Exists(saveFilePath))
+                    {
+                        MessageBoxResult result = MessageBox.Show(
+                            "Файл с таким именем уже существует в вашей папке, желаете перезаписать?",
+                            "Файл уже существует",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Warning
+                        );
+
+                        if (result == MessageBoxResult.No)
+                            return;
+                    }
+
+                    // Копируем файл в выбранную папку
+                    File.Copy(fileForCopy, saveFilePath, overwrite: true);
+                    MessageBox.Show($"Файл успешно сохранен в: {saveFilePath}", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }
