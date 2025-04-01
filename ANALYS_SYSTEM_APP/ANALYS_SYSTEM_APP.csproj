@@ -184,6 +184,9 @@
     <Compile Include="GUI\GeneralActions\Watch_Graphs.xaml.cs">
       <DependentUpon>Watch_Graphs.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ModeratorActions\CheckDocList.xaml.cs">
+      <DependentUpon>CheckDocList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ModeratorActions\RegistrationRequestList.xaml.cs">
       <DependentUpon>RegistrationRequestList.xaml</DependentUpon>
     </Compile>
@@ -274,6 +277,10 @@
       <DependentUpon>Main.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="GUI\ModeratorActions\CheckDocList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ModeratorActions\RegistrationRequestList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -58,7 +58,12 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             DocumentsSortByType.ItemsSource = database.Data_Source.ToList();
 
             //Загрузка списка документов
-            Refresh_Doc_List(database.Document.ToList());
+            Refresh_Doc_List(database.Document.Where(doc => doc.Status_ID != 4).ToList());
+
+            if (current_User.Role_ID == 1)
+            {
+                SaveFile.Visibility = Visibility.Hidden;
+            }
         }
 
         //Функция загрузки списка документов
@@ -229,23 +234,13 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
                 if (DocumentsSortByType.SelectedItem == null)
                 {   
                     //Если не выбран источник загрузки документа, то загрузка документов только по имени
-                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains)).ToList());
+                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Status_ID != 4).ToList());
                 }
                 else
                 {
-                    //Список неоходимых для загрузки документов
-                    List<Document> neededDocs = new List<Document>();
-                    //Выбранный тип источника данных
-                    List<Load_History> load_History = database.Load_History.Where(lh => lh.Data_Source_ID == selectedType.ID).ToList();
-
-                    foreach (Load_History story in load_History)
-                    {
-                        neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID).FirstOrDefault());
-                    }
-
                     //Загрузка сортированного списка документов
                     selectedType = DocumentsSortByType.SelectedItem as Data_Source;
-                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Type_ID == selectedType.ID).ToList());
+                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Type_ID == selectedType.ID && doc.Status_ID != 4).ToList());
                 }
             }
             catch(Exception ex)
@@ -266,7 +261,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
                 foreach (Load_History story in load_History)
                 {
-                    neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID).FirstOrDefault());
+                    neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID && doc.Status_ID != 4).FirstOrDefault());
                 }
 
                 if (String.Equals(contains, String.Empty))

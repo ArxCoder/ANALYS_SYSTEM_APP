@@ -128,8 +128,8 @@ namespace ANALYS_SYSTEM_APP.GUI
 
         private void Check_Document_List_Click(object sender, RoutedEventArgs e)
         {
-            Watch_Docs watch_Docs = new Watch_Docs(current_User);
-            watch_Docs.Show();
+            CheckDocList checkDocList = new CheckDocList(current_User);
+            checkDocList.Show(); 
             this.Close();
         }
     }
