@@ -306,7 +306,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         private void SaveCurrentFile(Document selectedDoc)
         {
             MessageBoxResult res = MessageBox.Show(
-                "У вас не выбран тип выгрузки документа, желаете сохранить его в исходном формате?",
+                "Для дальнейшего сохранения файла, выберите папку, в которую хотите сохранить файл",
                 "Сохранение документа",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Information
@@ -354,8 +354,13 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
                     Report newReport = new Report()
                     {
-
+                        Creation_Date = DateTime.Now,
+                        Document_ID = selectedDoc.ID,
+                        User_ID = current_User.ID
                     };
+                    database.Report.Add(newReport);
+                    database.SaveChanges();
+
                     MessageBox.Show($"Файл успешно сохранен в: {saveFilePath}", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
