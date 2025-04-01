@@ -25,6 +25,8 @@ using System.Dynamic;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using iTextSharp.text.pdf;
+using ClosedXML.Excel;
 
 namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 {
@@ -54,7 +56,6 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             CurrentTimer.Start();
 
             DocumentsSortByType.ItemsSource = database.Data_Source.ToList();
-            ReportTypeSelect.ItemsSource = database.Report_Type.ToList();
 
             //Загрузка списка документов
             Refresh_Doc_List(database.Document.ToList());
@@ -299,15 +300,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
             Document selectedDocument = Loaded_Docs_Files.SelectedItem as Document;
 
-            if (ReportTypeSelect.SelectedItem is null)
-            {
-                SaveCurrentFile(selectedDocument);
-                return;
-            }
-
-            Report_Type selectedReportType = ReportTypeSelect.SelectedItem as Report_Type;
-
-            
+            SaveCurrentFile(selectedDocument);
         }
 
         private void SaveCurrentFile(Document selectedDoc)
