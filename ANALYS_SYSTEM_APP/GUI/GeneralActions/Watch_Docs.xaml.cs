@@ -351,6 +351,11 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
                     // Копируем файл в выбранную папку
                     File.Copy(fileForCopy, saveFilePath, overwrite: true);
+
+                    Report newReport = new Report()
+                    {
+
+                    };
                     MessageBox.Show($"Файл успешно сохранен в: {saveFilePath}", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище ANALYS_SYSTEM_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище ANALYS_SYSTEM_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Change_History">
           <Key>
             <PropertyRef Name="ID" />
@@ -128,16 +128,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Creation_Date" Type="datetime" />
-          <Property Name="Repoort_Type_ID" Type="int" />
           <Property Name="Document_ID" Type="int" />
           <Property Name="User_ID" Type="int" />
-        </EntityType>
-        <EntityType Name="Report_Type">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Request_Decline">
           <Key>
@@ -374,18 +366,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Report_Report_Type">
-          <End Role="Report_Type" Type="Self.Report_Type" Multiplicity="0..1" />
-          <End Role="Report" Type="Self.Report" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Report_Type">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Report">
-              <PropertyRef Name="Repoort_Type_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Report_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Report" Type="Self.Report" Multiplicity="*" />
@@ -460,7 +440,6 @@
           <EntitySet Name="Organisation_News" EntityType="Self.Organisation_News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Report_Type" EntityType="Self.Report_Type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Request_Decline" EntityType="Self.Request_Decline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Request_Status" EntityType="Self.Request_Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -527,10 +506,6 @@
             <End Role="User_Role" EntitySet="User_Role" />
             <End Role="Registration_Request" EntitySet="Registration_Request" />
           </AssociationSet>
-          <AssociationSet Name="FK_Report_Report_Type" Association="Self.FK_Report_Report_Type">
-            <End Role="Report_Type" EntitySet="Report_Type" />
-            <End Role="Report" EntitySet="Report" />
-          </AssociationSet>
           <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
             <End Role="User" EntitySet="User" />
             <End Role="Report" EntitySet="Report" />
@@ -552,7 +527,8 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ANALYS_SYSTEM_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -642,9 +618,42 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="DateTime" Precision="3" />
           <Property Name="User_ID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Login_History_User" FromRole="Login_History" ToRole="User" />
           <Property Name="Login_Status_ID" Type="Int32" />
-          <NavigationProperty Name="Login_Status" Relationship="ANALYS_SYSTEM_DBModel.FK_Login_History_Login_Status" FromRole="Login_History" ToRole="Login_Status" />
+          <NavigationProperty Name="Login_Status" Relationship="Self.FK_Login_History_Login_Status" FromRole="Login_History" ToRole="Login_Status" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Login_History_User" FromRole="Login_History" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Login_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Login_History" Relationship="Self.FK_Login_History_Login_Status" FromRole="Login_Status" ToRole="Login_History" />
+        </EntityType>
+        <EntityType Name="News_Change_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" />
+          <Property Name="News_ID" Type="Int32" />
+          <Property Name="Old_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="New_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Organisation_News" Relationship="Self.FK_News_Change_History_Organisation_News" FromRole="News_Change_History" ToRole="Organisation_News" />
+          <NavigationProperty Name="User" Relationship="Self.FK_News_Change_History_User" FromRole="News_Change_History" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Organisation_News">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="News_Change_History" Relationship="Self.FK_News_Change_History_Organisation_News" FromRole="Organisation_News" ToRole="News_Change_History" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Organisation_News_User" FromRole="Organisation_News" ToRole="User" />
         </EntityType>
         <EntityType Name="Registration_Request">
           <Key>
@@ -659,10 +668,10 @@
           <Property Name="Creation_Date" Type="DateTime" Precision="3" />
           <Property Name="Request_Status_ID" Type="Int32" />
           <Property Name="Role_ID" Type="Int32" />
+          <Property Name="Birth" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Request_Status" Relationship="Self.FK_Registration_Request_Request_Status" FromRole="Registration_Request" ToRole="Request_Status" />
           <NavigationProperty Name="User_Role" Relationship="Self.FK_Registration_Request_User_Role" FromRole="Registration_Request" ToRole="User_Role" />
-          <Property Name="Birth" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Request_Decline" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" FromRole="Registration_Request" ToRole="Request_Decline" />
+          <NavigationProperty Name="Request_Decline" Relationship="Self.FK_Request_Decline_Registration_Request" FromRole="Registration_Request" ToRole="Request_Decline" />
         </EntityType>
         <EntityType Name="Report">
           <Key>
@@ -670,19 +679,20 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Creation_Date" Type="DateTime" Precision="3" />
-          <Property Name="Repoort_Type_ID" Type="Int32" />
           <Property Name="Document_ID" Type="Int32" />
           <Property Name="User_ID" Type="Int32" />
-          <NavigationProperty Name="Report_Type" Relationship="Self.FK_Report_Report_Type" FromRole="Report" ToRole="Report_Type" />
           <NavigationProperty Name="User" Relationship="Self.FK_Report_User" FromRole="Report" ToRole="User" />
         </EntityType>
-        <EntityType Name="Report_Type">
+        <EntityType Name="Request_Decline">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Report" Relationship="Self.FK_Report_Report_Type" FromRole="Report_Type" ToRole="Report" />
+          <Property Name="Registration_Request_ID" Type="Int32" />
+          <Property Name="Decline_Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="User_ID" Type="Int32" />
+          <NavigationProperty Name="Registration_Request" Relationship="Self.FK_Request_Decline_Registration_Request" FromRole="Request_Decline" ToRole="Registration_Request" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Request_Decline_User" FromRole="Request_Decline" ToRole="User" />
         </EntityType>
         <EntityType Name="Request_Status">
           <Key>
@@ -715,16 +725,16 @@
           <Property Name="Creation_date" Type="DateTime" Precision="3" />
           <Property Name="Role_ID" Type="Int32" />
           <Property Name="User_Status_ID" Type="Int32" />
+          <Property Name="Birth" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Change_History" Relationship="Self.FK_Change_History_User" FromRole="User" ToRole="Change_History" />
           <NavigationProperty Name="Load_History" Relationship="Self.FK_Load_History_User" FromRole="User" ToRole="Load_History" />
           <NavigationProperty Name="Login_History" Relationship="Self.FK_Login_History_User" FromRole="User" ToRole="Login_History" />
+          <NavigationProperty Name="News_Change_History" Relationship="Self.FK_News_Change_History_User" FromRole="User" ToRole="News_Change_History" />
+          <NavigationProperty Name="Organisation_News" Relationship="Self.FK_Organisation_News_User" FromRole="User" ToRole="Organisation_News" />
           <NavigationProperty Name="Report" Relationship="Self.FK_Report_User" FromRole="User" ToRole="Report" />
+          <NavigationProperty Name="Request_Decline" Relationship="Self.FK_Request_Decline_User" FromRole="User" ToRole="Request_Decline" />
           <NavigationProperty Name="User_Role" Relationship="Self.FK_User_User_Role" FromRole="User" ToRole="User_Role" />
           <NavigationProperty Name="User_Status" Relationship="Self.FK_User_User_Status" FromRole="User" ToRole="User_Status" />
-          <Property Name="Birth" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Organisation_News" Relationship="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" FromRole="User" ToRole="Organisation_News" />
-          <NavigationProperty Name="Request_Decline" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" FromRole="User" ToRole="Request_Decline" />
-          <NavigationProperty Name="News_Change_History" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_User" FromRole="User" ToRole="News_Change_History" />
         </EntityType>
         <EntityType Name="User_Role">
           <Key>
@@ -839,6 +849,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Login_History_Login_Status">
+          <End Role="Login_Status" Type="Self.Login_Status" Multiplicity="0..1" />
+          <End Role="Login_History" Type="Self.Login_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Login_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Login_History">
+              <PropertyRef Name="Login_Status_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Login_History_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Login_History" Type="Self.Login_History" Multiplicity="*" />
@@ -847,6 +869,42 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Login_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Change_History_Organisation_News">
+          <End Role="Organisation_News" Type="Self.Organisation_News" Multiplicity="0..1" />
+          <End Role="News_Change_History" Type="Self.News_Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organisation_News">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Change_History">
+              <PropertyRef Name="News_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_News_Change_History_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="News_Change_History" Type="Self.News_Change_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="News_Change_History">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Organisation_News_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Organisation_News" Type="Self.Organisation_News" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Organisation_News">
               <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -875,15 +933,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Report_Report_Type">
-          <End Role="Report_Type" Type="Self.Report_Type" Multiplicity="0..1" />
-          <End Role="Report" Type="Self.Report" Multiplicity="*" />
+        <Association Name="FK_Request_Decline_Registration_Request">
+          <End Role="Registration_Request" Type="Self.Registration_Request" Multiplicity="0..1" />
+          <End Role="Request_Decline" Type="Self.Request_Decline" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Report_Type">
+            <Principal Role="Registration_Request">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Report">
-              <PropertyRef Name="Repoort_Type_ID" />
+            <Dependent Role="Request_Decline">
+              <PropertyRef Name="Registration_Request_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -895,6 +953,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Report">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Request_Decline_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Request_Decline" Type="Self.Request_Decline" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Request_Decline">
               <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -932,9 +1002,12 @@
           <EntitySet Name="Document_Type" EntityType="Self.Document_Type" />
           <EntitySet Name="Load_History" EntityType="Self.Load_History" />
           <EntitySet Name="Login_History" EntityType="Self.Login_History" />
+          <EntitySet Name="Login_Status" EntityType="Self.Login_Status" />
+          <EntitySet Name="News_Change_History" EntityType="Self.News_Change_History" />
+          <EntitySet Name="Organisation_News" EntityType="Self.Organisation_News" />
           <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" />
           <EntitySet Name="Report" EntityType="Self.Report" />
-          <EntitySet Name="Report_Type" EntityType="Self.Report_Type" />
+          <EntitySet Name="Request_Decline" EntityType="Self.Request_Decline" />
           <EntitySet Name="Request_Status" EntityType="Self.Request_Status" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="User" EntityType="Self.User" />
@@ -972,9 +1045,25 @@
             <End Role="User" EntitySet="User" />
             <End Role="Load_History" EntitySet="Load_History" />
           </AssociationSet>
+          <AssociationSet Name="FK_Login_History_Login_Status" Association="Self.FK_Login_History_Login_Status">
+            <End Role="Login_Status" EntitySet="Login_Status" />
+            <End Role="Login_History" EntitySet="Login_History" />
+          </AssociationSet>
           <AssociationSet Name="FK_Login_History_User" Association="Self.FK_Login_History_User">
             <End Role="User" EntitySet="User" />
             <End Role="Login_History" EntitySet="Login_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Change_History_Organisation_News" Association="Self.FK_News_Change_History_Organisation_News">
+            <End Role="Organisation_News" EntitySet="Organisation_News" />
+            <End Role="News_Change_History" EntitySet="News_Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_News_Change_History_User" Association="Self.FK_News_Change_History_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="News_Change_History" EntitySet="News_Change_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Organisation_News_User" Association="Self.FK_Organisation_News_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Organisation_News" EntitySet="Organisation_News" />
           </AssociationSet>
           <AssociationSet Name="FK_Registration_Request_Request_Status" Association="Self.FK_Registration_Request_Request_Status">
             <End Role="Request_Status" EntitySet="Request_Status" />
@@ -984,13 +1073,17 @@
             <End Role="User_Role" EntitySet="User_Role" />
             <End Role="Registration_Request" EntitySet="Registration_Request" />
           </AssociationSet>
-          <AssociationSet Name="FK_Report_Report_Type" Association="Self.FK_Report_Report_Type">
-            <End Role="Report_Type" EntitySet="Report_Type" />
-            <End Role="Report" EntitySet="Report" />
+          <AssociationSet Name="FK_Request_Decline_Registration_Request" Association="Self.FK_Request_Decline_Registration_Request">
+            <End Role="Registration_Request" EntitySet="Registration_Request" />
+            <End Role="Request_Decline" EntitySet="Request_Decline" />
           </AssociationSet>
           <AssociationSet Name="FK_Report_User" Association="Self.FK_Report_User">
             <End Role="User" EntitySet="User" />
             <End Role="Report" EntitySet="Report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Request_Decline_User" Association="Self.FK_Request_Decline_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Request_Decline" EntitySet="Request_Decline" />
           </AssociationSet>
           <AssociationSet Name="FK_User_User_Role" Association="Self.FK_User_User_Role">
             <End Role="User_Role" EntitySet="User_Role" />
@@ -1000,151 +1093,7 @@
             <End Role="User_Status" EntitySet="User_Status" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <EntitySet Name="Organisation_News" EntityType="ANALYS_SYSTEM_DBModel.Organisation_News" />
-          <AssociationSet Name="FK_Organisation_News_User" Association="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Organisation_News" EntitySet="Organisation_News" />
-          </AssociationSet>
-          <EntitySet Name="Request_Decline" EntityType="ANALYS_SYSTEM_DBModel.Request_Decline" />
-          <AssociationSet Name="FK_Request_Decline_Registration_Request" Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request">
-            <End Role="Registration_Request" EntitySet="Registration_Request" />
-            <End Role="Request_Decline" EntitySet="Request_Decline" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Request_Decline_User" Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Request_Decline" EntitySet="Request_Decline" />
-          </AssociationSet>
-          <EntitySet Name="Login_Status" EntityType="ANALYS_SYSTEM_DBModel.Login_Status" />
-          <AssociationSet Name="FK_Login_History_Login_Status" Association="ANALYS_SYSTEM_DBModel.FK_Login_History_Login_Status">
-            <End Role="Login_Status" EntitySet="Login_Status" />
-            <End Role="Login_History" EntitySet="Login_History" />
-          </AssociationSet>
-          <EntitySet Name="News_Change_History" EntityType="ANALYS_SYSTEM_DBModel.News_Change_History" />
-          <AssociationSet Name="FK_News_Change_History_Organisation_News" Association="ANALYS_SYSTEM_DBModel.FK_News_Change_History_Organisation_News">
-            <End Role="Organisation_News" EntitySet="Organisation_News" />
-            <End Role="News_Change_History" EntitySet="News_Change_History" />
-          </AssociationSet>
-          <AssociationSet Name="FK_News_Change_History_User" Association="ANALYS_SYSTEM_DBModel.FK_News_Change_History_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="News_Change_History" EntitySet="News_Change_History" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Organisation_News">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Creation_Date" Type="DateTime" Precision="3" />
-          <Property Name="User_ID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" FromRole="Organisation_News" ToRole="User" />
-          <NavigationProperty Name="News_Change_History" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_Organisation_News" FromRole="Organisation_News" ToRole="News_Change_History" />
-        </EntityType>
-        <Association Name="FK_Organisation_News_User">
-          <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Organisation_News" Role="Organisation_News" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Organisation_News">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Request_Decline">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Registration_Request_ID" Type="Int32" />
-          <Property Name="Decline_Reason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Registration_Request" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" FromRole="Request_Decline" ToRole="Registration_Request" />
-          <Property Name="User_ID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" FromRole="Request_Decline" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_Request_Decline_Registration_Request">
-          <End Type="ANALYS_SYSTEM_DBModel.Registration_Request" Role="Registration_Request" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Request_Decline" Role="Request_Decline" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Registration_Request">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Request_Decline">
-              <PropertyRef Name="Registration_Request_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Request_Decline_User">
-          <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Request_Decline" Role="Request_Decline" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Request_Decline">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Login_Status">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Login_History" Relationship="ANALYS_SYSTEM_DBModel.FK_Login_History_Login_Status" FromRole="Login_Status" ToRole="Login_History" />
-        </EntityType>
-        <Association Name="FK_Login_History_Login_Status">
-          <End Type="ANALYS_SYSTEM_DBModel.Login_Status" Role="Login_Status" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Login_History" Role="Login_History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Login_Status">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Login_History">
-              <PropertyRef Name="Login_Status_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="News_Change_History">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" />
-          <Property Name="News_ID" Type="Int32" />
-          <NavigationProperty Name="Organisation_News" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_Organisation_News" FromRole="News_Change_History" ToRole="Organisation_News" />
-          <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_News_Change_History_User" FromRole="News_Change_History" ToRole="User" />
-          <Property Name="Old_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="New_Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK_News_Change_History_Organisation_News">
-          <End Type="ANALYS_SYSTEM_DBModel.Organisation_News" Role="Organisation_News" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.News_Change_History" Role="News_Change_History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organisation_News">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="News_Change_History">
-              <PropertyRef Name="News_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_News_Change_History_User">
-          <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.News_Change_History" Role="News_Change_History" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="News_Change_History">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1226,9 +1175,40 @@
           <EntitySetMapping Name="Login_History">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Login_History">
               <MappingFragment StoreEntitySet="Login_History">
-                <ScalarProperty Name="Login_Status_ID" ColumnName="Login_Status_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Login_Status_ID" ColumnName="Login_Status_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Login_Status">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Login_Status">
+              <MappingFragment StoreEntitySet="Login_Status">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News_Change_History">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.News_Change_History">
+              <MappingFragment StoreEntitySet="News_Change_History">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="News_ID" ColumnName="News_ID" />
+                <ScalarProperty Name="Old_Value" ColumnName="Old_Value" />
+                <ScalarProperty Name="New_Value" ColumnName="New_Value" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Organisation_News">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Organisation_News">
+              <MappingFragment StoreEntitySet="Organisation_News">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1236,7 +1216,6 @@
           <EntitySetMapping Name="Registration_Request">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Registration_Request">
               <MappingFragment StoreEntitySet="Registration_Request">
-                <ScalarProperty Name="Birth" ColumnName="Birth" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -1246,6 +1225,7 @@
                 <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
                 <ScalarProperty Name="Request_Status_ID" ColumnName="Request_Status_ID" />
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1254,17 +1234,18 @@
               <MappingFragment StoreEntitySet="Report">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
-                <ScalarProperty Name="Repoort_Type_ID" ColumnName="Repoort_Type_ID" />
                 <ScalarProperty Name="Document_ID" ColumnName="Document_ID" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Report_Type">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Report_Type">
-              <MappingFragment StoreEntitySet="Report_Type">
+          <EntitySetMapping Name="Request_Decline">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Request_Decline">
+              <MappingFragment StoreEntitySet="Request_Decline">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Registration_Request_ID" ColumnName="Registration_Request_ID" />
+                <ScalarProperty Name="Decline_Reason" ColumnName="Decline_Reason" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1290,7 +1271,6 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Birth" ColumnName="Birth" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -1300,6 +1280,7 @@
                 <ScalarProperty Name="Creation_date" ColumnName="Creation_date" />
                 <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
                 <ScalarProperty Name="User_Status_ID" ColumnName="User_Status_ID" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1316,47 +1297,6 @@
               <MappingFragment StoreEntitySet="User_Status">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Organisation_News">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Organisation_News">
-              <MappingFragment StoreEntitySet="Organisation_News">
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Request_Decline">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Request_Decline">
-              <MappingFragment StoreEntitySet="Request_Decline">
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="Decline_Reason" ColumnName="Decline_Reason" />
-                <ScalarProperty Name="Registration_Request_ID" ColumnName="Registration_Request_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Login_Status">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Login_Status">
-              <MappingFragment StoreEntitySet="Login_Status">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="News_Change_History">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.News_Change_History">
-              <MappingFragment StoreEntitySet="News_Change_History">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="New_Value" ColumnName="New_Value" />
-                <ScalarProperty Name="Old_Value" ColumnName="Old_Value" />
-                <ScalarProperty Name="News_ID" ColumnName="News_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

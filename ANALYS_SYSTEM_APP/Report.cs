@@ -16,11 +16,9 @@ namespace ANALYS_SYSTEM_APP
     {
         public int ID { get; set; }
         public Nullable<System.DateTime> Creation_Date { get; set; }
-        public Nullable<int> Repoort_Type_ID { get; set; }
         public Nullable<int> Document_ID { get; set; }
         public Nullable<int> User_ID { get; set; }
     
-        public virtual Report_Type Report_Type { get; set; }
         public virtual User User { get; set; }
     }
 }

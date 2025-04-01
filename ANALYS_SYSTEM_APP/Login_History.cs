@@ -19,7 +19,7 @@ namespace ANALYS_SYSTEM_APP
         public Nullable<int> User_ID { get; set; }
         public Nullable<int> Login_Status_ID { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Login_Status Login_Status { get; set; }
+        public virtual User User { get; set; }
     }
 }
