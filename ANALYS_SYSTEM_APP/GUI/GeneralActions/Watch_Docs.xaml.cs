@@ -105,99 +105,113 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 
         private void LoadExcelToDataGrid(string filePath)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            try
             {
-                var worksheet = package.Workbook.Worksheets[0]; // Берем первый лист
-                int colCount = worksheet.Dimension.End.Column;
-                int rowCount = worksheet.Dimension.End.Row;
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-                var data = new List<ExpandoObject>();
-
-                // Получаем заголовки
-                var headers = new List<string>();
-                for (int col = 1; col <= colCount; col++)
+                using (var package = new ExcelPackage(new FileInfo(filePath)))
                 {
-                    headers.Add(worksheet.Cells[1, col].Text);
-                }
+                    var worksheet = package.Workbook.Worksheets[0]; // Берем первый лист
+                    int colCount = worksheet.Dimension.End.Column;
+                    int rowCount = worksheet.Dimension.End.Row;
 
-                // Читаем строки и конвертируем в ExpandoObject
-                for (int row = 2; row <= rowCount; row++) // Начинаем со 2-й строки, так как 1-я — заголовки
-                {
-                    var expando = new ExpandoObject() as IDictionary<string, object>;
+                    var data = new List<ExpandoObject>();
+
+                    // Получаем заголовки
+                    var headers = new List<string>();
                     for (int col = 1; col <= colCount; col++)
                     {
-                        expando[headers[col - 1]] = worksheet.Cells[row, col].Text;
+                        headers.Add(worksheet.Cells[1, col].Text);
                     }
-                    data.Add((ExpandoObject)expando);
-                }
 
-                // Очищаем старые колонки
-                Selected_Doc_Data.Columns.Clear();
-                foreach (var key in headers)
-                {
-                    Selected_Doc_Data.Columns.Add(new DataGridTextColumn
+                    // Читаем строки и конвертируем в ExpandoObject
+                    for (int row = 2; row <= rowCount; row++) // Начинаем со 2-й строки, так как 1-я — заголовки
                     {
-                        Header = key,
-                        Binding = new Binding($"[{key}]")
-                    });
+                        var expando = new ExpandoObject() as IDictionary<string, object>;
+                        for (int col = 1; col <= colCount; col++)
+                        {
+                            expando[headers[col - 1]] = worksheet.Cells[row, col].Text;
+                        }
+                        data.Add((ExpandoObject)expando);
+                    }
+
+                    // Очищаем старые колонки
+                    Selected_Doc_Data.Columns.Clear();
+                    foreach (var key in headers)
+                    {
+                        Selected_Doc_Data.Columns.Add(new DataGridTextColumn
+                        {
+                            Header = key,
+                            Binding = new Binding($"[{key}]")
+                        });
+                    }
+
+                    // Преобразуем в Dictionary<string, object> для привязки
+                    var list = data.Select(expando =>
+                        ((IDictionary<string, object>)expando)
+                        .ToDictionary(kvp => kvp.Key, kvp => kvp.Value?.ToString() ?? "")
+                    ).ToList();
+
+                    // Привязываем к DataGrid
+                    Selected_Doc_Data.ItemsSource = null;
+                    Selected_Doc_Data.ItemsSource = list;
+                    Selected_Doc_Data.Items.Refresh();
                 }
-
-                // Преобразуем в Dictionary<string, object> для привязки
-                var list = data.Select(expando =>
-                    ((IDictionary<string, object>)expando)
-                    .ToDictionary(kvp => kvp.Key, kvp => kvp.Value?.ToString() ?? "")
-                ).ToList();
-
-                // Привязываем к DataGrid
-                Selected_Doc_Data.ItemsSource = null;
-                Selected_Doc_Data.ItemsSource = list;
-                Selected_Doc_Data.Items.Refresh();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
 
         private void LoadCsvToDataGrid(string filePath)
         {
-            using (var reader = new StreamReader(filePath))
-            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";" }))
+            try
             {
-                var records = csv.GetRecords<dynamic>().ToList();
-                var data = new List<ExpandoObject>();
-
-                foreach (var record in records)
+                using (var reader = new StreamReader(filePath))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = ";" }))
                 {
-                    var expando = new ExpandoObject() as IDictionary<string, object>;
-                    foreach (var kvp in (IDictionary<string, object>)record)
-                    {
-                        expando[kvp.Key] = kvp.Value ?? "";
-                    }
-                    data.Add((ExpandoObject)expando);
-                }
+                    var records = csv.GetRecords<dynamic>().ToList();
+                    var data = new List<ExpandoObject>();
 
-                if (data.Count > 0)
-                {
-                    Selected_Doc_Data.Columns.Clear(); // Очищаем старые колонки
-                    foreach (var key in ((IDictionary<string, object>)data[0]).Keys)
+                    foreach (var record in records)
                     {
-                        Selected_Doc_Data.Columns.Add(new DataGridTextColumn
+                        var expando = new ExpandoObject() as IDictionary<string, object>;
+                        foreach (var kvp in (IDictionary<string, object>)record)
                         {
-                            Header = key,
-                            Binding = new Binding($"[{key}]") // Привязка к ключу
-                        });
+                            expando[kvp.Key] = kvp.Value ?? "";
+                        }
+                        data.Add((ExpandoObject)expando);
                     }
+
+                    if (data.Count > 0)
+                    {
+                        Selected_Doc_Data.Columns.Clear(); // Очищаем старые колонки
+                        foreach (var key in ((IDictionary<string, object>)data[0]).Keys)
+                        {
+                            Selected_Doc_Data.Columns.Add(new DataGridTextColumn
+                            {
+                                Header = key,
+                                Binding = new Binding($"[{key}]") // Привязка к ключу
+                            });
+                        }
+                    }
+
+                    var list = data.Select(expando =>
+                    ((IDictionary<string, object>)expando)
+                    .ToDictionary(kvp => kvp.Key, kvp => kvp.Value?.ToString() ?? "")
+                    ).ToList();
+
+                    Selected_Doc_Data.ItemsSource = null;
+                    Selected_Doc_Data.ItemsSource = list;
+                    Selected_Doc_Data.Items.Refresh();
                 }
-
-                var list = data.Select(expando =>
-                ((IDictionary<string, object>)expando)
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value?.ToString() ?? "")
-                ).ToList();
-
-                Selected_Doc_Data.ItemsSource = null;
-                Selected_Doc_Data.ItemsSource = list;
-                Selected_Doc_Data.Items.Refresh();
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            } 
         }
 
 

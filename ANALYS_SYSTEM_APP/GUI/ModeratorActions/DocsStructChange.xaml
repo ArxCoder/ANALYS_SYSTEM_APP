@@ -61,7 +61,7 @@
         <StackPanel Orientation="Vertical" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,50,0,0">
             <TextBlock Text="Список структур файлов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-            <ListView x:Name="FileStructList" Width="500" HorizontalAlignment="Center" Height="700" BorderBrush="Black" BorderThickness="1">
+            <ListView x:Name="FileStructList" Width="500" HorizontalAlignment="Center" Height="700" BorderBrush="Black" BorderThickness="1" MouseDoubleClick="FileStructList_MouseDoubleClick">
                 <ListView.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -82,18 +82,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-
-            <Button Margin="0,30,0,30" x:Name="ChangeStruct" Width="500" HorizontalAlignment="Center" Height="35"
-                Content="Редактировать структуру" FontSize="20" FontWeight="Bold">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Margin="0,50,0,0">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="1" Margin="0,50,20,0">
             <TextBlock Text="Создание новой структуры" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
 
             <TextBlock Text="Название типа документа" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
@@ -134,7 +125,57 @@
             </TextBox>
 
             <Button Margin="0,30,0,30" x:Name="AddNewStruct" Width="400" HorizontalAlignment="Center" Height="35"
-        Content="Создать новую структуру" FontSize="20" FontWeight="Bold">
+        Content="Создать новую структуру" FontSize="20" FontWeight="Bold" Click="AddNewStruct_Click">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Margin="0,50,20,0">
+            <TextBlock Text="Редактирование структуры" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Название типа документа" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="ChangeDocTypeName" Width="400" Height="35" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Название структуры документа" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="ChangeDocStructName" Width="400" Height="35" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Описание структуры" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="ChangeDocStructDesc" Width="400" Height="150" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+             TextWrapping="Wrap">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <TextBlock Text="Список атрибутов структуры" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBox x:Name="ChangeDocStructAttList" Width="400" Height="35" Margin="0,10,0,20" FontSize="20" HorizontalContentAlignment="Left" VerticalContentAlignment="Center">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <Button Margin="0,30,0,30" x:Name="ChangeStruct" Width="400" HorizontalAlignment="Center" Height="35"
+    Content="Изменить" FontSize="20" FontWeight="Bold" Click="ChangeStruct_Click">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>

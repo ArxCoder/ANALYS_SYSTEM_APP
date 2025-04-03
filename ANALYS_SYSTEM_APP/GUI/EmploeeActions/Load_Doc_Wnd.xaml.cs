@@ -204,25 +204,33 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
         /// <returns>Результат валидации: true - заголовки верны, false - есть расхождение в наличии основных заголовков</returns>
         private bool ValidateExcelHeaders(List<string> expectedHeaders, string filePath)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-            //Чтение заголовков из excel таблицы
-            using (var package = new ExcelPackage(new System.IO.FileInfo(filePath)))
+            try
             {
-                var worksheet = package.Workbook.Worksheets[0];
-                int columnCount = worksheet.Dimension.End.Column;
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-                //Инициализация списка заголовков в excel таблице
-                List<string> actualheaders = new List<string>();
-
-                //Перенос заголовков в список
-                for (int col = 1; col <= columnCount; col++)
+                //Чтение заголовков из excel таблицы
+                using (var package = new ExcelPackage(new System.IO.FileInfo(filePath)))
                 {
-                    actualheaders.Add(worksheet.Cells[1, col].Text.Trim());
-                }
+                    var worksheet = package.Workbook.Worksheets[0];
+                    int columnCount = worksheet.Dimension.End.Column;
 
-                //Сравнение списков с заголовками
-                return expectedHeaders.All(actualheaders.Contains) && actualheaders.All(expectedHeaders.Contains);
+                    //Инициализация списка заголовков в excel таблице
+                    List<string> actualheaders = new List<string>();
+
+                    //Перенос заголовков в список
+                    for (int col = 1; col <= columnCount; col++)
+                    {
+                        actualheaders.Add(worksheet.Cells[1, col].Text.Trim());
+                    }
+
+                    //Сравнение списков с заголовками
+                    return expectedHeaders.All(actualheaders.Contains) && actualheaders.All(expectedHeaders.Contains);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
             }
         }
 
@@ -246,56 +254,63 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                 return;
             }
 
-            Document_Type selectedType = New_Doc_Type.SelectedItem as Document_Type;
-            //Получение списка необходимых заголовков в файле из БД
-            string AttributesList = database.Document_Struct.Where(ds => ds.Type_ID == selectedType.ID).Select(dt => dt.Attributes_List).FirstOrDefault();
-            List<string> neededHeaders = JsonConvert.DeserializeObject<List<string>>(AttributesList);
-
-            //Проверка на соответствие заголовков
-            if (ValidateCsvHeaders(pathToSelectedFile, neededHeaders))
+            try
             {
-                if (File.Exists($"{pathToLoadedFiles}{openFileDialog.SafeFileName}"))
+                Document_Type selectedType = New_Doc_Type.SelectedItem as Document_Type;
+                //Получение списка необходимых заголовков в файле из БД
+                string AttributesList = database.Document_Struct.Where(ds => ds.Type_ID == selectedType.ID).Select(dt => dt.Attributes_List).FirstOrDefault();
+                List<string> neededHeaders = JsonConvert.DeserializeObject<List<string>>(AttributesList);
+
+                //Проверка на соответствие заголовков
+                if (ValidateCsvHeaders(pathToSelectedFile, neededHeaders))
                 {
-                    MessageBox.Show("Файл с таким именем уже существует, переименуйте файл", "Ошибка загрузки",
-                        MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    if (File.Exists($"{pathToLoadedFiles}{openFileDialog.SafeFileName}"))
+                    {
+                        MessageBox.Show("Файл с таким именем уже существует, переименуйте файл", "Ошибка загрузки",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        return;
+                    }
+
+                    File.Copy(pathToSelectedFile, $"{pathToLoadedFiles}{openFileDialog.SafeFileName}");
+
+                    Document newDocument = new Document()
+                    {
+                        Date = DateTime.Now,
+                        Name = openFileDialog.SafeFileName,
+                        Status_ID = 1,
+                        Type_ID = selectedType.ID
+                    };
+
+                    database.Document.Add(newDocument);
+                    database.SaveChanges();
+
+                    Data_Source data_Source = New_Doc_Src.SelectedItem as Data_Source;
+
+                    Load_History load_History = new Load_History()
+                    {
+                        Source_File_Name = openFileDialog.FileName,
+                        Date = DateTime.Now,
+                        User_ID = current_User.ID,
+                        Document_ID = newDocument.ID,
+                        Data_Source_ID = data_Source.ID
+                    };
+
+                    database.Load_History.Add(load_History);
+                    database.SaveChanges();
+                    Refresh_Doc_List();
+                    MessageBox.Show("Файл успешно загружен", "Загрузка файла",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Выбранный файл не соответствует структуре", "Ошибка загрузки",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-
-                File.Copy(pathToSelectedFile, $"{pathToLoadedFiles}{openFileDialog.SafeFileName}");
-
-                Document newDocument = new Document()
-                {
-                    Date = DateTime.Now,
-                    Name = openFileDialog.SafeFileName,
-                    Status_ID = 1,
-                    Type_ID = selectedType.ID
-                };
-
-                database.Document.Add(newDocument);
-                database.SaveChanges();
-
-                Data_Source data_Source = New_Doc_Src.SelectedItem as Data_Source;
-
-                Load_History load_History = new Load_History()
-                {
-                    Source_File_Name = openFileDialog.FileName,
-                    Date = DateTime.Now,
-                    User_ID = current_User.ID,
-                    Document_ID = newDocument.ID,
-                    Data_Source_ID = data_Source.ID
-                };
-
-                database.Load_History.Add(load_History);
-                database.SaveChanges();
-                Refresh_Doc_List();
-                MessageBox.Show("Файл успешно загружен", "Загрузка файла",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Выбранный файл не соответствует структуре", "Ошибка загрузки",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -321,28 +336,36 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
         /// <returns>Результат валидации true/false</returns>
         static bool ValidateCsvHeaders(string filePath, List<string> expectedHeaders)
         {
-            //Получение кодировки выбранного файла
-            var encoding = DetectFileEncoding(filePath);
-
-            //Чтение CSV файла
-            using (var reader = new StreamReader(filePath, encoding))
-            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+            try
             {
-                Delimiter = ";",
-                TrimOptions = TrimOptions.Trim, 
-                IgnoreBlankLines = true 
-            }))
+                //Получение кодировки выбранного файла
+                var encoding = DetectFileEncoding(filePath);
+
+                //Чтение CSV файла
+                using (var reader = new StreamReader(filePath, encoding))
+                using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    Delimiter = ";",
+                    TrimOptions = TrimOptions.Trim,
+                    IgnoreBlankLines = true
+                }))
+                {
+                    csv.Read();
+                    csv.ReadHeader();
+
+                    //Получение списка заголовков
+                    var actualHeaders = csv.HeaderRecord?
+                        .Select(h => h.Replace("\"", "").Trim())
+                        .ToList() ?? new List<string>();
+
+                    //Сравнение заголовков
+                    return expectedHeaders.All(actualHeaders.Contains) && actualHeaders.All(expectedHeaders.Contains);
+                }
+            }
+            catch(Exception ex)
             {
-                csv.Read();
-                csv.ReadHeader();
-
-                //Получение списка заголовков
-                var actualHeaders = csv.HeaderRecord?
-                    .Select(h => h.Replace("\"", "").Trim())
-                    .ToList() ?? new List<string>();
-
-                //Сравнение заголовков
-                return expectedHeaders.All(actualHeaders.Contains) && actualHeaders.All(expectedHeaders.Contains);
+                MessageBox.Show(ex.Message);
+                return false;
             }
         }
     }

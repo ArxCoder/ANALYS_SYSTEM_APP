@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -149,6 +150,17 @@ namespace ANALYS_SYSTEM_APP
             {
                 MessageBox.Show("Для создания заявки на регистрацию заполните все поля.", "Ошибка регистрации", MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
+                return;
+            }
+
+            //Регулярное выражение на проверку пароля
+            string pattern = @"^(?=.*\d)(?=.*[A-Z])(?=.*[:,\-+_]).{10,}$";
+            if (!Regex.IsMatch(Reg_Password_Input.Text, pattern))
+            {
+                MessageBox.Show("Пароль должен соответствовать следующим требованиям:" +
+                    "\nМинимум 1 цифра, 1 заглвная буква, 1 спец символ: : , - + _" +
+                    "\nМинимальная длина пароля 10 символов", "Ошибка регистрации",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
