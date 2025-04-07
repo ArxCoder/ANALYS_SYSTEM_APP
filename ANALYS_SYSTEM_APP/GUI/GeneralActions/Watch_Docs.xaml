@@ -62,7 +62,7 @@
             <TextBlock Text="Список загруженных документов" FontSize="24" FontWeight="Bold"
                HorizontalAlignment="Center" Margin="0,0,0,30"/>
             <ListView x:Name="Loaded_Docs_Files"
-    BorderBrush="Black" BorderThickness="1" Width="500" Height="400" MouseDoubleClick="Loaded_Docs_Files_MouseDoubleClick">
+    BorderBrush="Black" BorderThickness="1" Width="500" Height="350" MouseDoubleClick="Loaded_Docs_Files_MouseDoubleClick">
                 <ListView.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
@@ -97,6 +97,11 @@
            Margin="0,20,0,20"/>
             <ComboBox x:Name="DocumentsSortByType" Height="30" FontSize="20"
                       DisplayMemberPath="Name" SelectionChanged="DocumentsSortByType_SelectionChanged"/>
+
+            <TextBlock Text="Поставщик документа" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"
+           Margin="0,20,0,20"/>
+            <ComboBox x:Name="DocumentsSortByProvider" Height="30" FontSize="20"
+                      DisplayMemberPath="Name" SelectionChanged="DocumentsSortByProvider_SelectionChanged"/>
 
             <Button x:Name="DropFilters" Content="Сбросить фильтр" FontSize="24" FontWeight="Bold" Height="35"
                     Margin="0,20,0,0" Click="DropFilters_Click">

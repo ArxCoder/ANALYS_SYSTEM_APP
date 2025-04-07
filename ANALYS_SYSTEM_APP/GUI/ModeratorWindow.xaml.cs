@@ -139,5 +139,12 @@ namespace ANALYS_SYSTEM_APP.GUI
             docsStructChange.Show();
             this.Close();
         }
+
+        private void ProviderActions_Click(object sender, RoutedEventArgs e)
+        {
+            ProviderChange providerChange = new ProviderChange(current_User);
+            providerChange.Show();
+            this.Close();
+        }
     }
 }

@@ -44,5 +44,8 @@ namespace ANALYS_SYSTEM_APP
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<User_Role> User_Role { get; set; }
         public virtual DbSet<User_Status> User_Status { get; set; }
+        public virtual DbSet<Organisation_Type> Organisation_Type { get; set; }
+        public virtual DbSet<Provider> Provider { get; set; }
+        public virtual DbSet<Provider_Change_Story> Provider_Change_Story { get; set; }
     }
 }

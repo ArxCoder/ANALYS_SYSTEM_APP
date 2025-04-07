@@ -44,6 +44,13 @@
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Role" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Status" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Organisation_Type" Width="1.5" PointX="8.375" PointY="1.375" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Provider" Width="1.5" PointX="10.625" PointY="1" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Provider" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Organisation_Type" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Provider_Change_Story" Width="1.5" PointX="12.875" PointY="7.375" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_Provider" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

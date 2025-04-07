@@ -28,6 +28,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using iTextSharp.text.pdf;
 using ClosedXML.Excel;
 using OfficeOpenXml.ConditionalFormatting.Contracts;
+using DocumentFormat.OpenXml.ExtendedProperties;
 
 namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
 {
@@ -43,6 +44,8 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         //Таймер для отображения текущего времени
         DispatcherTimer CurrentTimer = new DispatcherTimer();
         private readonly string pathToLoadedFiles = $@"{System.IO.Directory.GetCurrentDirectory()}\FILES\";
+        private List<Document> DocsList = new List<Document>();
+
         public Watch_Docs(User current_User)
         {
             InitializeComponent();
@@ -57,9 +60,12 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             CurrentTimer.Start();
 
             DocumentsSortByType.ItemsSource = database.Data_Source.ToList();
+            DocumentsSortByProvider.ItemsSource = database.Provider.ToList();
 
             //Загрузка списка документов
-            Refresh_Doc_List(database.Document.Where(doc => doc.Status_ID != 4).ToList());
+            DocsList.Clear();
+            DocsList = database.Document.Where(doc => doc.Status_ID != 4).ToList();
+            Refresh_Doc_List();
 
             if (current_User.Role_ID == 1)
             {
@@ -68,11 +74,11 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         }
 
         //Функция загрузки списка документов
-        private void Refresh_Doc_List(List<Document> Docs)
+        private void Refresh_Doc_List()
         {
             Loaded_Docs_Files.ItemsSource = null;
             Loaded_Docs_Files.Items.Clear();
-            Loaded_Docs_Files.ItemsSource = Docs;
+            Loaded_Docs_Files.ItemsSource = this.DocsList.OrderByDescending(doc => doc.Date);
         }
 
         //Получение текущего времени
@@ -246,20 +252,39 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             {
                 //Строка, содержащая часть или полное наименование типа документа
                 string contains = DocumentsSortByName.Text.ToString();
-                //Источник данных загрузки документа
-                Data_Source selectedType = new Data_Source();
 
-                if (DocumentsSortByType.SelectedItem == null)
-                {   
-                    //Если не выбран источник загрузки документа, то загрузка документов только по имени
-                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Status_ID != 4).ToList());
-                }
-                else
+                List<Document> documents = database.Document.Where(doc => doc.Status_ID != 4 && doc.Name.Contains(contains)).ToList();
+
+                if (DocumentsSortByType.SelectedItem != null)
                 {
-                    //Загрузка сортированного списка документов
-                    selectedType = DocumentsSortByType.SelectedItem as Data_Source;
-                    Refresh_Doc_List(database.Document.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Type_ID == selectedType.ID && doc.Status_ID != 4).ToList());
+                    Data_Source selectedType = DocumentsSortByType.SelectedItem as Data_Source;
+
+                    foreach (Load_History lh in database.Load_History)
+                    {
+                        if (lh.Data_Source_ID != selectedType.ID)
+                        {
+                            Document document = database.Document.Where(doc => doc.Status_ID != 4 && doc.ID == lh.Document_ID).FirstOrDefault();
+                            if (document != null)
+                            {
+                                documents.Remove(document);
+                            }
+                        }
+                    }
                 }
+
+                if (DocumentsSortByProvider.SelectedItem != null)
+                {
+                    Provider selectedProvider = DocumentsSortByProvider.SelectedItem as Provider;
+                    foreach (Document document in documents)
+                    {
+                        if (document.Provider_ID != selectedProvider.ID)
+                            documents.Remove(document);
+                    }
+                }
+
+                DocsList.Clear();
+                DocsList = documents;
+                Refresh_Doc_List();
             }
             catch(Exception ex)
             {
@@ -285,14 +310,24 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
                     neededDocs.Add(database.Document.Where(doc => doc.ID == story.Document_ID).FirstOrDefault());
                 }
 
-                if (String.Equals(contains, String.Empty))
+                if (!String.Equals(DocumentsSortByName.Text, String.Empty))
                 {
-                    Refresh_Doc_List(neededDocs);
+                    neededDocs = neededDocs.Where(doc => doc.Name.Contains(DocumentsSortByName.Text)).ToList();
                 }
-                else
+
+                if (DocumentsSortByProvider.SelectedItem != null)
                 {
-                    Refresh_Doc_List(neededDocs.Where(doc => doc.Document_Type.Name.Contains(contains) && doc.Status_ID != 4).ToList());
+                    Provider selectedProvider = DocumentsSortByProvider.SelectedItem as Provider;
+                    foreach(Document document in neededDocs)
+                    {
+                        if (document.Provider_ID != selectedProvider.ID)
+                            neededDocs.Remove(document);
+                    }
                 }
+
+                DocsList.Clear();
+                DocsList = neededDocs;
+                Refresh_Doc_List();
             }
             catch(Exception ex)
             {
@@ -304,7 +339,11 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
         {
             DocumentsSortByName.Text = String.Empty;
             DocumentsSortByType.SelectedItem = null;
-            Refresh_Doc_List(database.Document.Where(doc => doc.Status_ID != 4).ToList());
+            DocumentsSortByProvider.SelectedItem = null;
+
+            DocsList.Clear();
+            DocsList = database.Document.Where(doc => doc.Status_ID != 4).ToList();
+            Refresh_Doc_List();
         }
 
         private void SaveFile_Click(object sender, RoutedEventArgs e)
@@ -388,5 +427,39 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             }
         }
 
+        private void DocumentsSortByProvider_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DocumentsSortByProvider.SelectedItem == null)
+                return;
+
+            Provider selectedProvider = DocumentsSortByProvider.SelectedItem as Provider;
+            List<Document> documents = database.Document.Where(doc => doc.Provider_ID == selectedProvider.ID && doc.Status_ID != 4).ToList();
+
+            if (!String.Equals(DocumentsSortByName.Text, String.Empty))
+            {
+                documents = documents.Where(doc => doc.Name.Contains(DocumentsSortByName.Text)).ToList();
+            }
+
+            if (DocumentsSortByType.SelectedItem != null)
+            {
+                Data_Source selectedType = DocumentsSortByType.SelectedItem as Data_Source;
+
+                foreach (Load_History lh in database.Load_History)
+                {
+                    if (lh.Data_Source_ID != selectedType.ID)
+                    {
+                        Document document = database.Document.Where(doc => doc.Status_ID != 4 && doc.ID == lh.Document_ID).FirstOrDefault();
+                        if (document != null)
+                        {
+                            documents.Remove(document);
+                        }
+                    }
+                }
+            }
+
+            DocsList.Clear();
+            DocsList = documents;
+            Refresh_Doc_List();
+        }
     }
 }

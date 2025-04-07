@@ -24,6 +24,7 @@ namespace ANALYS_SYSTEM_APP
             this.Organisation_News = new HashSet<Organisation_News>();
             this.Report = new HashSet<Report>();
             this.Request_Decline = new HashSet<Request_Decline>();
+            this.Provider_Change_Story = new HashSet<Provider_Change_Story>();
         }
     
         public int ID { get; set; }
@@ -53,5 +54,7 @@ namespace ANALYS_SYSTEM_APP
         public virtual ICollection<Request_Decline> Request_Decline { get; set; }
         public virtual User_Role User_Role { get; set; }
         public virtual User_Status User_Status { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Provider_Change_Story> Provider_Change_Story { get; set; }
     }
 }

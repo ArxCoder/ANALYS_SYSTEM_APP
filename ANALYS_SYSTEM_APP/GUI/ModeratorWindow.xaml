@@ -57,69 +57,85 @@
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0" BorderBrush="Black" BorderThickness="1" CornerRadius="10">
-            <StackPanel Orientation="Vertical" Margin="20">
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
-                    <StackPanel Orientation="Vertical" Margin="5">
-                        <TextBlock Text="Заявки на регистрацию" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock x:Name="Registration_Request_Count" FontSize="20" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="400"/>
-                        <Button x:Name="Check_Request_List" Width="400" Height="30" Margin="0,10,0,0" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                Content="Просмотреть список заявок" Click="Check_Request_List_Click">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="10"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </StackPanel>
-                </Border>
+        <ScrollViewer Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0" Height="800" VerticalScrollBarVisibility="Hidden">
+            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10">
+                <StackPanel Margin="20" Orientation="Vertical">
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock Text="Заявки на регистрацию" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock x:Name="Registration_Request_Count" FontSize="20" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="400"/>
+                            <Button x:Name="Check_Request_List" Width="400" Height="30" Margin="0,10,0,0" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                        Content="Просмотреть список заявок" Click="Check_Request_List_Click">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
+                    </Border>
 
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
-                    <StackPanel Orientation="Vertical" Margin="5">
-                        <TextBlock Text="Список пользователей" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Просмотр списка пользователей для администрирования графика входа и управления доступом к информации." Width="400" TextWrapping="Wrap"
-                                   FontSize="20" Margin="0,10,0,0"/>
-                        <Button x:Name="Check_User_List" Width="400" Height="30" Content="Список пользователей" Margin="0,10,0,0" FontSize="20" FontWeight="Bold"
-                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Check_User_List_Click">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="10"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </StackPanel>
-                </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock Text="Список пользователей" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Просмотр списка пользователей для администрирования графика входа и управления доступом к информации." Width="400" TextWrapping="Wrap"
+                           FontSize="20" Margin="0,10,0,0"/>
+                            <Button x:Name="Check_User_List" Width="400" Height="30" Content="Список пользователей" Margin="0,10,0,0" FontSize="20" FontWeight="Bold"
+                        HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="Check_User_List_Click">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
+                    </Border>
 
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
-                    <StackPanel Orientation="Vertical" Margin="5">
-                        <TextBlock Text="Просмотр документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock Width="400" FontSize="20" Margin="0,10,0,0" TextWrapping="Wrap" Text="Просмотр списка документов для их проверки, администрирования и редактирования."/>
-                        <Button x:Name="Check_Document_List" Width="400" Content="Список документов" HorizontalContentAlignment="Center"
-                                VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,10,0,0" Click="Check_Document_List_Click">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="10"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </StackPanel>
-                </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock Text="Просмотр документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Width="400" FontSize="20" Margin="0,10,0,0" TextWrapping="Wrap" Text="Просмотр списка документов для их проверки, администрирования и редактирования."/>
+                            <Button x:Name="Check_Document_List" Width="400" Content="Список документов" HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" FontSize="20" FontWeight="Bold" Margin="0,10,0,0" Click="Check_Document_List_Click">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
+                    </Border>
 
-                <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
-                    <StackPanel Orientation="Vertical" Margin="5">
-                        <TextBlock Text="Структура документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <TextBlock FontSize="20" Width="400" TextWrapping="Wrap" Margin="0,10,0,0" Text="Просмотр структур документов, их редактирование и создание."/>
-                        <Button x:Name="DocumentStructChange" Width="400" Content="Структура документов" FontSize="20" FontWeight="Bold" Margin="0,10,0,0" Click="DocumentStructChange_Click">
-                            <Button.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="10"/>
-                                </Style>
-                            </Button.Resources>
-                        </Button>
-                    </StackPanel>
-                </Border>
-            </StackPanel>
-        </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock Text="Структура документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock FontSize="20" Width="400" TextWrapping="Wrap" Margin="0,10,0,0" Text="Просмотр структур документов, их редактирование и создание."/>
+                            <Button x:Name="DocumentStructChange" Width="400" Content="Структура документов" FontSize="20" FontWeight="Bold" Margin="0,10,0,0" Click="DocumentStructChange_Click">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock Text="Поставщики документов" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock FontSize="20" Width="400" TextWrapping="Wrap" Margin="0,10,0,0" Text="Просмотр списка поставщиков, их изменение и создание новых."/>
+                            <Button x:Name="ProviderActions" Width="400" Content="Поставщики документов" FontSize="20" FontWeight="Bold" Margin="0,10,0,0" Click="ProviderActions_Click">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
 
         <TextBlock FontSize="24" FontWeight="Bold" Text="Новости организации" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
         <ListView x:Name="News_List" Height="800" Grid.Row="1" HorizontalAlignment="Center" Margin="0,50,0,0"

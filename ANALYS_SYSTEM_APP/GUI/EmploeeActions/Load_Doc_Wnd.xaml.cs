@@ -53,6 +53,7 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
             //Загрузка информации в ComboBox
             New_Doc_Src.ItemsSource = database.Data_Source.ToList();
             New_Doc_Type.ItemsSource = database.Document_Type.ToList();
+            New_Doc_Provider.ItemsSource = database.Provider.ToList();
 
             //Загрузка списка документов
             Refresh_Doc_List();
@@ -84,7 +85,8 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
         {
             //Валидация на пустые значения полей
             if (New_Doc_Src.SelectedItem is null ||
-                New_Doc_Type.SelectedItem is null)
+                New_Doc_Type.SelectedItem is null ||
+                New_Doc_Provider.SelectedItem is null)
             {
                 MessageBox.Show("Для выбора файла заполните все поля", "Загрузка документа",
                     MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -131,6 +133,7 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                 }
 
                 Document_Type selectedType = New_Doc_Type.SelectedItem as Document_Type;
+                Provider selectedProvider = New_Doc_Provider.SelectedItem as Provider;
                 //Получение списка необходимых заголовков в файле из БД
                 string AttributesList = database.Document_Struct.Where(ds => ds.Type_ID == selectedType.ID).Select(dt => dt.Attributes_List).FirstOrDefault();
                 List<string> neededHeaders = JsonConvert.DeserializeObject<List<string>>(AttributesList);
@@ -156,6 +159,7 @@ namespace ANALYS_SYSTEM_APP.GUI.EmploeeActions
                     {
                         Date = DateTime.Now,
                         Name = openFileDialog.SafeFileName,
+                        Provider_ID = selectedProvider.ID,
                         Status_ID = 1,
                         Type_ID = selectedType.ID
                     };

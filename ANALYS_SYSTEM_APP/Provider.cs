@@ -12,28 +12,26 @@ namespace ANALYS_SYSTEM_APP
     using System;
     using System.Collections.Generic;
     
-    public partial class Document
+    public partial class Provider
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Document()
+        public Provider()
         {
-            this.Change_History = new HashSet<Change_History>();
-            this.Load_History = new HashSet<Load_History>();
+            this.Document = new HashSet<Document>();
+            this.Provider_Change_Story = new HashSet<Provider_Change_Story>();
         }
     
         public int ID { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
         public string Name { get; set; }
-        public Nullable<int> Status_ID { get; set; }
-        public Nullable<int> Type_ID { get; set; }
-        public Nullable<int> Provider_ID { get; set; }
+        public Nullable<int> Organisation_Type_ID { get; set; }
+        public string Owner { get; set; }
+        public string Location { get; set; }
+        public Nullable<System.DateTime> Creation_Date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Change_History> Change_History { get; set; }
-        public virtual Document_Status Document_Status { get; set; }
-        public virtual Document_Type Document_Type { get; set; }
+        public virtual ICollection<Document> Document { get; set; }
+        public virtual Organisation_Type Organisation_Type { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Load_History> Load_History { get; set; }
-        public virtual Provider Provider { get; set; }
+        public virtual ICollection<Provider_Change_Story> Provider_Change_Story { get; set; }
     }
 }
