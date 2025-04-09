@@ -300,6 +300,7 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
                     return;
 
                 Data_Source selectedDocType = DocumentsSortByType.SelectedItem as Data_Source;
+                Provider selectedProvider = DocumentsSortByProvider.SelectedItem as Provider;
                 string contains = DocumentsSortByName.Text.ToString();
 
                 List<Document> neededDocs = new List<Document>();
@@ -315,9 +316,8 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
                     neededDocs = neededDocs.Where(doc => doc.Name.Contains(DocumentsSortByName.Text)).ToList();
                 }
 
-                if (DocumentsSortByProvider.SelectedItem != null)
+                if (selectedProvider != null)
                 {
-                    Provider selectedProvider = DocumentsSortByProvider.SelectedItem as Provider;
                     foreach(Document document in neededDocs)
                     {
                         if (document.Provider_ID != selectedProvider.ID)

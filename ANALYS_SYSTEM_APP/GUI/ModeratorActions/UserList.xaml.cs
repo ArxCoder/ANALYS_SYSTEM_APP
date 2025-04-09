@@ -39,10 +39,10 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             CurrentTimer.Start();
 
             //Установка информации в список пользователей
-            Users_List.ItemsSource = database.User.ToList();
+            Users_List.ItemsSource = database.User.Where(u => u.ID != current_User.ID).ToList();
 
             //Заполнение ComboBox данными
-            User_Role.ItemsSource = database.User_Role.ToList();
+            User_Role.ItemsSource = database.User_Role.Where(role => role.ID != 3).ToList();
             User_Status.ItemsSource = database.User_Status.ToList();
         }
 
@@ -128,7 +128,7 @@ namespace ANALYS_SYSTEM_APP.GUI.ModeratorActions
             //Изменение информации в списке пользователей
             Users_List.ItemsSource = null;
             Users_List.Items.Clear();
-            Users_List.ItemsSource = database.User.ToList();
+            Users_List.ItemsSource = database.User.Where(u => u.ID != current_User.ID).ToList();
         }
     }
 }
