@@ -32,8 +32,8 @@ namespace ANALYS_SYSTEM_APP
         public virtual ICollection<Change_History> Change_History { get; set; }
         public virtual Document_Status Document_Status { get; set; }
         public virtual Document_Type Document_Type { get; set; }
+        public virtual Provider Provider { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Load_History> Load_History { get; set; }
-        public virtual Provider Provider { get; set; }
     }
 }

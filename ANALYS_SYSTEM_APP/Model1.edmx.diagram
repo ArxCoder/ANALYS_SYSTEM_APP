@@ -4,31 +4,34 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ce6b49ead8a14b229cca49af72181e86" Name="Diagram1">
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Change_History" Width="1.5" PointX="11.25" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Data_Source" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Status" Width="1.5" PointX="3.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Struct" Width="1.5" PointX="6" PointY="18.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Type" Width="1.5" PointX="3.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Load_History" Width="1.5" PointX="8.25" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Login_History" Width="1.5" PointX="8.25" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Login_Status" Width="1.5" PointX="6" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.News_Change_History" Width="1.5" PointX="10.5" PointY="17.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Organisation_News" Width="1.5" PointX="8.25" PointY="23.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Registration_Request" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Report" Width="1.5" PointX="8.25" PointY="27" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Request_Decline" Width="1.5" PointX="8.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Request_Status" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User" Width="1.5" PointX="6" PointY="10.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User_Role" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User_Status" Width="1.5" PointX="3.75" PointY="8.5" IsExpanded="true" />
+      <Diagram DiagramId="e166498cd59142cf836a9c0bba8fb6ca" Name="Diagram1">
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Change_History" Width="1.5" PointX="11.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Data_Source" Width="1.5" PointX="6" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document" Width="1.5" PointX="6" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Status" Width="1.5" PointX="3.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Struct" Width="1.5" PointX="6" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Document_Type" Width="1.5" PointX="3.75" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Load_History" Width="1.5" PointX="8.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Login_History" Width="1.5" PointX="8.25" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Login_Status" Width="1.5" PointX="6" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.News_Change_History" Width="1.5" PointX="10.5" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Organisation_News" Width="1.5" PointX="8.25" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Organisation_Type" Width="1.5" PointX="1.5" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Provider" Width="1.5" PointX="3.75" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Provider_Change_Story" Width="1.5" PointX="11.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Registration_Request" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Report" Width="1.5" PointX="8.25" PointY="31.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Request_Decline" Width="1.5" PointX="8.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Request_Status" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User" Width="1.5" PointX="6" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User_Role" Width="1.5" PointX="0.75" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.User_Status" Width="1.5" PointX="3.75" PointY="10" IsExpanded="true" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Change_History_Document" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Change_History_User" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Load_History_Data_Source" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Document_Status" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Document_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Provider" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Load_History_Document" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Struct_Document_Type" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Load_History_User" ManuallyRouted="false" />
@@ -37,6 +40,9 @@
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_News_Change_History_Organisation_News" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_News_Change_History_User" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Organisation_News_User" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Organisation_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_Provider" ManuallyRouted="false" />
+        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_User" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Registration_Request_Request_Status" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Registration_Request_User_Role" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_Registration_Request" ManuallyRouted="false" />
@@ -44,13 +50,6 @@
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Request_Decline_User" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Role" ManuallyRouted="false" />
         <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_User_User_Status" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Organisation_Type" Width="1.5" PointX="8.375" PointY="1.375" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Provider" Width="1.5" PointX="10.625" PointY="1" />
-        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Document_Provider" />
-        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Organisation_Type" />
-        <EntityTypeShape EntityType="ANALYS_SYSTEM_DBModel.Provider_Change_Story" Width="1.5" PointX="12.875" PointY="7.375" />
-        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_Provider" />
-        <AssociationConnector Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

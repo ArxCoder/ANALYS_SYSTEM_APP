@@ -36,16 +36,15 @@ namespace ANALYS_SYSTEM_APP
         public virtual DbSet<Login_Status> Login_Status { get; set; }
         public virtual DbSet<News_Change_History> News_Change_History { get; set; }
         public virtual DbSet<Organisation_News> Organisation_News { get; set; }
+        public virtual DbSet<Organisation_Type> Organisation_Type { get; set; }
+        public virtual DbSet<Provider> Provider { get; set; }
+        public virtual DbSet<Provider_Change_Story> Provider_Change_Story { get; set; }
         public virtual DbSet<Registration_Request> Registration_Request { get; set; }
         public virtual DbSet<Report> Report { get; set; }
         public virtual DbSet<Request_Decline> Request_Decline { get; set; }
         public virtual DbSet<Request_Status> Request_Status { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<User_Role> User_Role { get; set; }
         public virtual DbSet<User_Status> User_Status { get; set; }
-        public virtual DbSet<Organisation_Type> Organisation_Type { get; set; }
-        public virtual DbSet<Provider> Provider { get; set; }
-        public virtual DbSet<Provider_Change_Story> Provider_Change_Story { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище ANALYS_SYSTEM_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище ANALYS_SYSTEM_DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Change_History">
           <Key>
             <PropertyRef Name="ID" />
@@ -174,16 +174,6 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -521,7 +511,6 @@
           <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Request_Decline" EntityType="Self.Request_Decline" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Request_Status" EntityType="Self.Request_Status" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Role" EntityType="Self.User_Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_Status" EntityType="Self.User_Status" Schema="dbo" store:Type="Tables" />
@@ -622,7 +611,8 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ANALYS_SYSTEM_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -657,12 +647,12 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Status_ID" Type="Int32" />
           <Property Name="Type_ID" Type="Int32" />
+          <Property Name="Provider_ID" Type="Int32" />
           <NavigationProperty Name="Change_History" Relationship="Self.FK_Change_History_Document" FromRole="Document" ToRole="Change_History" />
           <NavigationProperty Name="Document_Status" Relationship="Self.FK_Document_Document_Status" FromRole="Document" ToRole="Document_Status" />
           <NavigationProperty Name="Document_Type" Relationship="Self.FK_Document_Document_Type" FromRole="Document" ToRole="Document_Type" />
+          <NavigationProperty Name="Provider" Relationship="Self.FK_Document_Provider" FromRole="Document" ToRole="Provider" />
           <NavigationProperty Name="Load_History" Relationship="Self.FK_Load_History_Document" FromRole="Document" ToRole="Load_History" />
-          <Property Name="Provider_ID" Type="Int32" />
-          <NavigationProperty Name="Provider" Relationship="ANALYS_SYSTEM_DBModel.FK_Document_Provider" FromRole="Document" ToRole="Provider" />
         </EntityType>
         <EntityType Name="Document_Status">
           <Key>
@@ -751,6 +741,39 @@
           <NavigationProperty Name="News_Change_History" Relationship="Self.FK_News_Change_History_Organisation_News" FromRole="Organisation_News" ToRole="News_Change_History" />
           <NavigationProperty Name="User" Relationship="Self.FK_Organisation_News_User" FromRole="Organisation_News" ToRole="User" />
         </EntityType>
+        <EntityType Name="Organisation_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Provider" Relationship="Self.FK_Provider_Organisation_Type" FromRole="Organisation_Type" ToRole="Provider" />
+        </EntityType>
+        <EntityType Name="Provider">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Organisation_Type_ID" Type="Int32" />
+          <Property Name="Owner" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Document" Relationship="Self.FK_Document_Provider" FromRole="Provider" ToRole="Document" />
+          <NavigationProperty Name="Organisation_Type" Relationship="Self.FK_Provider_Organisation_Type" FromRole="Provider" ToRole="Organisation_Type" />
+          <NavigationProperty Name="Provider_Change_Story" Relationship="Self.FK_Provider_Change_Story_Provider" FromRole="Provider" ToRole="Provider_Change_Story" />
+        </EntityType>
+        <EntityType Name="Provider_Change_Story">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_ID" Type="Int32" />
+          <Property Name="Provider_ID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Provider" Relationship="Self.FK_Provider_Change_Story_Provider" FromRole="Provider_Change_Story" ToRole="Provider" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Provider_Change_Story_User" FromRole="Provider_Change_Story" ToRole="User" />
+        </EntityType>
         <EntityType Name="Registration_Request">
           <Key>
             <PropertyRef Name="ID" />
@@ -798,16 +821,6 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Registration_Request" Relationship="Self.FK_Registration_Request_Request_Status" FromRole="Request_Status" ToRole="Registration_Request" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
@@ -827,11 +840,11 @@
           <NavigationProperty Name="Login_History" Relationship="Self.FK_Login_History_User" FromRole="User" ToRole="Login_History" />
           <NavigationProperty Name="News_Change_History" Relationship="Self.FK_News_Change_History_User" FromRole="User" ToRole="News_Change_History" />
           <NavigationProperty Name="Organisation_News" Relationship="Self.FK_Organisation_News_User" FromRole="User" ToRole="Organisation_News" />
+          <NavigationProperty Name="Provider_Change_Story" Relationship="Self.FK_Provider_Change_Story_User" FromRole="User" ToRole="Provider_Change_Story" />
           <NavigationProperty Name="Report" Relationship="Self.FK_Report_User" FromRole="User" ToRole="Report" />
           <NavigationProperty Name="Request_Decline" Relationship="Self.FK_Request_Decline_User" FromRole="User" ToRole="Request_Decline" />
           <NavigationProperty Name="User_Role" Relationship="Self.FK_User_User_Role" FromRole="User" ToRole="User_Role" />
           <NavigationProperty Name="User_Status" Relationship="Self.FK_User_User_Status" FromRole="User" ToRole="User_Status" />
-          <NavigationProperty Name="Provider_Change_Story" Relationship="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_User" FromRole="User" ToRole="Provider_Change_Story" />
         </EntityType>
         <EntityType Name="User_Role">
           <Key>
@@ -907,6 +920,18 @@
             </Principal>
             <Dependent Role="Document">
               <PropertyRef Name="Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Document_Provider">
+          <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+          <End Role="Document" Type="Self.Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="Provider_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1002,6 +1027,42 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Organisation_News">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Provider_Organisation_Type">
+          <End Role="Organisation_Type" Type="Self.Organisation_Type" Multiplicity="0..1" />
+          <End Role="Provider" Type="Self.Provider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organisation_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Provider">
+              <PropertyRef Name="Organisation_Type_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Provider_Change_Story_Provider">
+          <End Role="Provider" Type="Self.Provider" Multiplicity="0..1" />
+          <End Role="Provider_Change_Story" Type="Self.Provider_Change_Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provider">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Provider_Change_Story">
+              <PropertyRef Name="Provider_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Provider_Change_Story_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Provider_Change_Story" Type="Self.Provider_Change_Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Provider_Change_Story">
               <PropertyRef Name="User_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1102,11 +1163,13 @@
           <EntitySet Name="Login_Status" EntityType="Self.Login_Status" />
           <EntitySet Name="News_Change_History" EntityType="Self.News_Change_History" />
           <EntitySet Name="Organisation_News" EntityType="Self.Organisation_News" />
+          <EntitySet Name="Organisation_Type" EntityType="Self.Organisation_Type" />
+          <EntitySet Name="Provider" EntityType="Self.Provider" />
+          <EntitySet Name="Provider_Change_Story" EntityType="Self.Provider_Change_Story" />
           <EntitySet Name="Registration_Request" EntityType="Self.Registration_Request" />
           <EntitySet Name="Report" EntityType="Self.Report" />
           <EntitySet Name="Request_Decline" EntityType="Self.Request_Decline" />
           <EntitySet Name="Request_Status" EntityType="Self.Request_Status" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="User" EntityType="Self.User" />
           <EntitySet Name="User_Role" EntityType="Self.User_Role" />
           <EntitySet Name="User_Status" EntityType="Self.User_Status" />
@@ -1128,6 +1191,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Document_Document_Type" Association="Self.FK_Document_Document_Type">
             <End Role="Document_Type" EntitySet="Document_Type" />
+            <End Role="Document" EntitySet="Document" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Document_Provider" Association="Self.FK_Document_Provider">
+            <End Role="Provider" EntitySet="Provider" />
             <End Role="Document" EntitySet="Document" />
           </AssociationSet>
           <AssociationSet Name="FK_Load_History_Document" Association="Self.FK_Load_History_Document">
@@ -1162,6 +1229,18 @@
             <End Role="User" EntitySet="User" />
             <End Role="Organisation_News" EntitySet="Organisation_News" />
           </AssociationSet>
+          <AssociationSet Name="FK_Provider_Organisation_Type" Association="Self.FK_Provider_Organisation_Type">
+            <End Role="Organisation_Type" EntitySet="Organisation_Type" />
+            <End Role="Provider" EntitySet="Provider" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Provider_Change_Story_Provider" Association="Self.FK_Provider_Change_Story_Provider">
+            <End Role="Provider" EntitySet="Provider" />
+            <End Role="Provider_Change_Story" EntitySet="Provider_Change_Story" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Provider_Change_Story_User" Association="Self.FK_Provider_Change_Story_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Provider_Change_Story" EntitySet="Provider_Change_Story" />
+          </AssociationSet>
           <AssociationSet Name="FK_Registration_Request_Request_Status" Association="Self.FK_Registration_Request_Request_Status">
             <End Role="Request_Status" EntitySet="Request_Status" />
             <End Role="Registration_Request" EntitySet="Registration_Request" />
@@ -1190,107 +1269,7 @@
             <End Role="User_Status" EntitySet="User_Status" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
-          <EntitySet Name="Organisation_Type" EntityType="ANALYS_SYSTEM_DBModel.Organisation_Type" />
-          <EntitySet Name="Provider" EntityType="ANALYS_SYSTEM_DBModel.Provider" />
-          <AssociationSet Name="FK_Document_Provider" Association="ANALYS_SYSTEM_DBModel.FK_Document_Provider">
-            <End Role="Provider" EntitySet="Provider" />
-            <End Role="Document" EntitySet="Document" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Provider_Organisation_Type" Association="ANALYS_SYSTEM_DBModel.FK_Provider_Organisation_Type">
-            <End Role="Organisation_Type" EntitySet="Organisation_Type" />
-            <End Role="Provider" EntitySet="Provider" />
-          </AssociationSet>
-          <EntitySet Name="Provider_Change_Story" EntityType="ANALYS_SYSTEM_DBModel.Provider_Change_Story" />
-          <AssociationSet Name="FK_Provider_Change_Story_Provider" Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_Provider">
-            <End Role="Provider" EntitySet="Provider" />
-            <End Role="Provider_Change_Story" EntitySet="Provider_Change_Story" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Provider_Change_Story_User" Association="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Provider_Change_Story" EntitySet="Provider_Change_Story" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Organisation_Type">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Provider" Relationship="ANALYS_SYSTEM_DBModel.FK_Provider_Organisation_Type" FromRole="Organisation_Type" ToRole="Provider" />
-        </EntityType>
-        <EntityType Name="Provider">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Organisation_Type_ID" Type="Int32" />
-          <Property Name="Owner" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Creation_Date" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Document" Relationship="ANALYS_SYSTEM_DBModel.FK_Document_Provider" FromRole="Provider" ToRole="Document" />
-          <NavigationProperty Name="Organisation_Type" Relationship="ANALYS_SYSTEM_DBModel.FK_Provider_Organisation_Type" FromRole="Provider" ToRole="Organisation_Type" />
-          <NavigationProperty Name="Provider_Change_Story" Relationship="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_Provider" FromRole="Provider" ToRole="Provider_Change_Story" />
-        </EntityType>
-        <Association Name="FK_Document_Provider">
-          <End Type="ANALYS_SYSTEM_DBModel.Provider" Role="Provider" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Document" Role="Document" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provider">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Document">
-              <PropertyRef Name="Provider_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Provider_Organisation_Type">
-          <End Type="ANALYS_SYSTEM_DBModel.Organisation_Type" Role="Organisation_Type" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Provider" Role="Provider" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Organisation_Type">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Provider">
-              <PropertyRef Name="Organisation_Type_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Provider_Change_Story">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="User_ID" Type="Int32" />
-          <Property Name="Provider_ID" Type="Int32" />
-          <NavigationProperty Name="Provider" Relationship="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_Provider" FromRole="Provider_Change_Story" ToRole="Provider" />
-          <NavigationProperty Name="User" Relationship="ANALYS_SYSTEM_DBModel.FK_Provider_Change_Story_User" FromRole="Provider_Change_Story" ToRole="User" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK_Provider_Change_Story_Provider">
-          <End Type="ANALYS_SYSTEM_DBModel.Provider" Role="Provider" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Provider_Change_Story" Role="Provider_Change_Story" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Provider">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Provider_Change_Story">
-              <PropertyRef Name="Provider_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Provider_Change_Story_User">
-          <End Type="ANALYS_SYSTEM_DBModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="ANALYS_SYSTEM_DBModel.Provider_Change_Story" Role="Provider_Change_Story" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Provider_Change_Story">
-              <PropertyRef Name="User_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1321,12 +1300,12 @@
           <EntitySetMapping Name="Document">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Document">
               <MappingFragment StoreEntitySet="Document">
-                <ScalarProperty Name="Provider_ID" ColumnName="Provider_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
                 <ScalarProperty Name="Type_ID" ColumnName="Type_ID" />
+                <ScalarProperty Name="Provider_ID" ColumnName="Provider_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1411,6 +1390,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Organisation_Type">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Organisation_Type">
+              <MappingFragment StoreEntitySet="Organisation_Type">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provider">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Provider">
+              <MappingFragment StoreEntitySet="Provider">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Organisation_Type_ID" ColumnName="Organisation_Type_ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provider_Change_Story">
+            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Provider_Change_Story">
+              <MappingFragment StoreEntitySet="Provider_Change_Story">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Provider_ID" ColumnName="Provider_ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Registration_Request">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Registration_Request">
               <MappingFragment StoreEntitySet="Registration_Request">
@@ -1455,17 +1464,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -1495,36 +1493,6 @@
               <MappingFragment StoreEntitySet="User_Status">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Organisation_Type">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Organisation_Type">
-              <MappingFragment StoreEntitySet="Organisation_Type">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Provider">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Provider">
-              <MappingFragment StoreEntitySet="Provider">
-                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="Organisation_Type_ID" ColumnName="Organisation_Type_ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Provider_Change_Story">
-            <EntityTypeMapping TypeName="ANALYS_SYSTEM_DBModel.Provider_Change_Story">
-              <MappingFragment StoreEntitySet="Provider_Change_Story">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Provider_ID" ColumnName="Provider_ID" />
-                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

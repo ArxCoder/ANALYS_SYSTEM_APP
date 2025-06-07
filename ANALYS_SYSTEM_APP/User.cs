@@ -22,9 +22,9 @@ namespace ANALYS_SYSTEM_APP
             this.Login_History = new HashSet<Login_History>();
             this.News_Change_History = new HashSet<News_Change_History>();
             this.Organisation_News = new HashSet<Organisation_News>();
+            this.Provider_Change_Story = new HashSet<Provider_Change_Story>();
             this.Report = new HashSet<Report>();
             this.Request_Decline = new HashSet<Request_Decline>();
-            this.Provider_Change_Story = new HashSet<Provider_Change_Story>();
         }
     
         public int ID { get; set; }
@@ -49,12 +49,12 @@ namespace ANALYS_SYSTEM_APP
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Organisation_News> Organisation_News { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Provider_Change_Story> Provider_Change_Story { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Report> Report { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request_Decline> Request_Decline { get; set; }
         public virtual User_Role User_Role { get; set; }
         public virtual User_Status User_Status { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Provider_Change_Story> Provider_Change_Story { get; set; }
     }
 }

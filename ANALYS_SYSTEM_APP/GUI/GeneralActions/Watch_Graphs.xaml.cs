@@ -55,24 +55,25 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             newChart.Name = "UserChart";
             newChart.Width = 1200;
             newChart.Height = 700;
-            newChart.IsEnabled = false;
+            newChart.FontSize = 14;
+            newChart.FontWeight = FontWeights.Bold;
+            //newChart.IsEnabled = false;
 
             List<ChartData> chartData = new List<ChartData>();
-            foreach (User user in database.User)
+            User user = current_User;
+
+            string userName = $"{user.Surname} {user.Name} {user.Lastname}";
+            int documentCount = database.Load_History.Where(doc => doc.User_ID == user.ID).Count();
+
+            if (documentCount > 0)
             {
-                string userName = $"{user.Surname} {user.Name} {user.Lastname}";
-                int documentCount = database.Load_History.Where(doc => doc.User_ID == user.ID).Count();
-
-                if (documentCount > 0)
+                ChartData newChartData = new ChartData()
                 {
-                    ChartData newChartData = new ChartData()
-                    {
-                        UserName = userName,
-                        DocumentCount = documentCount
-                    };
+                    UserName = userName,
+                    DocumentCount = documentCount
+                };
 
-                    chartData.Add(newChartData);
-                }
+                chartData.Add(newChartData);
             }
 
             if (newChart.AxisX.Count > 0)
@@ -112,13 +113,15 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             newChart.Name = "UserChart";
             newChart.Width = 1200;
             newChart.Height = 700;
-            newChart.IsEnabled = false;
+            newChart.FontSize = 14;
+            newChart.FontWeight = FontWeights.Bold;
+            //newChart.IsEnabled = false;
 
             List<DocsChart> docsData = new List<DocsChart>();
             foreach (Data_Source src in database.Data_Source)
             {
                 string Name = src.Name;
-                int Count = database.Load_History.Where(doc => doc.Data_Source_ID == src.ID).Count();
+                int Count = database.Load_History.Where(doc => doc.Data_Source_ID == src.ID && doc.User_ID == current_User.ID).Count();
 
                 if (Count > 0)
                 {
