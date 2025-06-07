@@ -146,5 +146,12 @@ namespace ANALYS_SYSTEM_APP.GUI
             providerChange.Show();
             this.Close();
         }
+
+        private void Check_Graphs_Click(object sender, RoutedEventArgs e)
+        {
+            Watch_Graphs watch_Graphs = new Watch_Graphs(current_User);
+            watch_Graphs.Show();
+            this.Close();
+        }
     }
 }

@@ -57,46 +57,92 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             newChart.Height = 700;
             newChart.FontSize = 14;
             newChart.FontWeight = FontWeights.Bold;
-            //newChart.IsEnabled = false;
 
-            List<ChartData> chartData = new List<ChartData>();
-            User user = current_User;
-
-            string userName = $"{user.Surname} {user.Name} {user.Lastname}";
-            int documentCount = database.Load_History.Where(doc => doc.User_ID == user.ID).Count();
-
-            if (documentCount > 0)
+            if (current_User.Role_ID != 3)
             {
-                ChartData newChartData = new ChartData()
+                List<ChartData> chartData = new List<ChartData>();
+                User user = current_User;
+
+                string userName = $"{user.Surname} {user.Name} {user.Lastname}";
+                int documentCount = database.Load_History.Where(doc => doc.User_ID == user.ID).Count();
+
+                if (documentCount > 0)
                 {
-                    UserName = userName,
-                    DocumentCount = documentCount
-                };
+                    ChartData newChartData = new ChartData()
+                    {
+                        UserName = userName,
+                        DocumentCount = documentCount
+                    };
 
-                chartData.Add(newChartData);
-            }
+                    chartData.Add(newChartData);
+                }
 
-            if (newChart.AxisX.Count > 0)
-            {
-                newChart.AxisX[0].Labels = chartData.Select(d => d.UserName).ToList();
+                if (newChart.AxisX.Count > 0)
+                {
+                    newChart.AxisX[0].Labels = chartData.Select(d => d.UserName).ToList();
+                }
+                else
+                {
+                    // Если нет элементов, можно создать или добавить ось
+                    newChart.AxisX.Add(new Axis
+                    {
+                        Labels = chartData.Select(d => d.UserName).ToList()
+                    });
+                }
+
+                newChart.Series.Add(new ColumnSeries
+                {
+                    Title = "Документы",
+                    Values = new ChartValues<int>(chartData.Select(d => d.DocumentCount))
+                });
+
+                LoadHistoryGraphPanel.Children.Add(newChart);
+                LoadHistoryGraphPanel.Visibility = Visibility.Visible;
             }
             else
             {
-                // Если нет элементов, можно создать или добавить ось
-                newChart.AxisX.Add(new Axis
+                List<ChartData> chartData = new List<ChartData>();
+                foreach (User user in database.User)
                 {
-                    Labels = chartData.Select(d => d.UserName).ToList()
+                    string userName = $"{user.Surname} {user.Name} {user.Lastname}";
+                    int documentCount = database.Load_History.Where(doc => doc.User_ID == user.ID).Count();
+
+                    if (documentCount > 0)
+                    {
+                        ChartData newChartData = new ChartData()
+                        {
+                            UserName = userName,
+                            DocumentCount = documentCount
+                        };
+
+                        chartData.Add(newChartData);
+                    }
+
+                    
+                }
+
+                if (newChart.AxisX.Count > 0)
+                {
+                    newChart.AxisX[0].Labels = chartData.Select(d => d.UserName).ToList();
+                }
+                else
+                {
+                    // Если нет элементов, можно создать или добавить ось
+                    newChart.AxisX.Add(new Axis
+                    {
+                        Labels = chartData.Select(d => d.UserName).ToList()
+                    });
+                }
+
+                newChart.Series.Add(new ColumnSeries
+                {
+                    Title = "Документы",
+                    Values = new ChartValues<int>(chartData.Select(d => d.DocumentCount))
                 });
+
+                LoadHistoryGraphPanel.Children.Add(newChart);
+                LoadHistoryGraphPanel.Visibility = Visibility.Visible;
             }
-
-            newChart.Series.Add(new ColumnSeries
-            {
-                Title = "Документы",
-                Values = new ChartValues<int>(chartData.Select(d => d.DocumentCount))
-            });
-
-            LoadHistoryGraphPanel.Children.Add(newChart);
-            LoadHistoryGraphPanel.Visibility = Visibility.Visible;
         }
 
         private struct DocsChart
@@ -118,44 +164,90 @@ namespace ANALYS_SYSTEM_APP.GUI.GeneralActions
             //newChart.IsEnabled = false;
 
             List<DocsChart> docsData = new List<DocsChart>();
-            foreach (Data_Source src in database.Data_Source)
-            {
-                string Name = src.Name;
-                int Count = database.Load_History.Where(doc => doc.Data_Source_ID == src.ID && doc.User_ID == current_User.ID).Count();
 
-                if (Count > 0)
+            if (current_User.Role_ID != 3)
+            {
+                foreach (Data_Source src in database.Data_Source)
                 {
-                    DocsChart newChartData = new DocsChart()
+                    string Name = src.Name;
+                    int Count = database.Load_History.Where(doc => doc.Data_Source_ID == src.ID && doc.User_ID == current_User.ID).Count();
+
+                    if (Count > 0)
                     {
-                        Name = Name,
-                        Count = Count
-                    };
+                        DocsChart newChartData = new DocsChart()
+                        {
+                            Name = Name,
+                            Count = Count
+                        };
 
-                    docsData.Add(newChartData);
+                        docsData.Add(newChartData);
+                    }
                 }
-            }
 
-            if (newChart.AxisX.Count > 0)
-            {
-                newChart.AxisX[0].Labels = docsData.Select(d => d.Name).ToList();
+                if (newChart.AxisX.Count > 0)
+                {
+                    newChart.AxisX[0].Labels = docsData.Select(d => d.Name).ToList();
+                }
+                else
+                {
+                    // Если нет элементов, можно создать или добавить ось
+                    newChart.AxisX.Add(new Axis
+                    {
+                        Labels = docsData.Select(d => d.Name).ToList()
+                    });
+                }
+
+                newChart.Series.Add(new ColumnSeries
+                {
+                    Title = "Документы",
+                    Values = new ChartValues<int>(docsData.Select(d => d.Count))
+                });
+
+                LoadHistoryGraphPanel.Children.Add(newChart);
+                LoadHistoryGraphPanel.Visibility = Visibility.Visible;
             }
             else
             {
-                // Если нет элементов, можно создать или добавить ось
-                newChart.AxisX.Add(new Axis
+                foreach (Data_Source src in database.Data_Source)
                 {
-                    Labels = docsData.Select(d => d.Name).ToList()
+                    string Name = src.Name;
+                    int Count = database.Load_History.Where(doc => doc.Data_Source_ID == src.ID).Count();
+
+                    if (Count > 0)
+                    {
+                        DocsChart newChartData = new DocsChart()
+                        {
+                            Name = Name,
+                            Count = Count
+                        };
+
+                        docsData.Add(newChartData);
+                    }
+                }
+
+                if (newChart.AxisX.Count > 0)
+                {
+                    newChart.AxisX[0].Labels = docsData.Select(d => d.Name).ToList();
+                }
+                else
+                {
+                    // Если нет элементов, можно создать или добавить ось
+                    newChart.AxisX.Add(new Axis
+                    {
+                        Labels = docsData.Select(d => d.Name).ToList()
+                    });
+                }
+
+                newChart.Series.Add(new ColumnSeries
+                {
+                    Title = "Документы",
+                    Values = new ChartValues<int>(docsData.Select(d => d.Count))
                 });
+
+                LoadHistoryGraphPanel.Children.Add(newChart);
+                LoadHistoryGraphPanel.Visibility = Visibility.Visible;
             }
-
-            newChart.Series.Add(new ColumnSeries
-            {
-                Title = "Документы",
-                Values = new ChartValues<int>(docsData.Select(d => d.Count))
-            });
-
-            LoadHistoryGraphPanel.Children.Add(newChart);
-            LoadHistoryGraphPanel.Visibility = Visibility.Visible;
+            
         }
 
         private struct ChartData {

@@ -133,6 +133,22 @@
                             </Button>
                         </StackPanel>
                     </Border>
+
+                    <Border BorderBrush="Black" BorderThickness="1" CornerRadius="10" Margin="10">
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBlock Text="Просмотр графиков" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Просмотр графиков активности пользователей и загрузки документов" 
+FontSize="20" HorizontalAlignment="Stretch" TextWrapping="Wrap" Width="400"/>
+                            <Button x:Name="Check_Graphs" Width="400" Height="30" Margin="0,10,0,0" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+Content="Просмотреть" Click="Check_Graphs_Click">
+                                <Button.Resources>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="CornerRadius" Value="10"/>
+                                    </Style>
+                                </Button.Resources>
+                            </Button>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
             </Border>
         </ScrollViewer>
